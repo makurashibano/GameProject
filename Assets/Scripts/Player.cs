@@ -30,6 +30,11 @@ public class Player : MonoBehaviour
 		if (Input.GetKey(KeyCode.A)) { 
 			rb.velocity = new Vector3(-speed, 0, 0); 
 		} 
+
+		if(Input.GetKeyDown(KeyCode.LeftShift)){
+			speed = speed + 10;
+			
+		}
 	}
 }
 
