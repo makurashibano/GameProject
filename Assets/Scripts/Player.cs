@@ -15,19 +15,19 @@ public class Player : MonoBehaviour
 	}
 	void FixedUpdate() { 
 		//  Upキーで上昇 
-		if (Input.GetKey("up")) { 
+		if (Input.GetKey("W")) { 
 			rb.velocity = new Vector3(0, 0, speed); 
 		} 
 		// Downキーで下降 
-		if (Input.GetKey("down")) { 
+		if (Input.GetKey("S")) { 
 			rb.velocity = new Vector3(0, 0, -speed); 
 		} 
 		// right キーで右に進む 
-		if (Input.GetKey("right")) { 
+		if (Input.GetKey("A")) { 
 			rb.velocity = new Vector3(speed, 0, 0); 
 		} 
 		//left キーで左に進む 
-		if (Input.GetKey("left")) { 
+		if (Input.GetKey("D")) { 
 			rb.velocity = new Vector3(-speed, 0, 0); 
 		} 
 	}
