@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float speed = 0;
-
+	public float CountDownTime = 0;
 
     // Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
 	public Rigidbody rb; 
@@ -30,6 +30,30 @@ public class Player : MonoBehaviour
 		if (Input.GetKey(KeyCode.A)) { 
 			rb.velocity = new Vector3(-speed, 0, 0); 
 		} 
+
+		if(CountDownTime  < 3.0f){
+			speed = 2;
+		}
+
+		if(CountDownTime <= 0f){
+			if(Input.GetKey(KeyCode.LeftShift)){
+				speed = speed + 30;
+				Debug.Log(speed);
+				CountDownTime = 4.0f;
+			}
+		}		
 	}
+
+	void CountDown(){
+		if(CountDownTime <= 0f) CountDownTime = 0;
+		Debug.Log(CountDownTime);
+		CountDownTime -= Time.deltaTime;
+	}
+
+	void Update () {
+		CountDown();
+   		}
+
+	
 }
 
