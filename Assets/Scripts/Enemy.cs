@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+	//playerの数を入れる配列
 	public GameObject[] gm;
 	NavMeshAgent navmesh; 
     // Start is called before the first frame update
@@ -16,6 +17,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		//playerをNavmeshを使って追いかける
         navmesh.destination = gm[0].transform.position;
     }
 }
