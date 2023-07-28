@@ -9,12 +9,20 @@ public class Enemy : MonoBehaviour
 	GameObject[] targets;
     //playerの中で一番近いオブジェクト
     GameObject target;
-	NavMeshAgent navmesh; 
+	NavMeshAgent navmesh;
+    Rigidbody rb;
 
+    Vector3 force = new Vector3 (0.0f,0.0f,0.5f);
+    bool isDamage = false;
     bool isAttack = false;
+    [SerializeField]
+    float LimitSpeed;
+    float kinematicCount = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = false;
         navmesh = GetComponent<NavMeshAgent>();
         //シーン内にあるPlayerオブジェクトを配列に入れる
         targets = GameObject.FindGameObjectsWithTag("Player");
@@ -45,10 +53,36 @@ public class Enemy : MonoBehaviour
         //追いかけているオブジェクトとの距離
         float distance = (this.gameObject.transform.position - target.transform.position).magnitude;
         AttackFlug(distance);
-		//playerをNavmeshを使って追いかける
-        navmesh.destination = target.transform.position;
+        if(isDamage){
+            rb.isKinematic = false;
+            rb.AddForce(force, ForceMode.Impulse);
+            //速度を制限
+            if (rb.velocity.magnitude > LimitSpeed)
+            {
+                rb.velocity = new Vector3(rb.velocity.x / 1.1f, rb.velocity.y, rb.velocity.z / 1.1f);
+            }          
+            KinematicCount();
+        }
+        //playerをNavmeshを使って追いかける
+        navmesh.destination = target.transform.position;    
+        
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Player"){
+            isDamage = true;
+        }
+    }
+
+    void KinematicCount(){
+        kinematicCount += 1f * Time.deltaTime;
+        if(kinematicCount>0.5f){
+            rb.isKinematic = true;
+            isDamage = false;
+            kinematicCount = 0f;
+        }
+    }
     //攻撃の判定関数
     void AttackFlug(float distance){
         if(distance < 2){
