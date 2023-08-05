@@ -9,15 +9,13 @@ public class Enemy : MonoBehaviour
 	GameObject[] targets;
     //playerの中で一番近いオブジェクト
     GameObject target;
+
 	NavMeshAgent navmesh;
     Rigidbody rb;
 
-    Vector3 force = new Vector3 (0.0f,0.0f,0.5f);
-    bool isDamage = false;
+    public float boundsPower = 10.0f;
+    Vector3 forceDir = new Vector3(0f, 0f, 0f);
     bool isAttack = false;
-    [SerializeField]
-    float LimitSpeed;
-    float kinematicCount = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,38 +47,27 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        rb.velocity = Vector3.zero;
         FetchNearObjectWithTag("Player");
         //追いかけているオブジェクトとの距離
         float distance = (this.gameObject.transform.position - target.transform.position).magnitude;
-        AttackFlug(distance);
-        if(isDamage){
-            rb.isKinematic = false;
-            rb.AddForce(force, ForceMode.Impulse);
-            //速度を制限
-            if (rb.velocity.magnitude > LimitSpeed)
-            {
-                rb.velocity = new Vector3(rb.velocity.x / 1.1f, rb.velocity.y, rb.velocity.z / 1.1f);
-            }          
-            KinematicCount();
-        }
+        AttackFlug(distance);     
         //playerをNavmeshを使って追いかける
-        navmesh.destination = target.transform.position;    
-        
+        navmesh.destination = target.transform.position;
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.tag == "Player"){
-            isDamage = true;
-        }
-    }
+        if (other.gameObject.tag == "Player"){
+            // 衝突位置を取得する
+            Vector3 hitPos = other.contacts[0].point;
 
-    void KinematicCount(){
-        kinematicCount += 1f * Time.deltaTime;
-        if(kinematicCount>0.5f){
-            rb.isKinematic = true;
-            isDamage = false;
-            kinematicCount = 0f;
+            // 衝突位置から自機へ向かうベクトルを求める
+            Vector3 boundVec = this.transform.position - hitPos;
+
+            // 逆方向にはねる
+            forceDir = boundsPower * boundVec.normalized;
+            rb.AddForce(forceDir, ForceMode.Impulse);
         }
     }
     //攻撃の判定関数
