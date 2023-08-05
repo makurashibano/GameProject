@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     //playerの中で一番近いオブジェクト
     GameObject target;
 
-	NavMeshAgent navmesh;
+    NavMeshAgent navmesh;
     Rigidbody rb;
 
     public float boundsPower = 10.0f;
@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
         navmesh = GetComponent<NavMeshAgent>();
         //シーン内にあるPlayerオブジェクトを配列に入れる
         targets = GameObject.FindGameObjectsWithTag("Player");
+        
     }
 
     //一番近いオブジェクトを探す関数
@@ -51,14 +52,29 @@ public class Enemy : MonoBehaviour
         FetchNearObjectWithTag("Player");
         //追いかけているオブジェクトとの距離
         float distance = (this.gameObject.transform.position - target.transform.position).magnitude;
-        AttackFlug(distance);     
+        AttackFlug(distance);
         //playerをNavmeshを使って追いかける
+        Debug.Log(distance);
+        Debug.Log(isAttack);
+        Move();
         navmesh.destination = target.transform.position;
+    }
+
+    void Move()
+    {
+        if (isAttack ==true)
+        {
+            navmesh.speed = 0f;
+        }
+        else if(isAttack == false)
+        {
+            navmesh.speed = 2f;
+        }
     }
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Player"){
+        if (other.gameObject.tag == "Push"){
             // 衝突位置を取得する
             Vector3 hitPos = other.contacts[0].point;
 
@@ -72,10 +88,11 @@ public class Enemy : MonoBehaviour
     }
     //攻撃の判定関数
     void AttackFlug(float distance){
-        if(distance < 2){
+        if(distance < 3f){
             isAttack = true;
         }
-        else{
+        else
+        {
             isAttack = false;
         }
     }
