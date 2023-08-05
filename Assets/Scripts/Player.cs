@@ -31,15 +31,15 @@ public class Player : MonoBehaviour
 			rb.velocity = new Vector3(-speed, 0, 0); 
 		} 
 
-		if(CountDownTime  < 3.0f){
-			speed = 2;
+		if(CountDownTime  < 1.7f){
+			speed = 5;
 		}
 
 		if(CountDownTime <= 0f){
 			if(Input.GetKey(KeyCode.LeftShift)){
 				speed = speed + 30;
 				Debug.Log(speed);
-				CountDownTime = 4.0f;
+				CountDownTime = 2.0f;
 			}
 		}		
 	}
