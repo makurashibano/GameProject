@@ -14,32 +14,18 @@ public class Player : MonoBehaviour
 		rb = GetComponent<Rigidbody>(); 
 	}
 	void FixedUpdate() { 
-		//  Upキーで上昇 
-		if (Input.GetKey(KeyCode.W)) { 
-			rb.velocity = new Vector3(0, 0, speed); 
-		} 
-		// Downキーで下降 
-		if (Input.GetKey(KeyCode.S)) { 
-			rb.velocity = new Vector3(0, 0, -speed); 
-		} 
-		// right キーで右に進む 
-		if (Input.GetKey(KeyCode.D)) { 
-			rb.velocity = new Vector3(speed, 0, 0); 
-		} 
-		//left キーで左に進む 
-		if (Input.GetKey(KeyCode.A)) { 
-			rb.velocity = new Vector3(-speed, 0, 0); 
-		} 
+		
 
-		if(CountDownTime  < 3.0f){
-			speed = 2;
+		if(CountDownTime  < 1.7f){
+			speed = 10;
 		}
 
-		if(CountDownTime <= 0f){
+		rb.velocity = new Vector3(Input.GetAxis("Horizontal") * speed , rb.velocity.y, Input.GetAxis("Vertical") * speed);
+		if (CountDownTime <= 0f){
 			if(Input.GetKey(KeyCode.LeftShift)){
-				speed = speed + 30;
+				speed = speed + 20;
 				Debug.Log(speed);
-				CountDownTime = 4.0f;
+				CountDownTime = 2.0f;
 			}
 		}		
 	}
