@@ -36,10 +36,22 @@ public class Player : MonoBehaviour
 		CountDownTime -= Time.deltaTime;
 	}
 
-	void Update () {
-		CountDown();
-   		}
+	private Vector3 latestPos;  //前回のPosition
 
-	
+	void Update(){
+		CountDown();
+
+		Vector3 diff = transform.position - latestPos;   //前回からどこに進んだかをベクトルで取得
+		latestPos = transform.position;  //前回のPositionの更新
+		latestPos.x = 0f;
+		latestPos.z = 0f;
+
+		//ベクトルの大きさが0.01以上の時に向きを変える処理をする
+		if (diff.magnitude > 0.01f)
+		{
+			transform.rotation = Quaternion.LookRotation(diff); //向きを変更する
+		}
+	}
+
 }
 
