@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     //ノックバックする位置
     Vector3 forceDir = new Vector3(0f, 0f, 0f);
     bool isAttack = false;
+    bool isFall = false;
 
     NavMeshAgent navmesh;
     Rigidbody rb;
@@ -26,6 +27,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isFall = false;
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
         navmesh = GetComponent<NavMeshAgent>();
@@ -55,6 +57,11 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isFall)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
+            return;
+        }
         rb.velocity = Vector3.zero;
         FetchNearObjectWithTag("Player");
         //追いかけているオブジェクトとの距離
@@ -62,6 +69,7 @@ public class Enemy : MonoBehaviour
         AttackFlug(distance);
         //移動
         Move();
+        
         //playerをNavmeshを使って追いかける
         navmesh.destination = target.transform.position;
     }
@@ -79,10 +87,19 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider col)
+    {
+        if(col.gameObject.tag == "Finish")
+        {
+            isFall = true;
+            navmesh.enabled = false;
+        }
+    }
     void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "Push")
         {
+
             Knockback(other);
             isDmage = true;
         }
@@ -107,7 +124,7 @@ public class Enemy : MonoBehaviour
 
         // 衝突位置から自機へ向かうベクトルを求める
         Vector3 boundVec = this.transform.position - hitPos;
-
+        boundVec.y = 0f;
         // 逆方向にはねる
         forceDir = boundsPower * boundVec.normalized;
         rb.AddForce(forceDir, ForceMode.Impulse);
