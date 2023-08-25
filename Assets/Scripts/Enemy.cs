@@ -10,15 +10,24 @@ public class Enemy : MonoBehaviour
     //playerの中で一番近いオブジェクト
     GameObject target;
 
+    bool isDmage = false;
+
+    [SerializeField]
+    float distancePoint = 3.0f;
+    //ノックバックする力
+    public float boundsPower = 10.0f;
+    //ノックバックする位置
+    Vector3 forceDir = new Vector3(0f, 0f, 0f);
+    bool isAttack = false;
+    bool isFall = false;
+
     NavMeshAgent navmesh;
     Rigidbody rb;
 
-    public float boundsPower = 10.0f;
-    Vector3 forceDir = new Vector3(0f, 0f, 0f);
-    bool isAttack = false;
     // Start is called before the first frame update
     void Start()
     {
+        isFall = false;
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
         navmesh = GetComponent<NavMeshAgent>();
@@ -48,20 +57,26 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isFall)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
+            return;
+        }
         rb.velocity = Vector3.zero;
         FetchNearObjectWithTag("Player");
         //追いかけているオブジェクトとの距離
         float distance = (this.gameObject.transform.position - target.transform.position).magnitude;
         AttackFlug(distance);
-        //playerをNavmeshを使って追いかける
-        Debug.Log(distance);
-        Debug.Log(isAttack);
+        //移動
         Move();
+        
+        //playerをNavmeshを使って追いかける
         navmesh.destination = target.transform.position;
     }
-
+    //移動関数
     void Move()
     {
+        //攻撃する前に止まる
         if (isAttack ==true)
         {
             navmesh.speed = 0f;
@@ -72,28 +87,48 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider col)
+    {
+        if(col.gameObject.tag == "Finish")
+        {
+            isFall = true;
+            navmesh.enabled = false;
+        }
+    }
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Push"){
-            // 衝突位置を取得する
-            Vector3 hitPos = other.contacts[0].point;
+        if (other.gameObject.tag == "Push")
+        {
 
-            // 衝突位置から自機へ向かうベクトルを求める
-            Vector3 boundVec = this.transform.position - hitPos;
-
-            // 逆方向にはねる
-            forceDir = boundsPower * boundVec.normalized;
-            rb.AddForce(forceDir, ForceMode.Impulse);
+            Knockback(other);
+            isDmage = true;
         }
     }
     //攻撃の判定関数
-    void AttackFlug(float distance){
-        if(distance < 3f){
+    void AttackFlug(float distance)
+    {
+        //近づくと止まり、攻撃する
+        if(distance < distancePoint){
             isAttack = true;
         }
         else
         {
             isAttack = false;
         }
+    }
+    //ノックバック関数
+    void Knockback(Collision other)
+    {
+        // 衝突位置を取得する
+        Vector3 hitPos = other.contacts[0].point;
+
+        // 衝突位置から自機へ向かうベクトルを求める
+        Vector3 boundVec = this.transform.position - hitPos;
+        boundVec.y = 0f;
+        // 逆方向にはねる
+        forceDir = boundsPower * boundVec.normalized;
+        rb.AddForce(forceDir, ForceMode.Impulse);
+
+        isDmage = false;
     }
 }
