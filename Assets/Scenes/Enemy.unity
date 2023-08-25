@@ -376,6 +376,7 @@ GameObject:
   - component: {fileID: 205620014}
   - component: {fileID: 205620019}
   - component: {fileID: 205620020}
+  - component: {fileID: 205620021}
   m_Layer: 0
   m_Name: cpu
   m_TagString: Player
@@ -395,8 +396,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6442f2ff5a0369a47a4ca08321759294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distancePoint: 3
-  boundsPower: 300
+  enemyState: {fileID: 205620021}
+  distancePoint: 6
+  boundsPower: 250
 --- !u!136 &205620015
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -506,7 +508,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
+  m_ObstacleAvoidanceType: 4
 --- !u!54 &205620020
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -534,6 +536,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &205620021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205620013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40502dae51310f4438d5a66e07db5bfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiState: 0
 --- !u!1 &211661404
 GameObject:
   m_ObjectHideFlags: 0
@@ -912,6 +927,7 @@ GameObject:
   - component: {fileID: 665015246}
   - component: {fileID: 665015245}
   - component: {fileID: 665015251}
+  - component: {fileID: 665015252}
   m_Layer: 0
   m_Name: cpu (1)
   m_TagString: Player
@@ -953,8 +969,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6442f2ff5a0369a47a4ca08321759294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distancePoint: 3
-  boundsPower: 300
+  enemyState: {fileID: 665015252}
+  distancePoint: 6
+  boundsPower: 250
 --- !u!136 &665015247
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1070,6 +1087,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &665015252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665015244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40502dae51310f4438d5a66e07db5bfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiState: 0
 --- !u!1 &1008399893
 GameObject:
   m_ObjectHideFlags: 0

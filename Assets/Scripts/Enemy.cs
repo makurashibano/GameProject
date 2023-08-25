@@ -5,8 +5,11 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-	//playerの数を入れる配列
-	GameObject[] targets;
+    [SerializeField]
+    EnemyState enemyState; 
+
+    //playerの数を入れる配列
+    GameObject[] targets;
     //playerの中で一番近いオブジェクト
     GameObject target;
 
@@ -57,34 +60,58 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        rb.velocity = new Vector3(0, rb.velocity.y, 0);
+        //一番近いキャラクターを取得
+        FetchNearObjectWithTag("Player");
+        //ステートを取得して行動を決める
+        switch (enemyState.aiState)
+        {
+            case EnemyState.EnemyAiState.WAIT:
+                WaitStart();
+                break;
+            case EnemyState.EnemyAiState.MOVE:
+                MoveStart();
+                break;
+            case EnemyState.EnemyAiState.ATTACK:
+                AttackStart();
+                break;
+            case EnemyState.EnemyAiState.Fall:
+                FallStart();
+                break;
+        }
+        //攻撃する前に止まる
+        if (enemyState.aiState ==EnemyState.EnemyAiState.ATTACK)
+        {
+            navmesh.speed = 0f;
+        }
+        else
+        {
+            navmesh.speed = 2f;
+        }
+        //一番近いキャラクターとの距離を取得
+        float distance = (transform.position - target.transform.position).magnitude;
+        //落下したらステートを落下にする
         if (isFall)
         {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
+            enemyState.aiState = EnemyState.EnemyAiState.Fall;
             return;
         }
-        rb.velocity = Vector3.zero;
-        FetchNearObjectWithTag("Player");
-        //追いかけているオブジェクトとの距離
-        float distance = (this.gameObject.transform.position - target.transform.position).magnitude;
-        AttackFlug(distance);
-        //移動
-        Move();
-        
-        //playerをNavmeshを使って追いかける
-        navmesh.destination = target.transform.position;
+        //一定の距離近づいたらステートを攻撃にそれ以外を移動にする
+        if(distance < distancePoint)
+        {
+            enemyState.aiState = EnemyState.EnemyAiState.ATTACK;
+        }
+        else
+        {
+            enemyState.aiState = EnemyState.EnemyAiState.MOVE;
+        }
+        Debug.Log(enemyState.aiState);
     }
     //移動関数
     void Move()
     {
-        //攻撃する前に止まる
-        if (isAttack ==true)
-        {
-            navmesh.speed = 0f;
-        }
-        else if(isAttack == false)
-        {
-            navmesh.speed = 2f;
-        }
+        //playerをNavmeshを使って追いかける
+        navmesh.destination = target.transform.position;
     }
 
     void OnTriggerEnter(Collider col)
@@ -99,21 +126,8 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "Push")
         {
-
             Knockback(other);
             isDmage = true;
-        }
-    }
-    //攻撃の判定関数
-    void AttackFlug(float distance)
-    {
-        //近づくと止まり、攻撃する
-        if(distance < distancePoint){
-            isAttack = true;
-        }
-        else
-        {
-            isAttack = false;
         }
     }
     //ノックバック関数
@@ -130,5 +144,26 @@ public class Enemy : MonoBehaviour
         rb.AddForce(forceDir, ForceMode.Impulse);
 
         isDmage = false;
+    }
+    //立ち止まる関数
+    void WaitStart()
+    {
+
+    }
+    //動く関数
+    void MoveStart()
+    {
+        //移動
+        Move();
+        
+    }
+    //攻撃関数
+    void AttackStart()
+    {
+        
+    }
+    void FallStart()
+    {
+        rb.velocity = new Vector3(0, rb.velocity.y, 0);
     }
 }
