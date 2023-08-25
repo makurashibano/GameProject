@@ -1211,7 +1211,7 @@ Transform:
   m_GameObject: {fileID: 1384497587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.01, y: 1.06, z: 7.02}
-  m_LocalScale: {x: 0.89393, y: 0.89393, z: 0.89393}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 687876413}
@@ -1318,7 +1318,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1558189128}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.1767902, y: -0.14004898, z: -1.0196939}
+  m_LocalPosition: {x: 1.1767902, y: 0, z: -1.0196939}
   m_LocalScale: {x: 14.135, y: 14.135, z: 14.135}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1358,6 +1358,7 @@ GameObject:
   - component: {fileID: 2013653224}
   - component: {fileID: 2013653223}
   - component: {fileID: 2013653222}
+  - component: {fileID: 2013653228}
   - component: {fileID: 2013653221}
   - component: {fileID: 2013653226}
   - component: {fileID: 2013653227}
@@ -1464,8 +1465,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2013653220}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.1767902, y: 1.83, z: -1.0196939}
-  m_LocalScale: {x: 0.89393, y: 0.89393, z: 0.89393}
+  m_LocalPosition: {x: 1.1767902, y: 1.52, z: -1.0196939}
+  m_LocalScale: {x: 1, y: 1, z: 1.6014894}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 319163545}
@@ -1520,6 +1521,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2013653228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013653220}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2962c3e802248f74393472597e7a4a2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2053147594
 GameObject:
   m_ObjectHideFlags: 0
