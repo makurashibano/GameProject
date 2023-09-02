@@ -398,7 +398,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyState: {fileID: 205620021}
   distancePoint: 6
-  boundsPower: 250
+  gravitySpeed: 14
+  boundsPower: 5
 --- !u!136 &205620015
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -531,7 +532,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
@@ -970,8 +971,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyState: {fileID: 665015252}
-  distancePoint: 6
-  boundsPower: 250
+  distancePoint: 3
+  gravitySpeed: 14
+  boundsPower: 5
 --- !u!136 &665015247
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1082,7 +1084,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80

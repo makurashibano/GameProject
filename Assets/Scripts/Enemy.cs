@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,16 +14,13 @@ public class Enemy : MonoBehaviour
     //playerの中で一番近いオブジェクト
     GameObject target;
 
-    bool isDmage = false;
-
     [SerializeField]
     float distancePoint = 3.0f;
+    [SerializeField]
+    private float gravitySpeed = 14f;
     //ノックバックする力
-    public float boundsPower = 10.0f;
-    //ノックバックする位置
-    Vector3 forceDir = new Vector3(0f, 0f, 0f);
-    bool isAttack = false;
-    bool isFall = false;
+    public float boundsPower = 5.0f;
+    Vector3 boundVec = new Vector3(0f,0f,0f);
 
     NavMeshAgent navmesh;
     Rigidbody rb;
@@ -30,7 +28,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isFall = false;
+
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
         navmesh = GetComponent<NavMeshAgent>();
@@ -60,7 +58,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = new Vector3(0, rb.velocity.y, 0);
+        rb.velocity = new Vector3(0, 0, 0);
         //一番近いキャラクターを取得
         FetchNearObjectWithTag("Player");
         //ステートを取得して行動を決める
@@ -91,9 +89,8 @@ public class Enemy : MonoBehaviour
         //一番近いキャラクターとの距離を取得
         float distance = (transform.position - target.transform.position).magnitude;
         //落下したらステートを落下にする
-        if (isFall)
-        {
-            enemyState.aiState = EnemyState.EnemyAiState.Fall;
+        if (enemyState.aiState == EnemyState.EnemyAiState.Fall)
+        {           
             return;
         }
         //一定の距離近づいたらステートを攻撃にそれ以外を移動にする
@@ -105,7 +102,8 @@ public class Enemy : MonoBehaviour
         {
             enemyState.aiState = EnemyState.EnemyAiState.MOVE;
         }
-        Debug.Log(enemyState.aiState);
+
+        
     }
     //移動関数
     void Move()
@@ -118,7 +116,7 @@ public class Enemy : MonoBehaviour
     {
         if(col.gameObject.tag == "Finish")
         {
-            isFall = true;
+            enemyState.aiState = EnemyState.EnemyAiState.Fall;
             navmesh.enabled = false;
         }
     }
@@ -126,24 +124,40 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "Push")
         {
-            Knockback(other);
-            isDmage = true;
+            KnockbackDirection(other);
+            StartCoroutine("Knock");
         }
     }
-    //ノックバック関数
-    void Knockback(Collision other)
+
+    IEnumerator Knock()
     {
+        int i = 0;
+        while(true)
+        {
+            Debug.Log(boundVec);
+            i++;
+            rb.AddForce(boundVec * boundsPower, ForceMode.Impulse);
+            yield return null;
+            if (i == 100)
+            {
+                yield break;
+            }
+
+        }
+        
+
+    }
+
+    //ノックバックする方向を取得する関数
+    void KnockbackDirection(Collision other)
+    {
+        rb.velocity = Vector3.zero;
         // 衝突位置を取得する
         Vector3 hitPos = other.contacts[0].point;
 
         // 衝突位置から自機へ向かうベクトルを求める
-        Vector3 boundVec = this.transform.position - hitPos;
-        boundVec.y = 0f;
-        // 逆方向にはねる
-        forceDir = boundsPower * boundVec.normalized;
-        rb.AddForce(forceDir, ForceMode.Impulse);
-
-        isDmage = false;
+        boundVec = (this.transform.position - hitPos).normalized;
+        boundVec.y = 0f;           
     }
     //立ち止まる関数
     void WaitStart()
@@ -163,7 +177,7 @@ public class Enemy : MonoBehaviour
         
     }
     void FallStart()
-    {
-        rb.velocity = new Vector3(0, rb.velocity.y, 0);
+    {        
+        rb.velocity -= new Vector3(0, gravitySpeed, 0);
     }
 }
