@@ -80,5 +80,41 @@ public class Player : MonoBehaviour
 
 	}
 
+	/*
+	IEnumerator Knock()
+    {
+		int count = 0;
+		while(true)
+        {
+			count++;
+
+        }
+    }
+	*/
+
+
+	/// <summary>
+	/// 衝突発生時の処理
+	/// </summary>
+	/// <param name="collision">衝突したCollider</param>
+	private void OnCollisionEnter(Collision collision)
+	{
+		if(collision.gameObject.tag == "Finish")
+        {
+			float boundsPower = 50.0f;
+
+			// 衝突位置を取得する
+			Vector3 hitPos = collision.contacts[0].point;
+
+			// 衝突位置から自機へ向かうベクトルを求める
+			Vector3 boundVec = this.transform.position - hitPos;
+			boundVec.y = 0;
+
+			// 逆方向にはねる
+			Vector3 forceDir = boundsPower * boundVec.normalized;
+			this.GetComponent<Rigidbody>().AddForce(forceDir, ForceMode.Impulse);
+		}
+	}
+	
 }
 
