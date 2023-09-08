@@ -77,21 +77,19 @@ public class Enemy : MonoBehaviour
                 FallStart();
                 break;
         }
-        //攻撃する前に止まる
-        if (enemyState.aiState ==EnemyState.EnemyAiState.ATTACK)
-        {
-            navmesh.speed = 0f;
-        }
-        else
-        {
-            navmesh.speed = 2f;
-        }
+        
+        
         //一番近いキャラクターとの距離を取得
         float distance = (transform.position - target.transform.position).magnitude;
-        //落下したらステートを落下にする
+
+        //落下したら動かないようにする
         if (enemyState.aiState == EnemyState.EnemyAiState.Fall)
         {           
             return;
+        }
+        if (target == null)
+        {
+            enemyState.aiState = EnemyState.EnemyAiState.WAIT;
         }
         //一定の距離近づいたらステートを攻撃にそれ以外を移動にする
         if(distance < distancePoint)
@@ -102,21 +100,14 @@ public class Enemy : MonoBehaviour
         {
             enemyState.aiState = EnemyState.EnemyAiState.MOVE;
         }
-
-        
     }
-    //移動関数
-    void Move()
-    {
-        //playerをNavmeshを使って追いかける
-        navmesh.destination = target.transform.position;
-    }
-
     void OnTriggerEnter(Collider col)
     {
+        //触れると落ちるようになる
         if(col.gameObject.tag == "Finish")
         {
             enemyState.aiState = EnemyState.EnemyAiState.Fall;
+            //ナビメッシュを消す
             navmesh.enabled = false;
         }
     }
@@ -128,24 +119,23 @@ public class Enemy : MonoBehaviour
             StartCoroutine("Knock");
         }
     }
-
+    //ノックバックをする　(コルーチン)
     IEnumerator Knock()
     {
-        int i = 0;
+        //ノックバックに力を加える回数
+        int count = 0;
         while(true)
-        {
-            Debug.Log(boundVec);
-            i++;
+        {           
+            count++;
+            //ノックバックを行っている
             rb.AddForce(boundVec * boundsPower, ForceMode.Impulse);
             yield return null;
-            if (i == 100)
+            //100回力を加えるとコルーチンを抜け出す
+            if (count == 100)
             {
                 yield break;
             }
-
         }
-        
-
     }
 
     //ノックバックする方向を取得する関数
@@ -162,22 +152,27 @@ public class Enemy : MonoBehaviour
     //立ち止まる関数
     void WaitStart()
     {
-
+        navmesh.speed = 0f;
     }
     //動く関数
     void MoveStart()
     {
-        //移動
-        Move();
-        
+        //移動速度
+        navmesh.speed = 4f;
+        //playerをNavmeshを使って追いかける
+        navmesh.destination = target.transform.position;
     }
     //攻撃関数
     void AttackStart()
     {
-        
+
+        //攻撃するときに止まる
+        navmesh.speed = 1f;
     }
+    //落下する関数
     void FallStart()
     {        
+        //落下するスピード
         rb.velocity -= new Vector3(0, gravitySpeed, 0);
     }
 }
