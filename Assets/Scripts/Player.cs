@@ -5,6 +5,11 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+	//ノックバックパワー
+	private float boundPower = 5.0f;
+	Vector3 boundVec = new Vector3(0f, 0f, 0f);
+
+
     public float speed = 0;
 	public float CountDownTime = 0;
 	private Vector3 playerMove;
@@ -80,5 +85,63 @@ public class Player : MonoBehaviour
 
 	}
 
+
+	/*
+	//ここに
+    //「もし[左クリック]を押したら」
+    //「[オブジェクト：Punch]を[z +0.5]の座標に出す」
+	//ってやつを書く
+	//ちなみに[オブジェクト：Punch]はコライダーが isTrigger になってて今のところ当たり判定はない
+
+	//あとまあさっきの吹き飛ばしも「自分が [オブジェクト：Punch] に触れたら」っていうif文に変える
+
+	
+		if(collision.gameObject.tag == "Attack")
+	
+	
+
+
+	*/
+
+
+	//ノックバックするコルーチン
+	IEnumerator Knock()
+    {
+		//ノックバックに力を加える回数
+		int count = 0;
+		while(true)
+        {
+			count++;
+			//ノックバックを行っている
+			rb.AddForce(boundVec * boundPower, ForceMode.Impulse);
+			yield return null;
+			//100回力を加えるとコルーチンを抜け出す
+			if(count == 100)
+            {
+				yield break; 
+            }
+        }
+    }
+	
+
+	/// <summary>
+	/// 衝突発生時の処理
+	/// </summary>
+	/// <param name="collision">衝突したCollider</param>
+	private void OnCollisionEnter(Collision collision)
+	{
+		if(collision.gameObject.tag == "Finish")
+        {
+			// 衝突位置を取得する
+			Vector3 hitPos = collision.contacts[0].point;
+
+			// 衝突位置から自機へ向かうベクトルを求める
+			boundVec = this.transform.position - hitPos;
+			boundVec.y = 0;
+
+			StartCoroutine("Knock");
+		}
+	}
+	
 }
 
