@@ -97,10 +97,6 @@ public class Player : MonoBehaviour
 
 	
 		if(collision.gameObject.tag == "Attack")
-	
-	
-
-
 	*/
 
 
@@ -128,20 +124,19 @@ public class Player : MonoBehaviour
 	/// 衝突発生時の処理
 	/// </summary>
 	/// <param name="collision">衝突したCollider</param>
-	private void OnCollisionEnter(Collision collision)
+	private void OnTriggerEnter(Collider collision)
 	{
-		if(collision.gameObject.tag == "Finish")
-        {
-			// 衝突位置を取得する
-			Vector3 hitPos = collision.contacts[0].point;
+		float boundsPower = 10.0f;
 
-			// 衝突位置から自機へ向かうベクトルを求める
-			boundVec = this.transform.position - hitPos;
-			boundVec.y = 0;
+		Rigidbody rigidbody = collision.GetComponent<Rigidbody>();
 
-			StartCoroutine("Knock");
-		}
-	}
+		Vector3 boundVec = this.transform.position - rigidbody.position;
+
+		boundVec.y = 0f;
+        Vector3 forceDir = boundsPower * boundVec.normalized;
+
+        this.GetComponent<Rigidbody>().velocity = forceDir;
+    }
 	
 }
 
