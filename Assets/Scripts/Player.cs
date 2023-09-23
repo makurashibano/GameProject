@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 	float rotateSpeed = 10f;
 
 	// Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
-	public Rigidbody rb; 
+	private Rigidbody rb; 
 	void Start()
 	{ 														  
 		rb = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
