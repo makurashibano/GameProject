@@ -118,15 +118,9 @@ public class Player : MonoBehaviour
 	private void OnTriggerEnter(Collider collider)
 	{
 		///ノックバック処理
-		//当たった場所を取得
-		Vector3 hitPos = collider.ClosestPointOnBounds(this.transform.position);
-		Debug.Log(hitPos);
-		//敵の場所を取得
-        Vector3 boundVec = this.transform.position - hitPos;
-		
-		boundVec.y = 0f;
+
 		//正規化
-        Vector3 forceDir = boundsPower * boundVec.normalized;
+        Vector3 forceDir = boundsPower * collider.transform.forward;
         //ノックバックさせる
         this.GetComponent<Rigidbody>().velocity = forceDir;
         ///
