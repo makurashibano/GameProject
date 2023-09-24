@@ -14,17 +14,44 @@ public class Player : MonoBehaviour
 	public float CountDownTime = 0;
 	private Vector3 playerMove;
 	float rotateSpeed = 10f;
+	[SerializeField]
+    private float boundsPower = 12.0f;
+	public bool isAttack= false;
+	[SerializeField]
+	GameObject[] players;
+	[SerializeField]
+	Vector3[] spawnPoint;
+	private Vector2 moveAmount;
 
-	// Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
-	private Rigidbody rb; 
-	void Start()
+    // Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
+    private Rigidbody rb;
+	[SerializeField]
+	private Collider col;
+    private void Awake()
+    {
+        int index = GetComponent<PlayerInput>().playerIndex;
+		GameObject playerSpawnPoint =GameObject.FindGameObjectWithTag("PlayerSpawnPoint" + index);
+		GameObject player = Instantiate(players[index]);
+		player.transform.parent = transform;
+		transform.position = playerSpawnPoint.transform.position;
+        transform.rotation = playerSpawnPoint.transform.rotation;
+    }
+    void Start()
 	{ 														  
 		rb = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
+		col.enabled = false; 
 	}
+	void OnMove(InputValue value)
+	{
+		moveAmount = value.Get<Vector2>();
+		
+	} 
+
 	void FixedUpdate() 
 	{
-		Move();
-	}
+		rb.velocity = new Vector3(moveAmount.x,rb.velocity.y/3.8f,moveAmount.y) * speed * Time.deltaTime;
+        //Move();
+    }
 	//プレイヤーの移動関数
 	void Move()
     {
@@ -37,8 +64,9 @@ public class Player : MonoBehaviour
 		var wKey = keyboard.wKey;
 		var sKey = keyboard.sKey;
 		var dKey = keyboard.dKey;
+        var spaceKey = keyboard.spaceKey;
 
-		if (aKey.isPressed)
+        if (aKey.isPressed)
 		{
 			playerMove.x += -0.5f;
 		}
@@ -54,8 +82,14 @@ public class Player : MonoBehaviour
 		{
 			playerMove.z += 0.5f;
 		}
-		//元のスピードに戻す
-		if (CountDownTime < 1.7f)
+        
+        if (spaceKey.isPressed)
+        {
+            isAttack = true;
+            Invoke("AttackFalse", 0.5f);
+        }
+        //元のスピードに戻す
+        if (CountDownTime < 1.7f)
 		{
 			speed = 10;
 		}
@@ -70,7 +104,7 @@ public class Player : MonoBehaviour
 			}
 		}
 		//移動を反映
-		rb.velocity = new Vector3(playerMove.x * speed, rb.velocity.y, playerMove.z * speed);
+		
 		//移動方向に回転している
 		transform.forward = Vector3.Slerp(transform.forward, playerMove, Time.deltaTime * rotateSpeed);
 	}
@@ -82,66 +116,35 @@ public class Player : MonoBehaviour
 	void Update()
 	{
 		CountDown();
-
-	}
-
-
-	/*
-	//ここに
-    //「もし[左クリック]を押したら」
-    //「[オブジェクト：Punch]を[z +0.5]の座標に出す」
-	//ってやつを書く
-	//ちなみに[オブジェクト：Punch]はコライダーが isTrigger になってて今のところ当たり判定はない
-
-	//あとまあさっきの吹き飛ばしも「自分が [オブジェクト：Punch] に触れたら」っていうif文に変える
-
-	
-		if(collision.gameObject.tag == "Attack")
-	
-	
-
-
-	*/
-
-
-	//ノックバックするコルーチン
-	IEnumerator Knock()
-    {
-		//ノックバックに力を加える回数
-		int count = 0;
-		while(true)
+        if (isAttack)
         {
-			count++;
-			//ノックバックを行っている
-			rb.AddForce(boundVec * boundPower, ForceMode.Impulse);
-			yield return null;
-			//100回力を加えるとコルーチンを抜け出す
-			if(count == 100)
-            {
-				yield break; 
-            }
-        }
-    }
-	
+            col.enabled = true;
+		}
+		else
+		{
+			col.enabled = false;
+		}
 
+    }
+	void AttackFalse()
+	{
+		isAttack = false;
+	}
+	
 	/// <summary>
 	/// 衝突発生時の処理
 	/// </summary>
 	/// <param name="collision">衝突したCollider</param>
-	private void OnCollisionEnter(Collision collision)
+	private void OnTriggerEnter(Collider collider)
 	{
-		if(collision.gameObject.tag == "Finish")
-        {
-			// 衝突位置を取得する
-			Vector3 hitPos = collision.contacts[0].point;
+		///ノックバック処理
 
-			// 衝突位置から自機へ向かうベクトルを求める
-			boundVec = this.transform.position - hitPos;
-			boundVec.y = 0;
-
-			StartCoroutine("Knock");
-		}
-	}
+		//正規化
+        Vector3 forceDir = boundsPower * collider.transform.forward;
+        //ノックバックさせる
+        this.GetComponent<Rigidbody>().velocity = forceDir;
+        ///
+    }
 	
 }
 
