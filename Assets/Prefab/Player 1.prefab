@@ -66,6 +66,7 @@ GameObject:
   - component: {fileID: 4973356753539302914}
   - component: {fileID: 6510083842446082683}
   - component: {fileID: 9173277029793386836}
+  - component: {fileID: 690171536576400152}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -190,3 +191,24 @@ MonoBehaviour:
   m_DefaultActionMap: gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!65 &690171536576400152
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5383779921714318381}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.3885291, y: 1.069198, z: 1.3858168}
+  m_Center: {x: -0.013758063, y: 0.72117656, z: 0.025648475}

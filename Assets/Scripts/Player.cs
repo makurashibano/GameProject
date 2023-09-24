@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
 		player.transform.parent = transform;
 		transform.position = playerSpawnPoint.transform.position;
         transform.rotation = playerSpawnPoint.transform.rotation;
+		name = "Player" + index;
     }
     void Start()
 	{ 														  
@@ -46,14 +47,20 @@ public class Player : MonoBehaviour
 		moveAmount = value.Get<Vector2>();
 		
 	} 
-
+	void OnAttack()
+	{
+        isAttack = true;
+        Invoke("AttackFalse", 0.5f);
+    }
 	void FixedUpdate() 
 	{
-		rb.velocity = new Vector3(moveAmount.x,rb.velocity.y/3.8f,moveAmount.y) * speed * Time.deltaTime;
+//		rb.velocity = new Vector3(moveAmount.x,rb.velocity.y/3.8f,moveAmount.y) * speed * Time.deltaTime;
+		Vector3 force = new Vector3(moveAmount.x, rb.velocity.y / 3.8f, moveAmount.y) * speed * Time.deltaTime*5f;
+		GetComponent<Rigidbody>().AddForce(force);
         //Move();
     }
-	//プレイヤーの移動関数
-	void Move()
+    //プレイヤーの移動関数
+    void Move()
     {
 		//初期化
 		playerMove = new Vector3(0f, 0f, 0f);
@@ -85,8 +92,7 @@ public class Player : MonoBehaviour
         
         if (spaceKey.isPressed)
         {
-            isAttack = true;
-            Invoke("AttackFalse", 0.5f);
+            
         }
         //元のスピードに戻す
         if (CountDownTime < 1.7f)
@@ -140,11 +146,16 @@ public class Player : MonoBehaviour
 		///ノックバック処理
 
 		//正規化
-        Vector3 forceDir = boundsPower * collider.transform.forward;
+        Vector3 forceDir = boundsPower * transform.forward;
         //ノックバックさせる
-        this.GetComponent<Rigidbody>().velocity = forceDir;
+		if (collider.transform.parent!=null)
+		{
+			return;
+		}
+//        collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
+        collider.transform.GetComponent<Rigidbody>().AddForce(forceDir,ForceMode.Impulse);
         ///
     }
-	
+
 }
 
