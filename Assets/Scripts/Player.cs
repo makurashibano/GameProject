@@ -17,21 +17,41 @@ public class Player : MonoBehaviour
 	[SerializeField]
     private float boundsPower = 12.0f;
 	public bool isAttack= false;
+	[SerializeField]
+	GameObject[] players;
+	[SerializeField]
+	Vector3[] spawnPoint;
+	private Vector2 moveAmount;
 
     // Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
     private Rigidbody rb;
 	[SerializeField]
 	private Collider col;
-
-	void Start()
+    private void Awake()
+    {
+        int index = GetComponent<PlayerInput>().playerIndex;
+		GameObject playerSpawnPoint =GameObject.FindGameObjectWithTag("PlayerSpawnPoint" + index);
+		GameObject player = Instantiate(players[index]);
+		player.transform.parent = transform;
+		transform.position = playerSpawnPoint.transform.position;
+        transform.rotation = playerSpawnPoint.transform.rotation;
+    }
+    void Start()
 	{ 														  
 		rb = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
 		col.enabled = false; 
 	}
+	void OnMove(InputValue value)
+	{
+		moveAmount = value.Get<Vector2>();
+		
+	} 
+
 	void FixedUpdate() 
 	{
-		Move();
-	}
+		rb.velocity = new Vector3(moveAmount.x,rb.velocity.y/3.8f,moveAmount.y) * speed * Time.deltaTime;
+        //Move();
+    }
 	//プレイヤーの移動関数
 	void Move()
     {
@@ -84,7 +104,7 @@ public class Player : MonoBehaviour
 			}
 		}
 		//移動を反映
-		rb.velocity = new Vector3(playerMove.x * speed, rb.velocity.y, playerMove.z * speed);
+		
 		//移動方向に回転している
 		transform.forward = Vector3.Slerp(transform.forward, playerMove, Time.deltaTime * rotateSpeed);
 	}
