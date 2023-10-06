@@ -8,6 +8,7 @@ public class HudManager : MonoBehaviour
 {
     [SerializeField]
     TMP_Dropdown dropdown;
+    public GameObject playerNumAddPanel;
     [SerializeField]
     PlayerInputManager PlayerInputManager;
     [SerializeField]
@@ -16,14 +17,21 @@ public class HudManager : MonoBehaviour
     public void AddButton()
     {
         Invoke("JoinPlayer",0f);
+        playerNumAddPanel.SetActive(false);
     }
     private void JoinPlayer()
     {
-        //Ç«Ç±Ç©ÇÁÇ©ê∂ê¨Ç≥ÇÍÇƒÇ¢ÇÈ
-        for(int i = 0; i < dropdown.value+1; i++)
+        if (dropdown.value == 0)
         {
-            PlayerInputManager.instance.JoinPlayer(i, -1, null);
-            Instantiate(player, new Vector3(-1.0f, 0.0f, 0.0f), Quaternion.identity);
+            PlayerInputManager.instance.JoinPlayer(0, -1, null);
+        }
+        else
+        {
+            for (int i = 0; i < dropdown.value; i++)
+            {
+                PlayerInputManager.instance.JoinPlayer(i, -1, null);
+                Instantiate(player, new Vector3(-1.0f, 0.0f, 0.0f), Quaternion.identity);
+            }
         }
     }
 }
