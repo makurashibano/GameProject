@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "attack",
+                    "type": "Button",
+                    "id": "e0bc3332-cd02-4887-a8f6-a0ce7ebc22cb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -81,6 +90,28 @@
                     "action": "move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "33807706-2233-42fb-8946-90c3719e9062",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "867570bf-5fbd-4a58-9873-2c5c3e9c3e48",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -1332,6 +1332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   CountDownTime: 0
+  UnControllableTimer: 0
   boundsPower: 12
   isAttack: 0
   players: []
@@ -1499,7 +1500,7 @@ Transform:
   m_GameObject: {fileID: 1558189128}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.1768, y: 0, z: 9.8}
-  m_LocalScale: {x: 2, y: 1, z: 2}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1624,6 +1625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   CountDownTime: 0
+  UnControllableTimer: 0
   boundsPower: 12
   isAttack: 0
   players: []
