@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
 
     public float speed = 0;
 	public float CountDownTime = 0;
+    public float UnControllableTimer = 0.0f;
+
 	private Vector3 playerMove;
 	float rotateSpeed = 10f;
 	[SerializeField]
@@ -54,66 +56,31 @@ public class Player : MonoBehaviour
     }
 	void FixedUpdate() 
 	{
+		if (UnControllableTimer > 0f)
+		{
+            UnControllableTimer -= Time.deltaTime;
+        }
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+
+        if (UnControllableTimer > 0f)
+		{
+			return;
+		}
 //		rb.velocity = new Vector3(moveAmount.x,rb.velocity.y/3.8f,moveAmount.y) * speed * Time.deltaTime;
-		Vector3 force = new Vector3(moveAmount.x, rb.velocity.y / 3.8f, moveAmount.y) * speed * Time.deltaTime*5f;
-		GetComponent<Rigidbody>().AddForce(force);
+		Vector2 moveAmountNormalized = moveAmount.normalized;
+		Vector3 force = new Vector3(moveAmountNormalized.x, rb.velocity.y / 3.8f, moveAmountNormalized.y) * speed * Time.deltaTime;
+
+		GetComponent<Rigidbody>().velocity = force;
+		if(Mathf.Abs(moveAmount.x) <0.1f && Mathf.Abs(moveAmount.y )< 0.1f)
+		{
+			return;
+		}
+        Quaternion rotation = Quaternion.LookRotation(force);
+		transform.rotation = rotation;
         //Move();
     }
     //プレイヤーの移動関数
-    void Move()
-    {
-		//初期化
-		playerMove = new Vector3(0f, 0f, 0f);
-		//キーボードを取得
-		var keyboard = Keyboard.current;
-		//keyを取得
-		var aKey = keyboard.aKey;
-		var wKey = keyboard.wKey;
-		var sKey = keyboard.sKey;
-		var dKey = keyboard.dKey;
-        var spaceKey = keyboard.spaceKey;
-
-        if (aKey.isPressed)
-		{
-			playerMove.x += -0.5f;
-		}
-		if (dKey.isPressed)
-		{
-			playerMove.x += 0.5f;
-		}
-		if (sKey.isPressed)
-		{
-			playerMove.z += -0.5f;
-		}
-		if (wKey.isPressed)
-		{
-			playerMove.z += 0.5f;
-		}
-        
-        if (spaceKey.isPressed)
-        {
-            
-        }
-        //元のスピードに戻す
-        if (CountDownTime < 1.7f)
-		{
-			speed = 10;
-		}
-		//カウントが0以下なら走る
-		if (CountDownTime <= 0f)
-		{
-			//スピードを一時的に上げる
-			if (Input.GetKey(KeyCode.LeftShift))
-			{
-				speed = speed + 20;
-				CountDownTime = 2.0f;
-			}
-		}
-		//移動を反映
-		
-		//移動方向に回転している
-		transform.forward = Vector3.Slerp(transform.forward, playerMove, Time.deltaTime * rotateSpeed);
-	}
+    
 	//走るためのクールダウンカウント関数
 	void CountDown(){
 		if(CountDownTime <= 0f) CountDownTime = 0;
@@ -143,18 +110,18 @@ public class Player : MonoBehaviour
 	/// <param name="collision">衝突したCollider</param>
 	private void OnTriggerEnter(Collider collider)
 	{
-		///ノックバック処理
-
-		//正規化
-        Vector3 forceDir = boundsPower * transform.forward;
-        //ノックバックさせる
-		if (collider.transform.parent!=null)
+        ///ノックバック処理
+        LayerMask otherLayerMaskPlayer = LayerMask.NameToLayer("Player");
+        if (collider.gameObject.layer == otherLayerMaskPlayer)
 		{
-			return;
-		}
-//        collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
-        collider.transform.GetComponent<Rigidbody>().AddForce(forceDir,ForceMode.Impulse);
-        ///
+            //正規化
+            Vector3 forceDir = boundsPower * transform.forward;
+            //ノックバックさせる
+            //        collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
+            collider.GetComponent<Player>().UnControllableTimer = 0.5f;
+            collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
+            ///
+        }
     }
 
 }
