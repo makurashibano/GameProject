@@ -14,6 +14,7 @@ public class HudManager : MonoBehaviour
     [SerializeField]
     private GameObject player;
 
+    public List<GameObject> PlayerSpawnPoint;
     public void AddButton()
     {
         Invoke("JoinPlayer",0f);
@@ -21,17 +22,11 @@ public class HudManager : MonoBehaviour
     }
     private void JoinPlayer()
     {
-        if (dropdown.value == 0)
+        for (int i = 0; i <= dropdown.value; i++)
         {
-            PlayerInputManager.instance.JoinPlayer(0, -1, null);
-        }
-        else
-        {
-            for (int i = 0; i < dropdown.value; i++)
-            {
-                PlayerInputManager.instance.JoinPlayer(i, -1, null);
-                Instantiate(player, new Vector3(-1.0f, 0.0f, 0.0f), Quaternion.identity);
-            }
+            Debug.Log(i);
+            PlayerInputManager.instance.JoinPlayer(i, -1, null);
+            Instantiate(player, PlayerSpawnPoint[i].transform.position, Quaternion.identity);
         }
     }
 }
