@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GameStart",
+                    "type": "Button",
+                    "id": "8fa994bc-4ef6-4178-9a97-8f876b9049d9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -110,6 +119,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "507533c6-83fb-4fdc-bdb6-a7b4c60a0594",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GameStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9014dbd0-880d-4681-b382-636e46269018",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GameStart",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
