@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
     {
         int index = GetComponent<PlayerInput>().playerIndex;
 		GameObject playerSpawnPoint =GameObject.FindGameObjectWithTag("PlayerSpawnPoint" + index);
-		GameObject player = Instantiate(players[index]);
+		GameObject player = Instantiate(players[index], transform.position, transform.rotation);
 		player.transform.parent = transform;
 		transform.position = playerSpawnPoint.transform.position;
         transform.rotation = playerSpawnPoint.transform.rotation;
