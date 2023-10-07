@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 200
-  CountDownTime: 0
+  dashSpeed: 500
   UnControllableTimer: 0
   boundsPower: 12
   isAttack: 0
