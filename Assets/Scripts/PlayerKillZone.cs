@@ -5,31 +5,57 @@ using UnityEngine.SceneManagement;
 
 public class PlayerKillZone : MonoBehaviour
 {
-    int playerCount;
+    bool flag = false;
 
+    Collider PlayerKillZoneCol;
+
+    private void Awake()
+    {
+        PlayerKillZoneCol = GetComponent<Collider>();
+    }
     // Start is called before the first frame update
     void Start()
     {
-        playerCount = GameObject.FindGameObjectsWithTag("Player").Length;
-        Debug.Log(playerCount);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerCount == 1)
+        GameObject[] players= GameObject.FindGameObjectsWithTag("Player");
+        int fallingplayercount = 0;
+
+        foreach (var player in players)
         {
-            SceneManager.LoadScene("Result", LoadSceneMode.Additive);
+            Collider playercol = player.GetComponent<Collider>();
+            if (PlayerKillZoneCol.bounds.Intersects(playercol.bounds))
+            {
+                ++fallingplayercount;
+            }
+        }
+        Debug.Log(players.Length+":"+fallingplayercount);
+
+        if (fallingplayercount == 0&&(flag==false))
+        {
+            flag = true;
+            Debug.Log("aaaaa");
+        }
+        if (flag)
+        {
+            if (players.Length >= 2 && (players.Length - fallingplayercount == 1))
+            {
+                if (!SceneManager.GetSceneByName("Result").IsValid())
+                {
+                    SceneManager.LoadScene("Result", LoadSceneMode.Additive);
+                    //リザルトシーンを消してタイトルシーンを追加
+                    Invoke("unloadresult", 3f);
+                }
+
+                flag = false;
+            }
         }
     }
-    private void OnTriggerEnter(Collider other)
+    void unloadresult()
     {
-        if (other.CompareTag("Player"))
-        {
-            --playerCount;
-            Debug.Log(playerCount);
-        }
-
+        SceneManager.UnloadScene("Result");
     }
-
 }
