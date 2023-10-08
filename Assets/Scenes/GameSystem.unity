@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 1450728932}
   - component: {fileID: 1450728931}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GameSystemManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -428,8 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbafb6bb605a8f489ffddc841ee32c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownTime: 5
-  CountDown: 10
+  countdownTime: 153.72
   TimerText: {fileID: 1837158943}
   TimeUpPanel: {fileID: 1154396904}
 --- !u!4 &1450728932
@@ -586,8 +585,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 26.6463, y: -27.8856}
-  m_SizeDelta: {x: 253.2925, y: 105.7712}
+  m_AnchoredPosition: {x: -285.48975, y: 146.4656}
+  m_SizeDelta: {x: 130.2286, y: 97.8686}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1837158943
 MonoBehaviour:
@@ -609,7 +608,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00:00
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -636,15 +635,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 66.9
-  m_fontSizeBase: 66.9
+  m_fontSize: 75
+  m_fontSizeBase: 75
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
