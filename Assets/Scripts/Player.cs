@@ -9,18 +9,28 @@ public class Player : MonoBehaviour
 	private float boundPower = 5.0f;
 	Vector3 boundVec = new Vector3(0f, 0f, 0f);
 
-
+	//速さ
     public float speed = 0;
-	public float CountDownTime = 0;
+	//ダッシュの速さ
+	[SerializeField]
+	private float dashSpeed = 0f;
+	//ダッシュ判定
+	private bool isdash = false;
+	//ダッシュ後のクールタイム
+	private float coolTime = 0;
+	private bool iscoolTime = false;
+
     public float UnControllableTimer = 0.0f;
 
-	private Vector3 playerMove;
 	float rotateSpeed = 10f;
+	//押し出す力
 	[SerializeField]
     private float boundsPower = 12.0f;
+	//攻撃
 	public bool isAttack= false;
 	[SerializeField]
 	GameObject[] players;
+	//出現地点
 	[SerializeField]
 	Vector3[] spawnPoint;
 	private Vector2 moveAmount;
@@ -47,13 +57,17 @@ public class Player : MonoBehaviour
 	void OnMove(InputValue value)
 	{
 		moveAmount = value.Get<Vector2>();
-		
-	} 
+    } 
 	void OnAttack()
 	{
         isAttack = true;
         Invoke("AttackFalse", 0.5f);
     }
+
+	void OnDash()
+	{
+		isdash = true;
+	}
 	void FixedUpdate() 
 	{
 		if (UnControllableTimer > 0f)
@@ -70,25 +84,45 @@ public class Player : MonoBehaviour
 		Vector2 moveAmountNormalized = moveAmount.normalized;
 		Vector3 force = new Vector3(moveAmountNormalized.x, rb.velocity.y / 3.8f, moveAmountNormalized.y) * speed * Time.deltaTime;
 
-		GetComponent<Rigidbody>().velocity = force;
-		if(Mathf.Abs(moveAmount.x) <0.1f && Mathf.Abs(moveAmount.y )< 0.1f)
+		rigidbody.velocity = force;
+        //クールタイムがfalse ダッシュがtrueの時走る
+        if (isdash == true && iscoolTime == false)
+		{		
+            rigidbody.velocity = new Vector3(moveAmountNormalized.x, rb.velocity.y / 3.8f, moveAmountNormalized.y) * dashSpeed * Time.deltaTime;
+        }
+
+        if (Mathf.Abs(moveAmount.x) <0.1f && Mathf.Abs(moveAmount.y )< 0.1f)
 		{
 			return;
 		}
         Quaternion rotation = Quaternion.LookRotation(force);
 		transform.rotation = rotation;
-        //Move();
+		    
     }
-    //プレイヤーの移動関数
     
-	//走るためのクールダウンカウント関数
-	void CountDown(){
-		if(CountDownTime <= 0f) CountDownTime = 0;
-		CountDownTime -= Time.deltaTime;
+	//走るためのクールタイムカウント関数
+	void CoolTimeCount()
+	{
+        coolTime += Time.deltaTime;
+		Debug.Log(coolTime);
+		if (coolTime >= 2f)
+		{
+            iscoolTime = true;
+		}
+        if (coolTime >= 6f)
+		{
+			coolTime = 0;
+			iscoolTime = false;
+            isdash = false;
+        }
 	}
 	void Update()
 	{
-		CountDown();
+		if (isdash)
+		{
+			CoolTimeCount();
+		}
+		//攻撃する
         if (isAttack)
         {
             col.enabled = true;
@@ -103,12 +137,12 @@ public class Player : MonoBehaviour
 	{
 		isAttack = false;
 	}
-	
-	/// <summary>
-	/// 衝突発生時の処理
-	/// </summary>
-	/// <param name="collision">衝突したCollider</param>
-	private void OnTriggerEnter(Collider collider)
+    void DashFalse()
+    {
+        
+    }
+
+    private void OnTriggerEnter(Collider collider)
 	{
         ///ノックバック処理
         LayerMask otherLayerMaskPlayer = LayerMask.NameToLayer("Player");
