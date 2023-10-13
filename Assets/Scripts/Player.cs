@@ -35,8 +35,12 @@ public class Player : MonoBehaviour
 	Vector3[] spawnPoint;
 	private Vector2 moveAmount;
 
-    // Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
-    private Rigidbody rb;
+	//初期化用変数
+	private Vector3 PlayerPositionInitialization;
+
+
+	// Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
+	private Rigidbody rb;
 	[SerializeField]
 	private Collider col;
     private void Awake()
@@ -48,11 +52,13 @@ public class Player : MonoBehaviour
 		transform.position = playerSpawnPoint.transform.position;
         transform.rotation = playerSpawnPoint.transform.rotation;
 		name = "Player" + index;
+		PlayerPositionInitialization = this.gameObject.transform.position;
     }
     void Start()
 	{ 														  
 		rb = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
-		col.enabled = false; 
+		col.enabled = false;
+		Debug.Log(PlayerPositionInitialization);
 	}
 	void OnMove(InputValue value)
 	{
@@ -67,6 +73,7 @@ public class Player : MonoBehaviour
 	void OnDash()
 	{
 		isdash = true;
+		Initialization();
 	}
 	void FixedUpdate() 
 	{
@@ -99,7 +106,15 @@ public class Player : MonoBehaviour
 		transform.rotation = rotation;
 		    
     }
-    
+
+	void Initialization()
+    {
+		isdash = false;
+		iscoolTime = false;
+		isAttack = false;
+		this.gameObject.transform.position = PlayerPositionInitialization;
+    }
+
 	//走るためのクールタイムカウント関数
 	void CoolTimeCount()
 	{
@@ -137,10 +152,6 @@ public class Player : MonoBehaviour
 	{
 		isAttack = false;
 	}
-    void DashFalse()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider collider)
 	{
