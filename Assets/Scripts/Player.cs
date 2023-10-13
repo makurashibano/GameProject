@@ -58,7 +58,6 @@ public class Player : MonoBehaviour
 	{ 														  
 		rb = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
 		col.enabled = false;
-		Debug.Log(PlayerPositionInitialization);
 	}
 	void OnMove(InputValue value)
 	{
@@ -73,7 +72,6 @@ public class Player : MonoBehaviour
 	void OnDash()
 	{
 		isdash = true;
-		Initialization();
 	}
 	void FixedUpdate() 
 	{
