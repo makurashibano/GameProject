@@ -32,12 +32,11 @@ public class PlayerKillZone : MonoBehaviour
                 ++fallingplayercount;
             }
         }
-        Debug.Log(players.Length+":"+fallingplayercount);
+        //Debug.Log(players.Length+":"+fallingplayercount);
 
         if (fallingplayercount == 0&&(flag==false))
         {
             flag = true;
-            Debug.Log("aaaaa");
         }
         if (flag)
         {
@@ -47,9 +46,9 @@ public class PlayerKillZone : MonoBehaviour
                 {
                     SceneManager.LoadScene("Result", LoadSceneMode.Additive);
                     //リザルトシーンを消してタイトルシーンを追加
-                    Invoke("unloadresult", 3f);
+                    Time.timeScale = 0;
+                    //Invoke("unloadresult", 3f);
                 }
-
                 flag = false;
             }
         }
