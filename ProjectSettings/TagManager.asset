@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Attack
+  - PlayerSpawnPoint0
+  - PlayerSpawnPoint1
+  - PlayerSpawnPoint2
+  - PlayerSpawnPoint3
+  - PlayerKillZone
   layers:
   - Default
   - TransparentFX
@@ -12,9 +17,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Player
+  - AttackCollider
+  - UI 3D Object
   - 
   - 
   - 
