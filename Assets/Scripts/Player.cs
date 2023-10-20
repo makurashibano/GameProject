@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
 		{
 			return;
 		}
-//		rb.velocity = new Vector3(moveAmount.x,rb.velocity.y/3.8f,moveAmount.y) * speed * Time.deltaTime;
+        //rb.velocity = new Vector3(moveAmount.x,rb.velocity.y/3.8f,moveAmount.y) * speed * Time.deltaTime;
 		Vector2 moveAmountNormalized = moveAmount.normalized;
 		Vector3 force = new Vector3(moveAmountNormalized.x, 0f, moveAmountNormalized.y) * speed + (Vector3.up* rigidbody.velocity.y);
 
@@ -116,7 +116,6 @@ public class Player : MonoBehaviour
 	void CoolTimeCount()
 	{
         coolTime += Time.deltaTime;
-		Debug.Log(coolTime);
 		if (coolTime >= 2f)
 		{
             iscoolTime = true;
