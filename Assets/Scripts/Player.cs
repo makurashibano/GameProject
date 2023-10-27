@@ -35,24 +35,29 @@ public class Player : MonoBehaviour
 	Vector3[] spawnPoint;
 	private Vector2 moveAmount;
 
-    // Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
-    private Rigidbody rb;
+	//初期化用変数
+	private Vector3 PlayerPositionInitialization;
+
+
+	// Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
+	private Rigidbody rigidbody;
 	[SerializeField]
 	private Collider col;
     private void Awake()
     {
         int index = GetComponent<PlayerInput>().playerIndex;
 		GameObject playerSpawnPoint =GameObject.FindGameObjectWithTag("PlayerSpawnPoint" + index);
-		GameObject player = Instantiate(players[index], transform.position, transform.rotation);
+		GameObject player = Instantiate(players[index],new Vector3(transform.position.x, transform.position.y-0.5f, transform.position.z), transform.rotation);
 		player.transform.parent = transform;
 		transform.position = playerSpawnPoint.transform.position;
         transform.rotation = playerSpawnPoint.transform.rotation;
 		name = "Player" + index;
+		PlayerPositionInitialization = this.gameObject.transform.position;
     }
     void Start()
-	{ 														  
-		rb = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
-		col.enabled = false; 
+	{
+		rigidbody = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
+		col.enabled = false;
 	}
 	void OnMove(InputValue value)
 	{
@@ -74,7 +79,6 @@ public class Player : MonoBehaviour
 		{
             UnControllableTimer -= Time.deltaTime;
         }
-        Rigidbody rigidbody = GetComponent<Rigidbody>();
 
         if (UnControllableTimer > 0f)
 		{
@@ -82,13 +86,13 @@ public class Player : MonoBehaviour
 		}
 //		rb.velocity = new Vector3(moveAmount.x,rb.velocity.y/3.8f,moveAmount.y) * speed * Time.deltaTime;
 		Vector2 moveAmountNormalized = moveAmount.normalized;
-		Vector3 force = new Vector3(moveAmountNormalized.x, rb.velocity.y / 3.8f, moveAmountNormalized.y) * speed * Time.deltaTime;
+		Vector3 force = new Vector3(moveAmountNormalized.x, 0f, moveAmountNormalized.y) * speed + (Vector3.up* rigidbody.velocity.y);
 
 		rigidbody.velocity = force;
         //クールタイムがfalse ダッシュがtrueの時走る
         if (isdash == true && iscoolTime == false)
 		{		
-            rigidbody.velocity = new Vector3(moveAmountNormalized.x, rb.velocity.y / 3.8f, moveAmountNormalized.y) * dashSpeed * Time.deltaTime;
+            rigidbody.velocity = new Vector3(moveAmountNormalized.x, 0f, moveAmountNormalized.y) * dashSpeed + (Vector3.up * rigidbody.velocity.y);
         }
 
         if (Mathf.Abs(moveAmount.x) <0.1f && Mathf.Abs(moveAmount.y )< 0.1f)
@@ -99,7 +103,15 @@ public class Player : MonoBehaviour
 		transform.rotation = rotation;
 		    
     }
-    
+
+	void Initialization()
+    {
+		isdash = false;
+		iscoolTime = false;
+		isAttack = false;
+		this.gameObject.transform.position = PlayerPositionInitialization;
+    }
+
 	//走るためのクールタイムカウント関数
 	void CoolTimeCount()
 	{
@@ -137,10 +149,6 @@ public class Player : MonoBehaviour
 	{
 		isAttack = false;
 	}
-    void DashFalse()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider collider)
 	{

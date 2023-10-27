@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457945521359129458}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.79, z: 1.66}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -51,8 +51,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.5669942, y: 1, z: 1.7988436}
-  m_Center: {x: -0.0140013695, y: 0, z: 0.3994218}
+  m_Size: {x: 2.5, y: 1, z: 1.5}
+  m_Center: {x: 0, y: 0.12, z: 0}
 --- !u!1 &5383779921714318381
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,8 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1650f7e5c91f134f8151f9c51f8fd16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 200
-  dashSpeed: 500
+  speed: 5
+  dashSpeed: 7
   UnControllableTimer: 0
   boundsPower: 12
   isAttack: 0

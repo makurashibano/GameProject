@@ -35,7 +35,12 @@
                 {
                     "name": "ResultOff",
                     "type": "Button",
-                    "id": "1f16553d-7da4-48eb-b6d2-d574046e516d",
+                    "id": "1f16553d-7da4-48eb-b6d2-d574046e516d"
+				},
+				{
+                    "name": "dash",
+                    "type": "Button",
+                    "id": "d3041584-1493-4667-8f38-c5d85777de23",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -172,6 +177,12 @@
                     "processors": "",
                     "groups": "",
                     "action": "ResultOff",
+                    "id": "a6034dd4-6f5e-4a4d-9119-501ed983e500",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
