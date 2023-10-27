@@ -5,8 +5,16 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-	//ノックバックパワー
-	private float boundPower = 5.0f;
+	//Playerとステージ
+	private void OnTriggerEnter2D(Collider2D collision)
+    {
+		if (collision.tag == "PlayerKillZone") 
+		{
+			Destroy(gameObject);
+		}
+    }
+    //ノックバックパワー
+    private float boundPower = 5.0f;
 	Vector3 boundVec = new Vector3(0f, 0f, 0f);
 
 	//速さ
