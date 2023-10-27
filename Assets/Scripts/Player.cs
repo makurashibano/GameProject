@@ -5,16 +5,9 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-	//Playerとステージ
-	private void OnTriggerEnter2D(Collider2D collision)
-    {
-		if (collision.tag == "PlayerKillZone") 
-		{
-			Destroy(gameObject);
-		}
-    }
-    //ノックバックパワー
-    private float boundPower = 5.0f;
+   
+//ノックバックパワー
+private float boundPower = 5.0f;
 	Vector3 boundVec = new Vector3(0f, 0f, 0f);
 
 	//速さ
@@ -159,7 +152,16 @@ public class Player : MonoBehaviour
 	}
 
     private void OnTriggerEnter(Collider collider)
-	{
+    { //Playerとステージ
+        void OnTriggerEnter(Collider collision)
+        {
+            if (collision.tag == "PlayerKillZone")
+            {
+                Destroy(gameObject);
+            }
+
+        }
+
         ///ノックバック処理
         LayerMask otherLayerMaskPlayer = LayerMask.NameToLayer("Player");
         if (collider.gameObject.layer == otherLayerMaskPlayer)
@@ -171,6 +173,7 @@ public class Player : MonoBehaviour
             collider.GetComponent<Player>().UnControllableTimer = 0.5f;
             collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
             ///
+
         }
     }
 
