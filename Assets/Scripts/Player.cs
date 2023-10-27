@@ -153,14 +153,10 @@ private float boundPower = 5.0f;
 
     private void OnTriggerEnter(Collider collider)
     { //Playerとステージ
-        void OnTriggerEnter(Collider collision)
+        if (collider.tag == "PlayerKillZone")
         {
-            if (collision.tag == "PlayerKillZone")
-            {
-                Destroy(gameObject);
-            }
-
-        }
+			Destroy(gameObject);
+		}
 
         ///ノックバック処理
         LayerMask otherLayerMaskPlayer = LayerMask.NameToLayer("Player");
