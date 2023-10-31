@@ -102,8 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1650f7e5c91f134f8151f9c51f8fd16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 200
-  dashSpeed: 500
+  speed: 150
+  dashSpeed: 250
   UnControllableTimer: 0
   boundsPower: 12
   isAttack: 0

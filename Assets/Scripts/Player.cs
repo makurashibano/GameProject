@@ -82,13 +82,13 @@ public class Player : MonoBehaviour
 		}
 //		rb.velocity = new Vector3(moveAmount.x,rb.velocity.y/3.8f,moveAmount.y) * speed * Time.deltaTime;
 		Vector2 moveAmountNormalized = moveAmount.normalized;
-		Vector3 force = new Vector3(moveAmountNormalized.x, rb.velocity.y / 3.8f, moveAmountNormalized.y) * speed * Time.deltaTime;
+		Vector3 force = new Vector3(moveAmountNormalized.x, rb.velocity.y, moveAmountNormalized.y) * speed * Time.deltaTime;
 
 		rigidbody.velocity = force;
         //クールタイムがfalse ダッシュがtrueの時走る
         if (isdash == true && iscoolTime == false)
 		{		
-            rigidbody.velocity = new Vector3(moveAmountNormalized.x, rb.velocity.y / 3.8f, moveAmountNormalized.y) * dashSpeed * Time.deltaTime;
+            rigidbody.velocity = new Vector3(moveAmountNormalized.x, rb.velocity.y, moveAmountNormalized.y) * dashSpeed * Time.deltaTime;
         }
 
         if (Mathf.Abs(moveAmount.x) <0.1f && Mathf.Abs(moveAmount.y )< 0.1f)
