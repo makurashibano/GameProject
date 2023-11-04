@@ -10,4 +10,11 @@ public class TitleScene : MonoBehaviour
     {
         SceneManager.UnloadScene("Title");
     }
+    void OnResultOff()
+    {
+        SceneManager.UnloadScene("Result");
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Title", LoadSceneMode.Additive);
+        
+    }
 }
