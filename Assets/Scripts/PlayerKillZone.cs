@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerKillZone : MonoBehaviour
 {
+    public static List<int> rank = new List<int>();
     bool flag = false;
 
     Collider PlayerKillZoneCol;
@@ -29,6 +30,8 @@ public class PlayerKillZone : MonoBehaviour
             Collider playercol = player.GetComponent<Collider>();
             if (PlayerKillZoneCol.bounds.Intersects(playercol.bounds))
             {
+                Player p = player.GetComponent<Player>();
+                rank.Add(p.PlayerIndex);
                 ++fallingplayercount;
             }
         }

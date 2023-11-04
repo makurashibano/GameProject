@@ -5,6 +5,11 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+	public int PlayerIndex
+    {
+		get { return GetComponent<PlayerInput>().playerIndex; }
+    }
+	
    
 //ノックバックパワー
 private float boundPower = 5.0f;
