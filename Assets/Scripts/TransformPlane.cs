@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class TransformPlane : MonoBehaviour
 {
+    public TimeManagement moveCountTime;
+    float time = moveCountTime.countdownTime;
     float yOrigin;
     [SerializeField]
-    float amplitude=1.5f;
+    float amplitude=0f;
     [SerializeField]
-    float moveSpeed = 0.3f;
+    float moveSpeed = 0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,20 +21,23 @@ public class TransformPlane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (y >= 2 || y < 0)
+       
+        if (time == 50)
         {
-            y += -1f * Time.deltaTime;
-        }
-        else if(y <= -2 || y > 0)
-        {
-            y += 1f * Time.deltaTime;
-        }
-        
+            StageUp();
+            Debug.Log();
 
-        transform.position = new Vector3(0, y+1.5f, 0);
-        */
-        float y=Mathf.Sin(Time.time*moveSpeed)*amplitude;
-        transform.position = new Vector3(transform.position.x, y+yOrigin,transform.position.z);
+        }
+
+    }
+
+    void StageUp()
+    {
+        for (float i = 0; i < 1; i += 0.1f)
+        {
+            float y = Mathf.Sin(i * moveSpeed) * amplitude;
+            transform.position = new Vector3(transform.position.x, y + yOrigin, transform.position.z);
+            Debug.Log(i);
+        }
     }
 }

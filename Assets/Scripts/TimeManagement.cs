@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class TimeManagement : MonoBehaviour
 {
     [SerializeField]
-    float countdownTime = 0f;
-    float CountDown = 0f;
+    public float countdownTime = 0f;
+    public float CountDown = 0f;
     public TextMeshProUGUI TimerText;
     public GameObject TimeUpPanel;
     bool sceneActive = false;
