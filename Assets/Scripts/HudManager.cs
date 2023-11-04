@@ -19,7 +19,7 @@ public class HudManager : MonoBehaviour
                 }*/
         // Å´
         List<InputDevice> devices = new List<InputDevice>(InputSystem.devices);
-        devices.RemoveAll(devices=> devices.name.Contains("Keyboard") || devices.name.Contains("Mouse"));
+        devices.RemoveAll(devices=> devices.name.Contains("Keyboard") || devices.name.Contains("Mouse") || devices.name.Contains("Pen"));
         //InputDevice[] devices = InputSystem.devices.ToArray();
         for (int i = 0; i < devices.Count; i++)
         {
