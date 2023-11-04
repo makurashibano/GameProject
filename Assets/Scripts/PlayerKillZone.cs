@@ -31,7 +31,7 @@ public class PlayerKillZone : MonoBehaviour
             if (PlayerKillZoneCol.bounds.Intersects(playercol.bounds))
             {
                 Player p = player.GetComponent<Player>();
-                rank.Add(p.PlayerIndex);
+                rank.Insert(0,p.PlayerIndex);
                 ++fallingplayercount;
             }
         }
@@ -47,6 +47,14 @@ public class PlayerKillZone : MonoBehaviour
             {
                 if (!SceneManager.GetSceneByName("Result").IsValid())
                 {
+                    for(int i = 0; i < players.Length; i++)
+                    {
+                        if (rank.IndexOf(i) == -1)
+                        {
+                            rank.Insert(0, i);
+                            break;
+                        }
+                    }
                     SceneManager.LoadScene("Result", LoadSceneMode.Additive);
                     //リザルトシーンを消してタイトルシーンを追加
                     Time.timeScale = 0;

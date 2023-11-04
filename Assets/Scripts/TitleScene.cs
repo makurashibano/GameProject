@@ -8,13 +8,16 @@ public class TitleScene : MonoBehaviour
     public GameObject Canvas;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (SceneManager.GetSceneByName("Title").IsValid())
         {
-            if (SceneManager.GetSceneByName("Title").IsValid())
+            if (Input.GetKeyDown(KeyCode.Return))
             {
                 SceneManager.UnloadScene("Title");
             }
-            if (SceneManager.GetSceneByName("Result").IsValid())
+        }
+        if (SceneManager.GetSceneByName("Result").IsValid())
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
             {
                 SceneManager.UnloadScene("Result");
                 Time.timeScale = 1;
