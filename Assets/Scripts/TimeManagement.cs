@@ -48,7 +48,12 @@ public class TimeManagement : MonoBehaviour
             }
         }
     }
-    
+    public void StopTimer()
+    {
+        sceneActive = false;
+
+    }
+
     void ActiveSceneChanged(Scene thisScene)
     {
         sceneActive = true;

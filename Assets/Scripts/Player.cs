@@ -185,6 +185,7 @@ public class Player : MonoBehaviour
 				}
 				if (!SceneManager.GetSceneByName("Result").IsValid())
 				{
+					GameObject.FindGameObjectWithTag("TimeManagement").SetActive(false);
 					SceneManager.LoadScene("Result", LoadSceneMode.Additive);
 				}
 			}
