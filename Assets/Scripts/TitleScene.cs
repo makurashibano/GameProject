@@ -6,17 +6,15 @@ using UnityEngine.SceneManagement;
 public class TitleScene : MonoBehaviour
 {
     public GameObject Canvas;
-    bool titlenow = true;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (titlenow)
+            if (SceneManager.GetSceneByName("Title").IsValid())
             {
                 SceneManager.UnloadScene("Title");
-                titlenow = false;
             }
-            if(titlenow==false)
+            if (SceneManager.GetSceneByName("Result").IsValid())
             {
                 SceneManager.UnloadScene("Result");
                 Time.timeScale = 1;
