@@ -6,15 +6,22 @@ using UnityEngine.SceneManagement;
 public class TitleScene : MonoBehaviour
 {
     public GameObject Canvas;
-    void OnGameStart()
+    bool titlenow = true;
+    private void Update()
     {
-        SceneManager.UnloadScene("Title");
-    }
-    void OnResultOff()
-    {
-        SceneManager.UnloadScene("Result");
-        Time.timeScale = 1;
-        SceneManager.LoadScene("Title", LoadSceneMode.Additive);
-        
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (titlenow)
+            {
+                SceneManager.UnloadScene("Title");
+                titlenow = false;
+            }
+            if(titlenow==false)
+            {
+                SceneManager.UnloadScene("Result");
+                Time.timeScale = 1;
+                SceneManager.LoadScene("Title", LoadSceneMode.Additive);
+            }
+        }
     }
 }

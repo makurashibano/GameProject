@@ -52,9 +52,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7279500924041691836, guid: 2a8c71c892c1a954091d91be57426d4c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -2144990787317247848, guid: 2a8c71c892c1a954091d91be57426d4c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2a8c71c892c1a954091d91be57426d4c, type: 3}
       propertyPath: m_Name
       value: philosphere Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2a8c71c892c1a954091d91be57426d4c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2a8c71c892c1a954091d91be57426d4c, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081104478508597222, guid: 2a8c71c892c1a954091d91be57426d4c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5947445232178429439, guid: 2a8c71c892c1a954091d91be57426d4c, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
