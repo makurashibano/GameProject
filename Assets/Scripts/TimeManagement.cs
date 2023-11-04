@@ -40,7 +40,6 @@ public class TimeManagement : MonoBehaviour
                 TimeUpPanel.SetActive(true);
                 second = 0;
                 TimerText.text = "0";
-                Time.timeScale = 0f;
                 Invoke("ReturnToTitle", 5f);
             }
         }
