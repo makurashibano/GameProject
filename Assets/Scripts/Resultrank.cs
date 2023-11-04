@@ -11,9 +11,9 @@ public class Resultrank : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < PlayerKillZone.rank.Count; i++)
+        for(int i = 0; i < Player.rank.Count; i++)
         {
-            int pl = PlayerKillZone.rank[i];
+            int pl = Player.rank[i];
             Instantiate(playerprefab[pl], playerrank[i]);
         }
     }

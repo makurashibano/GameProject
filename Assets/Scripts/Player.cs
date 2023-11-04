@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 
 public class Player : MonoBehaviour
 {
+	public static List<int> rank = new List<int>();
+	public static int totalPlayersCount; 
+
 	public int PlayerIndex
     {
 		get { return GetComponent<PlayerInput>().playerIndex; }
     }
-	
    
-//ノックバックパワー
-private float boundPower = 5.0f;
+	//ノックバックパワー
+	private float boundPower = 5.0f;
 	Vector3 boundVec = new Vector3(0f, 0f, 0f);
 
 	//速さ
@@ -59,8 +63,12 @@ private float boundPower = 5.0f;
         transform.rotation = playerSpawnPoint.transform.rotation;
 		name = "Player" + index;
 		PlayerPositionInitialization = this.gameObject.transform.position;
-    }
-    void Start()
+		rank.Clear();
+		GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
+		totalPlayersCount = currentPlayers.Length;
+
+	}
+	void Start()
 	{
 		rigidbody = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
 		col.enabled = false;
@@ -158,13 +166,34 @@ private float boundPower = 5.0f;
 
     private void OnTriggerEnter(Collider collider)
     { //Playerとステージ
-        if (collider.tag == "PlayerKillZone")
-        {
+		if (collider.tag == "PlayerKillZone")
+		{
+			GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+			if (PlayerIndex >= 0)
+            {
+				rank.Insert(0, PlayerIndex);
+			}
+			if (players.Length == 2)
+			{
+				for (int i = 0; i < totalPlayersCount; i++)
+				{
+					if (rank.IndexOf(i) == -1)
+					{
+						rank.Insert(0, i);
+						break;
+					}
+				}
+				if (!SceneManager.GetSceneByName("Result").IsValid())
+				{
+					SceneManager.LoadScene("Result", LoadSceneMode.Additive);
+				}
+			}
 			Destroy(gameObject);
+			return;
 		}
 
-        ///ノックバック処理
-        LayerMask otherLayerMaskPlayer = LayerMask.NameToLayer("Player");
+		///ノックバック処理
+		LayerMask otherLayerMaskPlayer = LayerMask.NameToLayer("Player");
         if (collider.gameObject.layer == otherLayerMaskPlayer)
 		{
             //正規化
