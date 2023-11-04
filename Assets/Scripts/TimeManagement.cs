@@ -17,7 +17,7 @@ public class TimeManagement : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(time);
         Time.timeScale = 1;
-        SceneManager.LoadScene("Title", LoadSceneMode.Additive);
+        SceneManager.LoadScene("Result", LoadSceneMode.Additive);
     }
     private void Awake()
     {
