@@ -88,14 +88,15 @@ public class Player : MonoBehaviour
 		Vector2 moveAmountNormalized = moveAmount.normalized;
 		Vector3 force = new Vector3(moveAmountNormalized.x, 0f, moveAmountNormalized.y) * speed + (Vector3.up* rigidbody.velocity.y);
 
-		rigidbody.velocity = force;
         //クールタイムがfalse ダッシュがtrueの時走る
         if (isdash == true && iscoolTime == false)
 		{		
             rigidbody.velocity = new Vector3(moveAmountNormalized.x, 0f, moveAmountNormalized.y) * dashSpeed + (Vector3.up * rigidbody.velocity.y);
         }
 
-        if (Mathf.Abs(moveAmount.x) <0.1f && Mathf.Abs(moveAmount.y )< 0.1f)
+		rigidbody.velocity = force;
+
+		if (Mathf.Abs(moveAmount.x) <0.1f && Mathf.Abs(moveAmount.y )< 0.1f)
 		{
 			return;
 		}
