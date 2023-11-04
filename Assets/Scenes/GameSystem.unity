@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbafb6bb605a8f489ffddc841ee32c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownTime: 10
+  countdownTime: 1000
   TimerText: {fileID: 1837158943}
   TimeUpPanel: {fileID: 1154396904}
 --- !u!4 &1450728932
