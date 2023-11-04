@@ -56,8 +56,4 @@ public class PlayerKillZone : MonoBehaviour
             }
         }
     }
-    void Unloadresult()
-    {
-        SceneManager.UnloadScene("Result");
-    }
 }
