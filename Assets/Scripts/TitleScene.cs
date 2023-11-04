@@ -12,17 +12,17 @@ public class TitleScene : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                SceneManager.UnloadScene("Title");
+                SceneManager.LoadScene("Stage");
             }
         }
-        if (SceneManager.GetSceneByName("Result").IsValid())
-        {
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                SceneManager.UnloadScene("Result");
-                Time.timeScale = 1;
-                SceneManager.LoadScene("Title", LoadSceneMode.Additive);
-            }
-        }
+        //if (SceneManager.GetSceneByName("Result").IsValid())
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Return))
+        //    {
+        //        SceneManager.UnloadScene("Result");
+        //        Time.timeScale = 1;
+        //        SceneManager.LoadScene("Title", LoadSceneMode.Additive);
+        //    }
+        //}
     }
 }

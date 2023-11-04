@@ -53,7 +53,10 @@ public class Player : MonoBehaviour
 	private Rigidbody rigidbody;
 	[SerializeField]
 	private Collider col;
-    private void Awake()
+
+	private GameObject timeManagement;
+
+	private void Awake()
     {
         int index = GetComponent<PlayerInput>().playerIndex;
 		GameObject playerSpawnPoint =GameObject.FindGameObjectWithTag("PlayerSpawnPoint" + index);
@@ -66,12 +69,14 @@ public class Player : MonoBehaviour
 		rank.Clear();
 		GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
 		totalPlayersCount = currentPlayers.Length;
-
+		timeManagement = GameObject.FindGameObjectWithTag("TimeManagement") ?? timeManagement;
+		timeManagement.SetActive(true);
 	}
 	void Start()
 	{
 		rigidbody = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
 		col.enabled = false;
+
 	}
 	void OnMove(InputValue value)
 	{
@@ -164,7 +169,7 @@ public class Player : MonoBehaviour
 		isAttack = false;
 	}
 
-    private void OnTriggerEnter(Collider collider)
+	private void OnTriggerEnter(Collider collider)
     { //Playerとステージ
 		if (collider.tag == "PlayerKillZone")
 		{
@@ -185,8 +190,14 @@ public class Player : MonoBehaviour
 				}
 				if (!SceneManager.GetSceneByName("Result").IsValid())
 				{
-					GameObject.FindGameObjectWithTag("TimeManagement").SetActive(false);
+					timeManagement.SetActive(false);
 					SceneManager.LoadScene("Result", LoadSceneMode.Additive);
+					players = GameObject.FindGameObjectsWithTag("Player");
+					foreach (var g in players)
+					{
+						Destroy(g);
+					}
+					return;
 				}
 			}
 			Destroy(gameObject);
