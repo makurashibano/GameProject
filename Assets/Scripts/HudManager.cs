@@ -7,31 +7,24 @@ using TMPro;
 public class HudManager : MonoBehaviour
 {
     [SerializeField]
-    TMP_Dropdown dropdown;
-    public GameObject playerNumAddPanel;
-    [SerializeField]
     PlayerInputManager PlayerInputManager;
-    [SerializeField]
-    private GameObject player;
+    private void Start()
+    {
+        /*        foreach (InputDevice device in InputSystem.devices)
+                {
+                    // デバイス名をログ出力
+                    Debug.Log(device.name);
+                    //playerinputmanager.joinplayer(0, -1, null, device);
 
-    public void AddButton()
-    {
-        Invoke("JoinPlayer",0f);
-        playerNumAddPanel.SetActive(false);
-    }
-    private void JoinPlayer()
-    {
-        if (dropdown.value == 0)
+                }*/
+        // ↓
+        List<InputDevice> devices = new List<InputDevice>(InputSystem.devices);
+        devices.RemoveAll(devices=> devices.name.Contains("Keyboard") || devices.name.Contains("Mouse") || devices.name.Contains("Pen"));
+        //InputDevice[] devices = InputSystem.devices.ToArray();
+        for (int i = 0; i < devices.Count; i++)
         {
-            PlayerInputManager.instance.JoinPlayer(0, -1, null);
-        }
-        else
-        {
-            for (int i = 0; i < dropdown.value; i++)
-            {
-                PlayerInputManager.instance.JoinPlayer(i, -1, null);
-                Instantiate(player, new Vector3(-1.0f, 0.0f, 0.0f), Quaternion.identity);
-            }
+            PlayerInputManager.JoinPlayer(i, -1, null, devices[i]);
+            Debug.Log(devices.Count +" _ "+ devices[i].name);
         }
     }
 }
