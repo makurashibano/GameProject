@@ -83,13 +83,13 @@ public class Player : MonoBehaviour
 		totalPlayersCount = currentPlayers.Length;
 		timeManagement = GameObject.FindGameObjectWithTag("TimeManagement") ?? timeManagement;
 		timeManagement.SetActive(true);
+		canvas.SetActive(true);
 	}
 	void Start()
 	{
 		audioSource = GetComponent<AudioSource>();
 		rigidbody = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
 		col.enabled = false;
-		canvas.SetActive(true);
 	}
 	void OnMove(InputValue value)
 	{
@@ -181,7 +181,7 @@ public class Player : MonoBehaviour
 			col.enabled = false;
 		}
 		inactiveTimer += Time.deltaTime;
-        if (inactiveTimer <= 3.0f)
+        if (inactiveTimer >= 3.0f)
         {
 			canvas.SetActive(false);
         }
