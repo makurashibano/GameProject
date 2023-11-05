@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
 
 	AudioSource audioSource;
 	public AudioClip attack_SE;
+	public AudioClip damage_SE;
 
 	// Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
 	private Rigidbody rigidbody;
@@ -236,6 +237,7 @@ public class Player : MonoBehaviour
             //ノックバックさせる
             //        collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
             collider.GetComponent<Player>().UnControllableTimer = 0.5f;
+			collider.GetComponent<AudioSource>().PlayOneShot(collider.GetComponent<Player>().damage_SE);
             collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
             ///
 

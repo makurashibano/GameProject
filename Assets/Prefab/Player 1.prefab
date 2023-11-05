@@ -358,6 +358,7 @@ MonoBehaviour:
   - {fileID: 3813346754495640647, guid: dbd1aea5eb89218409107cc21cf50acb, type: 3}
   spawnPoint: []
   attack_SE: {fileID: 8300000, guid: f2f955c05b7f4d44eb3034677849eb13, type: 3}
+  damage_SE: {fileID: 8300000, guid: 418f88e645eb4134ab6a7c983afd1bbe, type: 3}
   col: {fileID: 6723197363922051111}
 --- !u!54 &4973356753539302914
 Rigidbody:
