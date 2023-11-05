@@ -13,7 +13,10 @@ public class Player : MonoBehaviour
 	TMPro.TMP_Text playerText;
 	[SerializeField]
 	GameObject canvas;
-
+	[SerializeField]
+	List<Color> playerColor;
+	[SerializeField]
+	List<Color> playerColor1;
 	public int PlayerIndex
     {
 		get { return GetComponent<PlayerInput>().playerIndex; }
@@ -71,6 +74,12 @@ public class Player : MonoBehaviour
         int index = GetComponent<PlayerInput>().playerIndex;
 		GameObject playerSpawnPoint =GameObject.FindGameObjectWithTag("PlayerSpawnPoint" + index);
 		playerText.text = $"P{index+1}";
+		TMPro.VertexGradient vertexGradient=new TMPro.VertexGradient(playerColor[index]);
+		vertexGradient.topLeft = playerColor[index];
+		vertexGradient.topRight = playerColor[index];
+		vertexGradient.bottomLeft = playerColor1[index];
+		vertexGradient.bottomRight = playerColor1[index];
+		playerText.colorGradient = vertexGradient;
 		GameObject player = Instantiate(players[index],new Vector3(transform.position.x, transform.position.y-0.5f, transform.position.z), transform.rotation);
 		animator = player.GetComponent<Animator>();
 		player.transform.parent = transform;
