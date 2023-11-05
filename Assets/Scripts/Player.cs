@@ -19,8 +19,11 @@ public class Player : MonoBehaviour
 	private float boundPower = 5.0f;
 	Vector3 boundVec = new Vector3(0f, 0f, 0f);
 
+	[SerializeField]
+	Animator animator;
+
 	//速さ
-    public float speed = 0;
+	public float speed = 0;
 	//ダッシュの速さ
 	[SerializeField]
 	private float dashSpeed = 0f;
@@ -61,6 +64,7 @@ public class Player : MonoBehaviour
         int index = GetComponent<PlayerInput>().playerIndex;
 		GameObject playerSpawnPoint =GameObject.FindGameObjectWithTag("PlayerSpawnPoint" + index);
 		GameObject player = Instantiate(players[index],new Vector3(transform.position.x, transform.position.y-0.5f, transform.position.z), transform.rotation);
+		animator = player.GetComponent<Animator>();
 		player.transform.parent = transform;
 		transform.position = playerSpawnPoint.transform.position;
         transform.rotation = playerSpawnPoint.transform.rotation;
@@ -86,7 +90,9 @@ public class Player : MonoBehaviour
 	{
         isAttack = true;
         Invoke("AttackFalse", 0.5f);
-    }
+		animator?.SetTrigger("IsAttack");
+
+	}
 
 	void OnDash()
 	{
