@@ -1181,7 +1181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1327076789}
   m_Layer: 8
-  m_Name: RankPosition2
+  m_Name: RankPosition3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1200,7 +1200,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &1446883601
 GameObject:
@@ -1584,8 +1584,8 @@ MonoBehaviour:
   - {fileID: 3813346754495640647, guid: dbd1aea5eb89218409107cc21cf50acb, type: 3}
   playerrank:
   - {fileID: 1967679293}
-  - {fileID: 1327076789}
   - {fileID: 1873569794}
+  - {fileID: 1327076789}
   - {fileID: 1446883602}
 --- !u!4 &1697980300
 Transform:
@@ -1612,7 +1612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1873569794}
   m_Layer: 8
-  m_Name: RankPosition3
+  m_Name: RankPosition2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1631,7 +1631,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &1967679292
 GameObject:
