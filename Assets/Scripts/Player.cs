@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
 
 	private GameObject timeManagement;
 
-	float uiTime = 0;
+	float inactiveTimer = 0f;
 	private void Awake()
     {
         int index = GetComponent<PlayerInput>().playerIndex;
@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
 		audioSource = GetComponent<AudioSource>();
 		rigidbody = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
 		col.enabled = false;
-
+		canvas.SetActive(true);
 	}
 	void OnMove(InputValue value)
 	{
@@ -180,8 +180,8 @@ public class Player : MonoBehaviour
 		{
 			col.enabled = false;
 		}
-		uiTime = Time.deltaTime;
-        if (uiTime <= 3f)
+		inactiveTimer += Time.deltaTime;
+        if (inactiveTimer <= 3.0f)
         {
 			canvas.SetActive(false);
         }
