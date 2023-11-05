@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
         //クールタイムがfalse ダッシュがtrueの時走る
         if (isdash == true && iscoolTime == false)
 		{		
-            rigidbody.velocity = new Vector3(moveAmountNormalized.x, 0f, moveAmountNormalized.y) * dashSpeed + (Vector3.up * rigidbody.velocity.y);
+            force = new Vector3(moveAmountNormalized.x, 0f, moveAmountNormalized.y) * dashSpeed + (Vector3.up * rigidbody.velocity.y);
         }
 
 		rigidbody.velocity = force;
@@ -164,7 +164,7 @@ public class Player : MonoBehaviour
 	void CoolTimeCount()
 	{
         coolTime += Time.deltaTime;
-		if (coolTime >= 2f)
+		if (coolTime >= 0.5f)
 		{
             iscoolTime = true;
 		}

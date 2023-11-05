@@ -251,8 +251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f70e5fc0c9e1444e98dba5916eda654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetToFace: {fileID: 1948218766221572081}
-  isAutoFace: 1
 --- !u!1 &1457945521359129458
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,7 +370,7 @@ MonoBehaviour:
   - {r: 0.48490566, g: 0.9224892, b: 1, a: 1}
   animator: {fileID: 0}
   speed: 5.14
-  dashSpeed: 7
+  dashSpeed: 10
   UnControllableTimer: 0
   boundsPower: 12
   isAttack: 0
