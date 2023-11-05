@@ -51,6 +51,8 @@ public class Player : MonoBehaviour
 	//初期化用変数
 	private Vector3 PlayerPositionInitialization;
 
+	AudioSource audioSource;
+	public AudioClip attack_SE;
 
 	// Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
 	private Rigidbody rigidbody;
@@ -78,6 +80,7 @@ public class Player : MonoBehaviour
 	}
 	void Start()
 	{
+		audioSource = GetComponent<AudioSource>();
 		rigidbody = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
 		col.enabled = false;
 
@@ -88,8 +91,10 @@ public class Player : MonoBehaviour
     } 
 	void OnAttack()
 	{
-        isAttack = true;
-        Invoke("AttackFalse", 0.5f);
+		if (!isAttack) audioSource.PlayOneShot(attack_SE);
+		isAttack = true;
+		
+		Invoke("AttackFalse", 0.5f);
 		animator?.SetTrigger("IsAttack");
 
 	}
@@ -130,6 +135,7 @@ public class Player : MonoBehaviour
 		    
     }
 
+
 	void Initialization()
     {
 		isdash = false;
@@ -162,6 +168,7 @@ public class Player : MonoBehaviour
 		//攻撃する
         if (isAttack)
         {
+			
             col.enabled = true;
 		}
 		else
