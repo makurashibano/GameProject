@@ -61,6 +61,10 @@ public class Player : MonoBehaviour
 
 	private GameObject timeManagement;
 
+<<<<<<< Updated upstream
+=======
+	float inactiveTimer = 0f;
+>>>>>>> Stashed changes
 	private void Awake()
     {
         int index = GetComponent<PlayerInput>().playerIndex;
@@ -83,7 +87,7 @@ public class Player : MonoBehaviour
 	{
 		rigidbody = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
 		col.enabled = false;
-
+		canvas.SetActive(true);
 	}
 	void OnMove(InputValue value)
 	{
@@ -171,6 +175,14 @@ public class Player : MonoBehaviour
 		{
 			col.enabled = false;
 		}
+<<<<<<< Updated upstream
+=======
+		inactiveTimer += Time.deltaTime;
+        if (inactiveTimer <= 3.0f)
+        {
+			canvas.SetActive(false);
+        }
+>>>>>>> Stashed changes
 
     }
 	void AttackFalse()
