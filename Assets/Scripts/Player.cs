@@ -97,10 +97,9 @@ public class Player : MonoBehaviour
     } 
 	void OnAttack()
 	{
-		if (!isAttack) audioSource.PlayOneShot(attack_SE);
 		isAttack = true;
-		
 		Invoke("AttackFalse", 0.5f);
+		audioSource.PlayOneShot(attack_SE);
 		animator?.SetTrigger("IsAttack");
 
 	}
