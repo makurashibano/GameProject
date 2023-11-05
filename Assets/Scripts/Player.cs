@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
 	public static int totalPlayersCount;
 	[SerializeField]
 	TMPro.TMP_Text playerText;
+	[SerializeField]
+	GameObject canvas;
 
 	public int PlayerIndex
     {
@@ -61,10 +63,7 @@ public class Player : MonoBehaviour
 
 	private GameObject timeManagement;
 
-<<<<<<< Updated upstream
-=======
 	float inactiveTimer = 0f;
->>>>>>> Stashed changes
 	private void Awake()
     {
         int index = GetComponent<PlayerInput>().playerIndex;
@@ -175,14 +174,11 @@ public class Player : MonoBehaviour
 		{
 			col.enabled = false;
 		}
-<<<<<<< Updated upstream
-=======
 		inactiveTimer += Time.deltaTime;
         if (inactiveTimer <= 3.0f)
         {
 			canvas.SetActive(false);
         }
->>>>>>> Stashed changes
 
     }
 	void AttackFalse()
