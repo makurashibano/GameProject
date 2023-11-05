@@ -452,7 +452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbafb6bb605a8f489ffddc841ee32c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownTime: 40
+  countdownTime: 60
   TimerText: {fileID: 1837158943}
   TimeUpPanel: {fileID: 1154396904}
 --- !u!1 &617129038
@@ -1196,7 +1196,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &1288020280
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1209,7 +1209,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1d00da6c45f4fee49b760edd0fd49b0e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.03
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 1
   Mute: 0
