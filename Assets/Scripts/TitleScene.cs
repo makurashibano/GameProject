@@ -6,24 +6,41 @@ using UnityEngine.SceneManagement;
 
 public class TitleScene : MonoBehaviour
 {
-    public GameObject Canvas;
+    [SerializeField]
+    float timer = 0f;
+    public GameObject canvas;
+    private void Start()
+    {
+        
+    }
     private void Update()
     {
         if (SceneManager.GetSceneByName("Title").IsValid())
         {
-            if (Gamepad.current.buttonSouth.isPressed)
+            if (Gamepad.current != null)
             {
-                SceneManager.LoadScene("Stage");
+                if (Gamepad.current.buttonSouth.isPressed)
+                {
+                    canvas.SetActive(false);
+                    SceneManager.LoadScene("Stage");
+                }
             }
         }
-        //if (SceneManager.GetSceneByName("Result").IsValid())
-        //{
-        //    if (Input.GetKeyDown(KeyCode.Return))
-        //    {
-        //        SceneManager.UnloadScene("Result");
-        //        Time.timeScale = 1;
-        //        SceneManager.LoadScene("Title", LoadSceneMode.Additive);
-        //    }
-        //}
+        timer += Time.deltaTime;
+
+        if (timer >= 10.0f)
+        {
+            canvas.SetActive(false);
+        }
+        if (timer >= 10f && timer <= 16f)
+        {
+            canvas.SetActive(true);
+        }
+        if (timer >= 16.0f)
+        {
+            canvas.SetActive(false);
+            timer = 0f;
+        }
+
     }
 }

@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac5c34fc5b9c58c4db64acdd165d8fd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Canvas: {fileID: 0}
+  canvas: {fileID: 514907824}
 --- !u!4 &453472854
 Transform:
   m_ObjectHideFlags: 0
@@ -260,6 +260,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &514907824 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8602981564207565389, guid: 0441fb610f328f3479acc8ac5c6aef0b, type: 3}
+  m_PrefabInstance: {fileID: 1374694425}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1374694425
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -356,7 +361,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5559100985266269830, guid: 0441fb610f328f3479acc8ac5c6aef0b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
