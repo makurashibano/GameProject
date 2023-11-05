@@ -4,30 +4,29 @@ using UnityEngine;
 
 public class TransformPlane : MonoBehaviour
 {
+    [SerializeField]
+    float speed=1;
+    [SerializeField]
+    float amplitude=1.5f;
+    [SerializeField]
+    float startTime=5f;
+    float currentTime=0f;
+    float timer=0f;
     float y;
-    Vector3 pos;
-    // Start is called before the first frame update
     void Start()
     {
-        //ステージのPlaneオブジェクト上下
-        pos = transform.position;
-        y = 0.1f;
+        y = transform.position.y;
     }
 
-    // Update is called once per frame
     void Update()
     {
-       
-        if (y >= 2 || y<0)
+        currentTime += Time.deltaTime;
+        if (startTime <= currentTime)
         {
-            y += -1f * Time.deltaTime;
+            float a = Mathf.Sin(timer * speed) * amplitude;
+            timer += Time.deltaTime;
+            transform.position = new Vector3(transform.position.x, y + a, transform.position.z);
         }
-        else if(y <= -2 || y > 0)
-        {
-            y += 1f * Time.deltaTime;
-        }
-        
 
-        transform.position = new Vector3(0, y+1.5f, 0);
     }
 }
