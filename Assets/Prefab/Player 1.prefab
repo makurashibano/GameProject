@@ -75,14 +75,14 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4289967103
-  m_fontColor: {r: 1, g: 0.7018868, b: 0.7018868, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 1
+  m_colorMode: 1
   m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topLeft: {r: 0, g: 0, b: 0, a: 1}
     topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 0, g: 0, b: 0, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2.81
-  m_fontSizeBase: 2.81
+  m_fontSize: 2.5
+  m_fontSizeBase: 2.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 5089321379921750532}
   - component: {fileID: 8531396860047143036}
   - component: {fileID: 8154302525720099738}
+  - component: {fileID: 5349147780009790838}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -238,6 +239,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5349147780009790838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604598113254475209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f70e5fc0c9e1444e98dba5916eda654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetToFace: {fileID: 1948218766221572081}
+  isAutoFace: 1
 --- !u!1 &1457945521359129458
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,8 +359,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerText: {fileID: 1881465410957378823}
   canvas: {fileID: 604598113254475209}
+  playerColor:
+  - {r: 1, g: 0.5762775, b: 0, a: 1}
+  - {r: 1, g: 0.2113207, b: 0.2113207, a: 1}
+  - {r: 0.6547032, g: 0.3150943, b: 1, a: 1}
+  - {r: 0.04150939, g: 0.7722751, b: 1, a: 1}
+  playerColor1:
+  - {r: 1, g: 0.7703262, b: 0.3339622, a: 1}
+  - {r: 1, g: 0.4377358, b: 0.4377358, a: 1}
+  - {r: 0.79768676, g: 0.48490566, b: 1, a: 1}
+  - {r: 0.48490566, g: 0.9224892, b: 1, a: 1}
   animator: {fileID: 0}
-  speed: 5
+  speed: 5.14
   dashSpeed: 7
   UnControllableTimer: 0
   boundsPower: 12
