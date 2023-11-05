@@ -343,6 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerText: {fileID: 1881465410957378823}
+  canvas: {fileID: 604598113254475209}
   animator: {fileID: 0}
   speed: 5
   dashSpeed: 7
