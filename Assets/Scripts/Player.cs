@@ -68,6 +68,7 @@ public class Player : MonoBehaviour
 	private Collider col;
 
 	private GameObject timeManagement;
+	private GameObject BGMObject;
 
 	float inactiveTimer = 0f;
 	private void Awake()
@@ -224,7 +225,10 @@ public class Player : MonoBehaviour
 				if (!SceneManager.GetSceneByName("Result").IsValid())
 				{
 					timeManagement.SetActive(false);
+					BGMObject = GameObject.FindGameObjectWithTag("BGM");
+					Destroy(BGMObject);
 					SceneManager.LoadScene("Result", LoadSceneMode.Additive);
+
 					players = GameObject.FindGameObjectsWithTag("Player");
 					foreach (var g in players)
 					{

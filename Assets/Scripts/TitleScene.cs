@@ -17,14 +17,12 @@ public class TitleScene : MonoBehaviour
     {
         if (SceneManager.GetSceneByName("Title").IsValid())
         {
-            if (Gamepad.current != null)
+            if (Gamepad.current.buttonSouth.isPressed)
             {
-                if (Gamepad.current.buttonSouth.isPressed)
-                {
-                    canvas.SetActive(false);
-                    SceneManager.LoadScene("Stage");
-                }
+                canvas.SetActive(false);
+                SceneManager.LoadScene("Stage");
             }
+
         }
         timer += Time.deltaTime;
 
