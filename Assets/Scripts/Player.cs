@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
 	public static List<int> rank = new List<int>();
-	public static int totalPlayersCount; 
+	public static int totalPlayersCount;
+	[SerializeField]
+	TMPro.TMP_Text playerText;
 
 	public int PlayerIndex
     {
@@ -63,6 +65,7 @@ public class Player : MonoBehaviour
     {
         int index = GetComponent<PlayerInput>().playerIndex;
 		GameObject playerSpawnPoint =GameObject.FindGameObjectWithTag("PlayerSpawnPoint" + index);
+		playerText.text = $"P{index+1}";
 		GameObject player = Instantiate(players[index],new Vector3(transform.position.x, transform.position.y-0.5f, transform.position.z), transform.rotation);
 		animator = player.GetComponent<Animator>();
 		player.transform.parent = transform;
