@@ -268,7 +268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6678761462987830739, guid: e96c54a9054b6894580f3b392c429955, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.08
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 6678761462987830739, guid: e96c54a9054b6894580f3b392c429955, type: 3}
       propertyPath: m_LocalPosition.y
@@ -341,7 +341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6678761462987830739, guid: e96c54a9054b6894580f3b392c429955, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.09
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 6678761462987830739, guid: e96c54a9054b6894580f3b392c429955, type: 3}
       propertyPath: m_LocalPosition.y
@@ -455,6 +455,7 @@ MonoBehaviour:
   countdownTime: 60
   TimerText: {fileID: 1837158943}
   TimeUpPanel: {fileID: 1154396904}
+  isdrawStopTime: 0
 --- !u!1 &617129038
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,6 +707,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 144569014}
     m_Modifications:
+    - target: {fileID: 153686051591494723, guid: e96c54a9054b6894580f3b392c429955, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 919dcff948e8bfd4db822c073de29997, type: 2}
     - target: {fileID: 6333304102537490281, guid: e96c54a9054b6894580f3b392c429955, type: 3}
       propertyPath: m_Name
       value: house Variant
@@ -1110,7 +1115,7 @@ GameObject:
   - component: {fileID: 1154396906}
   m_Layer: 5
   m_Name: TimeUpPanel
-  m_TagString: Untagged
+  m_TagString: TimePanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1474,6 +1479,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 144569014}
     m_Modifications:
+    - target: {fileID: 153686051591494723, guid: e96c54a9054b6894580f3b392c429955, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 919dcff948e8bfd4db822c073de29997, type: 2}
     - target: {fileID: 6333304102537490281, guid: e96c54a9054b6894580f3b392c429955, type: 3}
       propertyPath: m_Name
       value: house Variant (2)
@@ -1951,7 +1960,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 38, y: -26}
+  m_AnchoredPosition: {x: 38, y: 0}
   m_SizeDelta: {x: 208.143, y: 97.8686}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1837158943

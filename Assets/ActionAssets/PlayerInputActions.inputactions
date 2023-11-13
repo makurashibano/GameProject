@@ -183,17 +183,6 @@
                     "action": "ResultOff",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "09eeb312-a794-47e8-b4e6-7c4dd2757b7c",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         }

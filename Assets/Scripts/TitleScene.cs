@@ -17,7 +17,7 @@ public class TitleScene : MonoBehaviour
     {
         if (SceneManager.GetSceneByName("Title").IsValid())
         {
-            if (Gamepad.current.buttonSouth.isPressed)
+            if (Gamepad.current.startButton.isPressed)
             {
                 canvas.SetActive(false);
                 SceneManager.LoadScene("Stage");

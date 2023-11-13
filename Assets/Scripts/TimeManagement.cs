@@ -12,7 +12,8 @@ public class TimeManagement : MonoBehaviour
     public TextMeshProUGUI TimerText;
     public GameObject TimeUpPanel;
     bool sceneActive = true;
-    
+    public bool isdrawStopTime = false;
+        
     void ReturnToTitle()
     {
         SceneManager.LoadScene("title");
@@ -38,6 +39,7 @@ public class TimeManagement : MonoBehaviour
             if (CountDown <= 1f)
             {
                 TimeUpPanel.SetActive(true);
+                isdrawStopTime = true;
                 second = 0;
                 TimerText.text = "0";
                 Invoke("ReturnToTitle", 5f);

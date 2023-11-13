@@ -67,20 +67,27 @@ public class Player : MonoBehaviour
 	[SerializeField]
 	private Collider col;
 
-	private GameObject timeManagement;
+	public GameObject obj;
+
+	public GameObject timeManagement;
 	private GameObject BGMObject;
+
+	public GameObject Managers;
 
 	float inactiveTimer = 0f;
 	private void Awake()
     {
-        int index = GetComponent<PlayerInput>().playerIndex;
+		obj = GameObject.Find("Canvas").transform.Find("TimeUpPanel").gameObject;
+		int index = GetComponent<PlayerInput>().playerIndex;
 		GameObject playerSpawnPoint =GameObject.FindGameObjectWithTag("PlayerSpawnPoint" + index);
 		playerText.text = $"P{index+1}";
 		TMPro.VertexGradient vertexGradient=new TMPro.VertexGradient(playerColor[index]);
+
 		vertexGradient.topLeft = playerColor[index];
 		vertexGradient.topRight = playerColor[index];
 		vertexGradient.bottomLeft = playerColor1[index];
 		vertexGradient.bottomRight = playerColor1[index];
+
 		playerText.colorGradient = vertexGradient;
 		GameObject player = Instantiate(players[index],new Vector3(transform.position.x, transform.position.y-0.5f, transform.position.z), transform.rotation);
 		animator = player.GetComponent<Animator>();
@@ -101,6 +108,7 @@ public class Player : MonoBehaviour
 		audioSource = GetComponent<AudioSource>();
 		rigidbody = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
 		col.enabled = false;
+		Managers = GameObject.Find("Managers");
 	}
 	void OnMove(InputValue value)
 	{
@@ -121,6 +129,7 @@ public class Player : MonoBehaviour
 	}
 	void FixedUpdate() 
 	{
+		if(Managers.GetComponent<TimeManagement>().isdrawStopTime == true) return;
 		if (UnControllableTimer > 0f)
 		{
             UnControllableTimer -= Time.deltaTime;
@@ -224,11 +233,11 @@ public class Player : MonoBehaviour
 				}
 				if (!SceneManager.GetSceneByName("Result").IsValid())
 				{
+
 					timeManagement.SetActive(false);
 					BGMObject = GameObject.FindGameObjectWithTag("BGM");
 					Destroy(BGMObject);
-					SceneManager.LoadScene("Result", LoadSceneMode.Additive);
-
+					SceneManager.LoadScene("Result");
 					players = GameObject.FindGameObjectsWithTag("Player");
 					foreach (var g in players)
 					{
@@ -250,7 +259,7 @@ public class Player : MonoBehaviour
             //ノックバックさせる
             //        collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
             collider.GetComponent<Player>().UnControllableTimer = 0.5f;
-			collider.GetComponent<AudioSource>().PlayOneShot(collider.GetComponent<Player>().damage_SE);
+			collider.GetComponent<AudioSource>().PlayOneShot(collider.GetComponent<Player>().damage_SE,0.1f);
             collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
             ///
 
