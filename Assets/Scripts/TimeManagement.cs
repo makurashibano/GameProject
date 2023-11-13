@@ -11,17 +11,15 @@ public class TimeManagement : MonoBehaviour
     float CountDown = 0f;
     public TextMeshProUGUI TimerText;
     public GameObject TimeUpPanel;
-    bool sceneActive = false;
+    bool sceneActive = true;
     
-     IEnumerator ReturnToTitle(float time)
+    void ReturnToTitle()
     {
-        yield return new WaitForSecondsRealtime(time);
-        Time.timeScale = 1;
-        SceneManager.LoadScene("Title", LoadSceneMode.Additive);
+        SceneManager.LoadScene("title");
     }
     private void Awake()
     {
-        SceneManager.sceneUnloaded += ActiveSceneChanged;
+        CountDown = countdownTime;
     }
     
     // Update is called once per frame
@@ -39,20 +37,16 @@ public class TimeManagement : MonoBehaviour
             TimerText.text = second.ToString();
             if (CountDown <= 1f)
             {
-
                 TimeUpPanel.SetActive(true);
                 second = 0;
                 TimerText.text = "0";
-                Time.timeScale = 0f;
-                StartCoroutine(ReturnToTitle(5f));
+                Invoke("ReturnToTitle", 5f);
             }
         }
     }
-    
-    void ActiveSceneChanged(Scene thisScene)
+    public void StopTimer()
     {
-        sceneActive = true;
-        CountDown = countdownTime;
-        TimeUpPanel.SetActive(false);
+        sceneActive = false;
+
     }
 }
