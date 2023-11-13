@@ -23,7 +23,7 @@ public class Resultrank : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Gamepad.current.buttonNorth.isPressed)
+        if (Gamepad.current.buttonEast.isPressed)
         {
             SceneManager.LoadScene("Title");
         }

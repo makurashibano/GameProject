@@ -80,25 +80,28 @@ public class Player : MonoBehaviour
 		obj = GameObject.Find("Canvas").transform.Find("TimeUpPanel").gameObject;
 		int index = GetComponent<PlayerInput>().playerIndex;
 		GameObject playerSpawnPoint =GameObject.FindGameObjectWithTag("PlayerSpawnPoint" + index);
-		playerText.text = $"P{index+1}";
-		TMPro.VertexGradient vertexGradient=new TMPro.VertexGradient(playerColor[index]);
 
-		vertexGradient.topLeft = playerColor[index];
-		vertexGradient.topRight = playerColor[index];
-		vertexGradient.bottomLeft = playerColor1[index];
-		vertexGradient.bottomRight = playerColor1[index];
+		//頭上にプレイヤーのナンバーを表示
+		PlayerUI(index);
 
-		playerText.colorGradient = vertexGradient;
+		//キャラクターのモデルを表示
 		GameObject player = Instantiate(players[index],new Vector3(transform.position.x, transform.position.y-0.5f, transform.position.z), transform.rotation);
 		animator = player.GetComponent<Animator>();
 		player.transform.parent = transform;
+
+		//キャラクターのスポーンポイント
 		transform.position = playerSpawnPoint.transform.position;
         transform.rotation = playerSpawnPoint.transform.rotation;
 		name = "Player" + index;
 		PlayerPositionInitialization = this.gameObject.transform.position;
+
+		//ランキングを初期化
 		rank.Clear();
+
+
 		GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
 		totalPlayersCount = currentPlayers.Length;
+
 		timeManagement = GameObject.FindGameObjectWithTag("TimeManagement") ?? timeManagement;
 		timeManagement.SetActive(true);
 		canvas.SetActive(true);
@@ -109,6 +112,19 @@ public class Player : MonoBehaviour
 		rigidbody = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
 		col.enabled = false;
 		Managers = GameObject.Find("Managers");
+	}
+
+	void PlayerUI(int playerindex)
+    {
+		playerText.text = $"P{playerindex + 1}";
+		TMPro.VertexGradient vertexGradient = new TMPro.VertexGradient(playerColor[playerindex]);
+
+		vertexGradient.topLeft = playerColor[playerindex];
+		vertexGradient.topRight = playerColor[playerindex];
+		vertexGradient.bottomLeft = playerColor1[playerindex];
+		vertexGradient.bottomRight = playerColor1[playerindex];
+
+		playerText.colorGradient = vertexGradient;
 	}
 	void OnMove(InputValue value)
 	{
@@ -193,7 +209,6 @@ public class Player : MonoBehaviour
 		//攻撃する
         if (isAttack)
         {
-			
             col.enabled = true;
 		}
 		else
