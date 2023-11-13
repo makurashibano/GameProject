@@ -48,6 +48,10 @@ public class Player : MonoBehaviour
     private float boundsPower = 12.0f;
 	//攻撃
 	public bool isAttack= false;
+	//ダメージ
+	public bool isDamage = false;
+	float damageCount = 0f;
+
 	[SerializeField]
 	GameObject[] players;
 	//出現地点
@@ -111,6 +115,7 @@ public class Player : MonoBehaviour
 		audioSource = GetComponent<AudioSource>();
 		rigidbody = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
 		col.enabled = false;
+		isDamage = false;
 		Managers = GameObject.Find("Managers");
 	}
 
@@ -132,6 +137,7 @@ public class Player : MonoBehaviour
     } 
 	void OnAttack()
 	{
+		if (isDamage == true) return;
 		isAttack = true;
 		Invoke("AttackFalse", 0.5f);
 		audioSource.PlayOneShot(attack_SE);
@@ -202,6 +208,11 @@ public class Player : MonoBehaviour
 	}
 	void Update()
 	{
+		//ダメージ
+		if (isDamage)
+        {
+			DamageFalse();
+        }
 		if (isdash)
 		{
 			CoolTimeCount();
@@ -225,6 +236,17 @@ public class Player : MonoBehaviour
 	void AttackFalse()
 	{
 		isAttack = false;
+	}
+	void DamageFalse()
+	{
+		
+		damageCount += Time.deltaTime;
+		Debug.Log(damageCount);
+		if(damageCount>0.3f)
+        {
+			isDamage = false;
+			damageCount = 0f;
+		}
 	}
 
 	private void OnTriggerEnter(Collider collider)
@@ -274,12 +296,14 @@ public class Player : MonoBehaviour
             //ノックバックさせる
             //        collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
             collider.GetComponent<Player>().UnControllableTimer = 0.5f;
+			//攻撃されたときに攻撃できないようにする
+			collider.GetComponent<Player>().isDamage = true;
 			collider.GetComponent<AudioSource>().PlayOneShot(collider.GetComponent<Player>().damage_SE,0.1f);
             collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
             ///
 
         }
     }
-
+	
 }
 
