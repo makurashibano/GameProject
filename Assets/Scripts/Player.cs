@@ -78,6 +78,9 @@ public class Player : MonoBehaviour
 
 	public GameObject Managers;
 
+	[SerializeField]
+	private List<GameObject> playerParticles;
+
 	float inactiveTimer = 0f;
 	private void Awake()
     {
@@ -102,7 +105,6 @@ public class Player : MonoBehaviour
 		//ランキングを初期化
 		rank.Clear();
 
-
 		GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
 		totalPlayersCount = currentPlayers.Length;
 
@@ -118,7 +120,7 @@ public class Player : MonoBehaviour
 		isDamage = false;
 		Managers = GameObject.Find("Managers");
 	}
-
+	//プレイヤーの番号を表示
 	void PlayerUI(int playerindex)
     {
 		playerText.text = $"P{playerindex + 1}";
@@ -142,16 +144,16 @@ public class Player : MonoBehaviour
 		Invoke("AttackFalse", 0.5f);
 		audioSource.PlayOneShot(attack_SE);
 		animator?.SetTrigger("IsAttack");
-
 	}
-
 	void OnDash()
 	{
 		isdash = true;
 	}
 	void FixedUpdate() 
 	{
+		//時間切れになったら動けないようにする
 		if(Managers.GetComponent<TimeManagement>().isdrawStopTime == true) return;
+
 		if (UnControllableTimer > 0f)
 		{
             UnControllableTimer -= Time.deltaTime;
@@ -182,23 +184,16 @@ public class Player : MonoBehaviour
 		    
     }
 
-
-	void Initialization()
-    {
-		isdash = false;
-		iscoolTime = false;
-		isAttack = false;
-		this.gameObject.transform.position = PlayerPositionInitialization;
-    }
-
 	//走るためのクールタイムカウント関数
 	void CoolTimeCount()
 	{
         coolTime += Time.deltaTime;
+		//ダッシュ時間
 		if (coolTime >= 0.5f)
 		{
             iscoolTime = true;
 		}
+		//次ダッシュできるまでのカウント
         if (coolTime >= 6f)
 		{
 			coolTime = 0;
@@ -213,6 +208,7 @@ public class Player : MonoBehaviour
         {
 			DamageFalse();
         }
+		//ダッシュ中のクールタイム
 		if (isdash)
 		{
 			CoolTimeCount();
@@ -226,6 +222,7 @@ public class Player : MonoBehaviour
 		{
 			col.enabled = false;
 		}
+		//プレイヤーの番号を時間が来たら非表示にする
 		inactiveTimer += Time.deltaTime;
         if (inactiveTimer >= 3.0f)
         {
@@ -239,7 +236,6 @@ public class Player : MonoBehaviour
 	}
 	void DamageFalse()
 	{
-		
 		damageCount += Time.deltaTime;
 		Debug.Log(damageCount);
 		if(damageCount>0.3f)
@@ -250,16 +246,21 @@ public class Player : MonoBehaviour
 	}
 
 	private void OnTriggerEnter(Collider collider)
-    { //Playerとステージ
+    { 
+		//Playerのデス判定と順位を決定
 		if (collider.tag == "PlayerKillZone")
 		{
 			GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+			GameObject particle = Instantiate(playerParticles[0], this.transform.position, Quaternion.Euler(90, 0, 0));
+			Destroy(particle, 2f) ;
 			if (PlayerIndex >= 0)
             {
 				rank.Insert(0, PlayerIndex);
 			}
+			//ステージ上にプレイヤーが二人の場合
 			if (players.Length == 2)
 			{
+
 				for (int i = 0; i < totalPlayersCount; i++)
 				{
 					if (rank.IndexOf(i) == -1)
@@ -268,16 +269,16 @@ public class Player : MonoBehaviour
 						break;
 					}
 				}
+				//ランキングシーンに遷移
 				if (!SceneManager.GetSceneByName("Result").IsValid())
 				{
 
-					timeManagement.SetActive(false);
-					BGMObject = GameObject.FindGameObjectWithTag("BGM");
-					Destroy(BGMObject);
-					SceneManager.LoadScene("Result");
+					//RoadScene();
 					players = GameObject.FindGameObjectsWithTag("Player");
+					
 					foreach (var g in players)
 					{
+						
 						Destroy(g);
 					}
 					return;
@@ -287,21 +288,31 @@ public class Player : MonoBehaviour
 			return;
 		}
 
+		void RoadScene()
+        {
+			timeManagement.SetActive(false);
+			BGMObject = GameObject.FindGameObjectWithTag("BGM");
+			Destroy(BGMObject);
+			SceneManager.LoadScene("Result");			
+		}
+
+
 		///ノックバック処理
 		LayerMask otherLayerMaskPlayer = LayerMask.NameToLayer("Player");
         if (collider.gameObject.layer == otherLayerMaskPlayer)
 		{
             //正規化
             Vector3 forceDir = boundsPower * transform.forward;
-            //ノックバックさせる
-            //        collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
             collider.GetComponent<Player>().UnControllableTimer = 0.5f;
 			//攻撃されたときに攻撃できないようにする
 			collider.GetComponent<Player>().isDamage = true;
+			//ヒット時の音を鳴らす
 			collider.GetComponent<AudioSource>().PlayOneShot(collider.GetComponent<Player>().damage_SE,0.1f);
-            collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
-            ///
-
+			//エフェクトを表示
+			GameObject particle = Instantiate(playerParticles[1], collider.transform.position, Quaternion.identity);
+			Destroy(particle, 0.8f);
+			//ノックバックさせる
+			collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
         }
     }
 	
