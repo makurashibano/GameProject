@@ -46,6 +46,15 @@ public class Player : MonoBehaviour
 	//押し出す力
 	[SerializeField]
     private float boundsPower = 12.0f;
+
+	//攻撃ゲージ
+	private int attackCount = 0;
+	[SerializeField]
+	private int maxAttackCount = 4;
+	private bool isSpecialAttack = false;
+	[SerializeField]
+	private float specialAttackMultiplier = 2.0f;
+
 	//攻撃
 	public bool isAttack= false;
 	//ダメージ
@@ -138,6 +147,19 @@ public class Player : MonoBehaviour
 	void OnAttack()
 	{
 		if (isDamage == true) return;
+		//攻撃ゲージ
+		/*
+		 * 今、当たらなくてもカウントがされてしまっている
+		 * ほかのプレイヤーに当たるとに設定する必要がある
+		*/
+		attackCount++;
+		Debug.Log(attackCount);
+        if (attackCount >= maxAttackCount)
+        {
+			isSpecialAttack = true;
+			attackCount = 0;
+        }
+
 		isAttack = true;
 		Invoke("AttackFalse", 0.5f);
 		audioSource.PlayOneShot(attack_SE);
@@ -286,13 +308,14 @@ public class Player : MonoBehaviour
 			Destroy(gameObject);
 			return;
 		}
-
 		///ノックバック処理
 		LayerMask otherLayerMaskPlayer = LayerMask.NameToLayer("Player");
         if (collider.gameObject.layer == otherLayerMaskPlayer)
 		{
-            //正規化
-            Vector3 forceDir = boundsPower * transform.forward;
+			//攻撃ゲージ
+			float knockbackMultiplier = isSpecialAttack ? specialAttackMultiplier : 1.0f;
+			//正規化
+			Vector3 forceDir = boundsPower * transform.forward;
             //ノックバックさせる
             //        collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
             collider.GetComponent<Player>().UnControllableTimer = 0.5f;
@@ -300,9 +323,9 @@ public class Player : MonoBehaviour
 			collider.GetComponent<Player>().isDamage = true;
 			collider.GetComponent<AudioSource>().PlayOneShot(collider.GetComponent<Player>().damage_SE,0.1f);
             collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
-            ///
+			///
 
-        }
+		}
     }
 	
 }
