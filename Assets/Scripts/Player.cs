@@ -66,6 +66,8 @@ public class Player : MonoBehaviour
 	public AudioClip attack_SE;
 	public AudioClip damage_SE;
 
+	public List<AudioClip> player_SE; 	
+
 	// Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
 	private Rigidbody rigidbody;
 	[SerializeField]
@@ -173,12 +175,14 @@ public class Player : MonoBehaviour
             force = new Vector3(moveAmountNormalized.x, 0f, moveAmountNormalized.y) * dashSpeed + (Vector3.up * rigidbody.velocity.y);
         }
 
+		//移動
 		rigidbody.velocity = force;
-
+		//移動量が一定速度にいかないと回転しない
 		if (Mathf.Abs(moveAmount.x) <0.1f && Mathf.Abs(moveAmount.y )< 0.1f)
 		{
 			return;
 		}
+		//プレイヤーの向きを動かす方向に回転
         Quaternion rotation = Quaternion.LookRotation(force);
 		transform.rotation = rotation;
 		    
@@ -236,8 +240,8 @@ public class Player : MonoBehaviour
 	}
 	void DamageFalse()
 	{
+		//ダメージ処理
 		damageCount += Time.deltaTime;
-		Debug.Log(damageCount);
 		if(damageCount>0.3f)
         {
 			isDamage = false;
@@ -272,13 +276,11 @@ public class Player : MonoBehaviour
 				//ランキングシーンに遷移
 				if (!SceneManager.GetSceneByName("Result").IsValid())
 				{
-
 					//RoadScene();
 					players = GameObject.FindGameObjectsWithTag("Player");
 					
 					foreach (var g in players)
-					{
-						
+					{	
 						Destroy(g);
 					}
 					return;
