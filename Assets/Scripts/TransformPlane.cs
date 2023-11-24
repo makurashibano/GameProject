@@ -4,40 +4,50 @@ using UnityEngine;
 
 public class TransformPlane : MonoBehaviour
 {
-    public TimeManagement moveCountTime;
-    float time = moveCountTime.countdownTime;
-    float yOrigin;
     [SerializeField]
-    float amplitude=0f;
+    float speed = 1.0f;
     [SerializeField]
-    float moveSpeed = 0f;
-    // Start is called before the first frame update
+    float amplitude = 1.5f;
+    [SerializeField]
+    float startTime = 5f;
+
+    float currentTime = 0f;
+    float timer = 0f;
+    float y;
+    float stopTimer = 0f;
+
+    bool isMove = true;
     void Start()
     {
-        //ステージのPlaneオブジェクト上下
-        yOrigin = transform.position.y;
+        y = transform.position.y;
     }
-
-    // Update is called once per frame
     void Update()
     {
-       
-        if (time == 50)
+        currentTime += Time.deltaTime;
+
+        if (startTime <= currentTime)
         {
-            StageUp();
-            Debug.Log();
-
-        }
-
-    }
-
-    void StageUp()
-    {
-        for (float i = 0; i < 1; i += 0.1f)
-        {
-            float y = Mathf.Sin(i * moveSpeed) * amplitude;
-            transform.position = new Vector3(transform.position.x, y + yOrigin, transform.position.z);
-            Debug.Log(i);
+            float move = Mathf.Sin(timer * speed) * amplitude;
+            timer += Time.deltaTime;
+            if (isMove)
+            {
+                transform.position = new Vector3(transform.position.x, y + move, transform.position.z);
+                if (transform.position.y >= 0.49f)
+                {
+                    isMove = false;
+                    return;
+                }
+            }
+            if (!isMove)
+            {
+                stopTimer += Time.deltaTime;
+                if (stopTimer >=2f)
+                {
+                    stopTimer = 0f;
+                    isMove = true;
+                }
+                return;
+            }
         }
     }
 }

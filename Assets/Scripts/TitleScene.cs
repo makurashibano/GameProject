@@ -1,25 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class TitleScene : MonoBehaviour
 {
-    public GameObject Canvas;
+    [SerializeField]
+    float timer = 0f;
+    public GameObject canvas;
+    private void Start()
+    {
+        
+    }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (SceneManager.GetSceneByName("Title").IsValid())
         {
-            if (SceneManager.GetSceneByName("Title").IsValid())
+            if (Gamepad.current.startButton.isPressed)
             {
-                SceneManager.UnloadScene("Title");
+                canvas.SetActive(false);
+                SceneManager.LoadScene("Stage");
             }
-            if (SceneManager.GetSceneByName("Result").IsValid())
-            {
-                SceneManager.UnloadScene("Result");
-                Time.timeScale = 1;
-                SceneManager.LoadScene("Title", LoadSceneMode.Additive);
-            }
+
         }
+        timer += Time.deltaTime;
+
+        if (timer >= 10.0f)
+        {
+            canvas.SetActive(false);
+        }
+        if (timer >= 10f && timer <= 16f)
+        {
+            canvas.SetActive(true);
+        }
+        if (timer >= 16.0f)
+        {
+            canvas.SetActive(false);
+            timer = 0f;
+        }
+
     }
 }

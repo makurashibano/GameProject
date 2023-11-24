@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3620047051275857047}
+  - component: {fileID: 5540680905724542762}
   m_Layer: 6
   m_Name: skin_Q
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,8 +31,29 @@ Transform:
   m_Children:
   - {fileID: 971980911769509945}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &5540680905724542762
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3813346754495640647}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 79ee791c45b3b164e9f19ef90234b88b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &2080466194147101833
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87,6 +109,10 @@ PrefabInstance:
     - target: {fileID: 1939282508823918090, guid: 759bf51cc7d56a4458053aa4ac82c511, type: 3}
       propertyPath: m_Name
       value: philosphere Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939282508823918090, guid: 759bf51cc7d56a4458053aa4ac82c511, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

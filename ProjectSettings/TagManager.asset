@@ -10,6 +10,9 @@ TagManager:
   - PlayerSpawnPoint2
   - PlayerSpawnPoint3
   - PlayerKillZone
+  - TimeManagement
+  - BGM
+  - TimePanel
   layers:
   - Default
   - TransparentFX

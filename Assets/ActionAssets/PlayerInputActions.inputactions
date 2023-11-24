@@ -24,20 +24,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "GameStart",
-                    "type": "Button",
-                    "id": "8fa994bc-4ef6-4178-9a97-8f876b9049d9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ResultOff",
-                    "type": "Button",
-                    "id": "1f16553d-7da4-48eb-b6d2-d574046e516d"
-				},
-				{
                     "name": "dash",
                     "type": "Button",
                     "id": "d3041584-1493-4667-8f38-c5d85777de23",
@@ -138,47 +124,8 @@
                 },
                 {
                     "name": "",
-                    "id": "507533c6-83fb-4fdc-bdb6-a7b4c60a0594",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "GameStart",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9014dbd0-880d-4681-b382-636e46269018",
-                    "path": "<Keyboard>/enter",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "GameStart",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d6b235a0-f69e-422a-bc82-0e119338bd8c",
-                    "path": "<Gamepad>/select",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ResultOff",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4ead8bce-84ef-4793-b81c-4eb0e21b3c53",
-                    "path": "<Keyboard>/rightShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ResultOff",
-                    "id": "a6034dd4-6f5e-4a4d-9119-501ed983e500",
-                    "path": "<Keyboard>/leftShift",
+                    "id": "e25a4dc4-1e55-4725-b5a9-c4754e0773da",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
