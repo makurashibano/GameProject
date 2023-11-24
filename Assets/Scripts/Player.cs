@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     {
 		get { return GetComponent<PlayerInput>().playerIndex; }
     }
-   
+	LayerMask otherLayerMaskPlayer;
 	//ノックバックパワー
 	private float boundPower = 5.0f;
 	Vector3 boundVec = new Vector3(0f, 0f, 0f);
@@ -90,6 +90,7 @@ public class Player : MonoBehaviour
 	float inactiveTimer = 0f;
 	private void Awake()
     {
+		otherLayerMaskPlayer = LayerMask.NameToLayer("Player");
 		obj = GameObject.Find("Canvas").transform.Find("TimeUpPanel").gameObject;
 		int index = GetComponent<PlayerInput>().playerIndex;
 		GameObject playerSpawnPoint =GameObject.FindGameObjectWithTag("PlayerSpawnPoint" + index);
@@ -147,18 +148,6 @@ public class Player : MonoBehaviour
 	void OnAttack()
 	{
 		if (isDamage == true) return;
-		//攻撃ゲージ
-		/*
-		 * 今、当たらなくてもカウントがされてしまっている
-		 * ほかのプレイヤーに当たるとに設定する必要がある
-		*/
-		attackCount++;
-		Debug.Log(attackCount);
-        if (attackCount >= maxAttackCount)
-        {
-			isSpecialAttack = true;
-			attackCount = 0;
-        }
 
 		isAttack = true;
 		Invoke("AttackFalse", 0.5f);
@@ -263,14 +252,14 @@ public class Player : MonoBehaviour
 	{
 		
 		damageCount += Time.deltaTime;
-		Debug.Log(damageCount);
+		//Debug.Log(damageCount);
 		if(damageCount>0.3f)
         {
 			isDamage = false;
 			damageCount = 0f;
 		}
 	}
-
+	bool hasCollided = false;
 	private void OnTriggerEnter(Collider collider)
     { //Playerとステージ
 		if (collider.tag == "PlayerKillZone")
@@ -308,25 +297,46 @@ public class Player : MonoBehaviour
 			Destroy(gameObject);
 			return;
 		}
+		
 		///ノックバック処理
-		LayerMask otherLayerMaskPlayer = LayerMask.NameToLayer("Player");
+		
         if (collider.gameObject.layer == otherLayerMaskPlayer)
 		{
 			//攻撃ゲージ
+			if (!hasCollided)
+			{
+				attackCount++;
+				hasCollided = true;
+				Debug.Log(attackCount + "回");
+				if (attackCount >= maxAttackCount)
+				{
+					isSpecialAttack = true;
+					attackCount = 0;
+				}
+
+			}
+			//攻撃ゲージ
 			float knockbackMultiplier = isSpecialAttack ? specialAttackMultiplier : 1.0f;
+
 			//正規化
 			Vector3 forceDir = boundsPower * transform.forward;
-            //ノックバックさせる
-            //        collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
-            collider.GetComponent<Player>().UnControllableTimer = 0.5f;
+			//ノックバックさせる
+			//        collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
+			collider.GetComponent<Player>().UnControllableTimer = 0.5f;
 			//攻撃されたときに攻撃できないようにする
 			collider.GetComponent<Player>().isDamage = true;
 			collider.GetComponent<AudioSource>().PlayOneShot(collider.GetComponent<Player>().damage_SE,0.1f);
-            collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
-			///
-
+            collider.transform.GetComponent<Rigidbody>().velocity = forceDir*knockbackMultiplier;
+			Debug.Log((forceDir * knockbackMultiplier).magnitude);
 		}
-    }
-	
+	}
+    private void OnTriggerExit(Collider other)
+    {
+		if (other.gameObject.layer == otherLayerMaskPlayer)
+		{
+			hasCollided = false;
+		}
+	}
+    
 }
 

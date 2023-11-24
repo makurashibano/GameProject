@@ -373,7 +373,10 @@ MonoBehaviour:
   dashSpeed: 10
   UnControllableTimer: 0
   boundsPower: 12
+  maxAttackCount: 4
+  specialAttackMultiplier: 1.5
   isAttack: 0
+  isDamage: 0
   players:
   - {fileID: 7008454588849471792, guid: 5aa8bbef400ce4b4ab59dc2fca468a45, type: 3}
   - {fileID: 7466202218037769747, guid: 8d77a5b4e26a9244cbba9623e67ce3ed, type: 3}
@@ -383,6 +386,9 @@ MonoBehaviour:
   attack_SE: {fileID: 8300000, guid: f2f955c05b7f4d44eb3034677849eb13, type: 3}
   damage_SE: {fileID: 8300000, guid: 418f88e645eb4134ab6a7c983afd1bbe, type: 3}
   col: {fileID: 6723197363922051111}
+  obj: {fileID: 0}
+  timeManagement: {fileID: 0}
+  Managers: {fileID: 0}
 --- !u!54 &4973356753539302914
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -478,9 +484,9 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.8, y: 0.8, z: 0.8}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &3336668592381085519
 CapsuleCollider:
