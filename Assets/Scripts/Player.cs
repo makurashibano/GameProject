@@ -332,6 +332,7 @@ public class Player : MonoBehaviour
 			{
 				attackCount++;
 				hasCollided = true;
+				Debug.Log(attackCount);
 				if (attackCount >= maxAttackCount)
 				{
 					isSpecialAttack = true;
@@ -355,6 +356,7 @@ public class Player : MonoBehaviour
 			collider.transform.GetComponent<Rigidbody>().velocity = forceDir*knockbackMultiplier;
 		}
 	}
+
     private void OnTriggerExit(Collider other)
     {
 		if (other.gameObject.layer == otherLayerMaskPlayer)
@@ -362,7 +364,28 @@ public class Player : MonoBehaviour
 			hasCollided = false;
 		}
 	}
-	private IEnumerator Hit()
+
+    private void OnCollisionEnter(Collision collision)
+    {
+		///ノックバック処理		
+		if (collision.gameObject.layer == otherLayerMaskPlayer)
+		{
+
+			//正規化
+			Vector3 forceDir = (boundsPower/2) * -transform.forward;
+			//ノックバックさせる
+			collision.gameObject.GetComponent<Player>().UnControllableTimer = 0.5f;
+			//攻撃されたときに攻撃できないようにする
+			collision.gameObject.GetComponent<Player>().isDamage = true;
+			collision.gameObject.GetComponent<AudioSource>().PlayOneShot(collision.gameObject.GetComponent<Player>().damage_SE, 0.1f);
+			GameObject particle = Instantiate(playerParticles[1], collision.gameObject.transform.position, Quaternion.identity);
+			Destroy(particle, 0.8f);
+			//敵を飛ばす
+			gameObject.transform.GetComponent<Rigidbody>().velocity = forceDir;
+		}
+	}
+
+    private IEnumerator Hit()
 	{
 		BodyFlash(160);
 		// 0.2秒間待つ
@@ -378,9 +401,7 @@ public class Player : MonoBehaviour
 		{
 			MeshRenderer meshRenderer;
 			meshRenderer = obj.GetComponent<MeshRenderer>();
-			Debug.Log(meshRenderer);
 			meshRenderer.materials[1].color = new Color32(255, 255, 255, alpha);
-
 		}
 	}
 	void RoadScene()
