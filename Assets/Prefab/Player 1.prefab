@@ -385,10 +385,15 @@ MonoBehaviour:
   spawnPoint: []
   attack_SE: {fileID: 8300000, guid: f2f955c05b7f4d44eb3034677849eb13, type: 3}
   damage_SE: {fileID: 8300000, guid: 418f88e645eb4134ab6a7c983afd1bbe, type: 3}
+  player_SE: []
   col: {fileID: 6723197363922051111}
   obj: {fileID: 0}
   timeManagement: {fileID: 0}
   Managers: {fileID: 0}
+  playerParticles:
+  - {fileID: 1687118924408352, guid: 77c69ec12208c4c4380d15e30b6f8f68, type: 3}
+  - {fileID: 100004, guid: f95ff734540a0d749be6571b6cb5b37f, type: 3}
+  childObjects: []
 --- !u!54 &4973356753539302914
 Rigidbody:
   m_ObjectHideFlags: 0
