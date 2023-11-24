@@ -13,6 +13,8 @@ TagManager:
   - TimeManagement
   - BGM
   - TimePanel
+  - FxTemporaire
+  - ModelBody
   layers:
   - Default
   - TransparentFX

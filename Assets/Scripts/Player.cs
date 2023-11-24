@@ -18,10 +18,10 @@ public class Player : MonoBehaviour
 	[SerializeField]
 	List<Color> playerColor1;
 	public int PlayerIndex
-    {
+	{
 		get { return GetComponent<PlayerInput>().playerIndex; }
-    }
-   
+	}
+
 	//ノックバックパワー
 	private float boundPower = 5.0f;
 	Vector3 boundVec = new Vector3(0f, 0f, 0f);
@@ -40,14 +40,14 @@ public class Player : MonoBehaviour
 	private float coolTime = 0;
 	private bool iscoolTime = false;
 
-    public float UnControllableTimer = 0.0f;
+	public float UnControllableTimer = 0.0f;
 
 	float rotateSpeed = 10f;
 	//押し出す力
 	[SerializeField]
-    private float boundsPower = 12.0f;
+	private float boundsPower = 12.0f;
 	//攻撃
-	public bool isAttack= false;
+	public bool isAttack = false;
 	//ダメージ
 	public bool isDamage = false;
 	float damageCount = 0f;
@@ -66,9 +66,9 @@ public class Player : MonoBehaviour
 	public AudioClip attack_SE;
 	public AudioClip damage_SE;
 
-	public List<AudioClip> player_SE; 	
+	public List<AudioClip> player_SE;
 
-	// Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
+	// Rigidbodyコンポーネントを入れる変数 
 	private Rigidbody rigidbody;
 	[SerializeField]
 	private Collider col;
@@ -82,25 +82,27 @@ public class Player : MonoBehaviour
 
 	[SerializeField]
 	private List<GameObject> playerParticles;
+	//子オブジェクトを格納
+	public List<GameObject> childObjects;
 
 	float inactiveTimer = 0f;
 	private void Awake()
-    {
+	{
 		obj = GameObject.Find("Canvas").transform.Find("TimeUpPanel").gameObject;
 		int index = GetComponent<PlayerInput>().playerIndex;
-		GameObject playerSpawnPoint =GameObject.FindGameObjectWithTag("PlayerSpawnPoint" + index);
+		GameObject playerSpawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint" + index);
 
 		//頭上にプレイヤーのナンバーを表示
 		PlayerUI(index);
 
 		//キャラクターのモデルを表示
-		GameObject player = Instantiate(players[index],new Vector3(transform.position.x, transform.position.y-0.5f, transform.position.z), transform.rotation);
+		GameObject player = Instantiate(players[index], new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), transform.rotation);
 		animator = player.GetComponent<Animator>();
 		player.transform.parent = transform;
 
 		//キャラクターのスポーンポイント
 		transform.position = playerSpawnPoint.transform.position;
-        transform.rotation = playerSpawnPoint.transform.rotation;
+		transform.rotation = playerSpawnPoint.transform.rotation;
 		name = "Player" + index;
 		PlayerPositionInitialization = this.gameObject.transform.position;
 
@@ -113,6 +115,7 @@ public class Player : MonoBehaviour
 		timeManagement = GameObject.FindGameObjectWithTag("TimeManagement") ?? timeManagement;
 		timeManagement.SetActive(true);
 		canvas.SetActive(true);
+		GetChildren(player);
 	}
 	void Start()
 	{
@@ -121,10 +124,30 @@ public class Player : MonoBehaviour
 		col.enabled = false;
 		isDamage = false;
 		Managers = GameObject.Find("Managers");
+
+	}
+	//子を取得
+	void GetChildren(GameObject playerModel)
+	{
+		Transform children = playerModel.GetComponentInChildren<Transform>();
+		//子要素がいなければ終了
+		if (children.childCount == 0)
+		{
+			return;
+		}
+		//modelのBodyだけ取得
+		foreach (Transform child in children)
+		{
+			if(child.gameObject.tag == "ModelBody")
+            {
+				childObjects.Add(child.gameObject);
+			}
+			GetChildren(child.gameObject);
+		}
 	}
 	//プレイヤーの番号を表示
 	void PlayerUI(int playerindex)
-    {
+	{
 		playerText.text = $"P{playerindex + 1}";
 		TMPro.VertexGradient vertexGradient = new TMPro.VertexGradient(playerColor[playerindex]);
 
@@ -138,7 +161,7 @@ public class Player : MonoBehaviour
 	void OnMove(InputValue value)
 	{
 		moveAmount = value.Get<Vector2>();
-    } 
+	}
 	void OnAttack()
 	{
 		if (isDamage == true) return;
@@ -151,76 +174,60 @@ public class Player : MonoBehaviour
 	{
 		isdash = true;
 	}
-	void FixedUpdate() 
+	void FixedUpdate()
 	{
 		//時間切れになったら動けないようにする
-		if(Managers.GetComponent<TimeManagement>().isdrawStopTime == true) return;
+		if (Managers.GetComponent<TimeManagement>().isdrawStopTime == true) return;
 
 		if (UnControllableTimer > 0f)
 		{
-            UnControllableTimer -= Time.deltaTime;
-        }
+			UnControllableTimer -= Time.deltaTime;
+		}
 
-        if (UnControllableTimer > 0f)
+		if (UnControllableTimer > 0f)
 		{
 			return;
 		}
-        //rb.velocity = new Vector3(moveAmount.x,rb.velocity.y/3.8f,moveAmount.y) * speed * Time.deltaTime;
+		//rb.velocity = new Vector3(moveAmount.x,rb.velocity.y/3.8f,moveAmount.y) * speed * Time.deltaTime;
 		Vector2 moveAmountNormalized = moveAmount.normalized;
-		Vector3 force = new Vector3(moveAmountNormalized.x, 0f, moveAmountNormalized.y) * speed + (Vector3.up* rigidbody.velocity.y);
+		Vector3 force = new Vector3(moveAmountNormalized.x, 0f, moveAmountNormalized.y) * speed + (Vector3.up * rigidbody.velocity.y);
 
-        //クールタイムがfalse ダッシュがtrueの時走る
-        if (isdash == true && iscoolTime == false)
-		{		
-            force = new Vector3(moveAmountNormalized.x, 0f, moveAmountNormalized.y) * dashSpeed + (Vector3.up * rigidbody.velocity.y);
-        }
+		//クールタイムがfalse ダッシュがtrueの時走る
+		if (isdash == true && iscoolTime == false)
+		{
+			force = new Vector3(moveAmountNormalized.x, 0f, moveAmountNormalized.y) * dashSpeed + (Vector3.up * rigidbody.velocity.y);
+		}
 
 		//移動
 		rigidbody.velocity = force;
 		//移動量が一定速度にいかないと回転しない
-		if (Mathf.Abs(moveAmount.x) <0.1f && Mathf.Abs(moveAmount.y )< 0.1f)
+		if (Mathf.Abs(moveAmount.x) < 0.1f && Mathf.Abs(moveAmount.y) < 0.1f)
 		{
 			return;
 		}
 		//プレイヤーの向きを動かす方向に回転
-        Quaternion rotation = Quaternion.LookRotation(force);
+		Quaternion rotation = Quaternion.LookRotation(force);
 		transform.rotation = rotation;
-		    
-    }
 
-	//走るためのクールタイムカウント関数
-	void CoolTimeCount()
-	{
-        coolTime += Time.deltaTime;
-		//ダッシュ時間
-		if (coolTime >= 0.5f)
-		{
-            iscoolTime = true;
-		}
-		//次ダッシュできるまでのカウント
-        if (coolTime >= 6f)
-		{
-			coolTime = 0;
-			iscoolTime = false;
-            isdash = false;
-        }
 	}
+
 	void Update()
 	{
 		//ダメージ
 		if (isDamage)
-        {
+		{
 			DamageFalse();
-        }
+			BodyFlash();
+		}
 		//ダッシュ中のクールタイム
 		if (isdash)
 		{
-			CoolTimeCount();
+			DashCoolTimeCount();
 		}
 		//攻撃する
-        if (isAttack)
-        {
-            col.enabled = true;
+		if (isAttack)
+		{
+			col.enabled = true;
 		}
 		else
 		{
@@ -228,12 +235,29 @@ public class Player : MonoBehaviour
 		}
 		//プレイヤーの番号を時間が来たら非表示にする
 		inactiveTimer += Time.deltaTime;
-        if (inactiveTimer >= 3.0f)
-        {
+		if (inactiveTimer >= 3.0f)
+		{
 			canvas.SetActive(false);
-        }
+		}
 
-    }
+	}
+	//走るためのクールタイムカウント関数
+	void DashCoolTimeCount()
+	{
+		coolTime += Time.deltaTime;
+		//ダッシュ時間
+		if (coolTime >= 0.5f)
+		{
+			iscoolTime = true;
+		}
+		//次ダッシュできるまでのカウント
+		if (coolTime >= 6f)
+		{
+			coolTime = 0;
+			iscoolTime = false;
+			isdash = false;
+		}
+	}
 	void AttackFalse()
 	{
 		isAttack = false;
@@ -242,23 +266,23 @@ public class Player : MonoBehaviour
 	{
 		//ダメージ処理
 		damageCount += Time.deltaTime;
-		if(damageCount>0.3f)
-        {
+		if (damageCount > 0.3f)
+		{
 			isDamage = false;
 			damageCount = 0f;
 		}
 	}
 
 	private void OnTriggerEnter(Collider collider)
-    { 
+	{
 		//Playerのデス判定と順位を決定
 		if (collider.tag == "PlayerKillZone")
 		{
 			GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 			GameObject particle = Instantiate(playerParticles[0], this.transform.position, Quaternion.Euler(90, 0, 0));
-			Destroy(particle, 2f) ;
+			Destroy(particle, 2f);
 			if (PlayerIndex >= 0)
-            {
+			{
 				rank.Insert(0, PlayerIndex);
 			}
 			//ステージ上にプレイヤーが二人の場合
@@ -278,9 +302,9 @@ public class Player : MonoBehaviour
 				{
 					//RoadScene();
 					players = GameObject.FindGameObjectsWithTag("Player");
-					
+					RoadScene();
 					foreach (var g in players)
-					{	
+					{
 						Destroy(g);
 					}
 					return;
@@ -290,33 +314,42 @@ public class Player : MonoBehaviour
 			return;
 		}
 
-		void RoadScene()
-        {
-			timeManagement.SetActive(false);
-			BGMObject = GameObject.FindGameObjectWithTag("BGM");
-			Destroy(BGMObject);
-			SceneManager.LoadScene("Result");			
-		}
-
-
 		///ノックバック処理
 		LayerMask otherLayerMaskPlayer = LayerMask.NameToLayer("Player");
-        if (collider.gameObject.layer == otherLayerMaskPlayer)
+		if (collider.gameObject.layer == otherLayerMaskPlayer)
 		{
-            //正規化
-            Vector3 forceDir = boundsPower * transform.forward;
-            collider.GetComponent<Player>().UnControllableTimer = 0.5f;
+			//正規化
+			Vector3 forceDir = boundsPower * transform.forward;
+			collider.GetComponent<Player>().UnControllableTimer = 0.5f;
 			//攻撃されたときに攻撃できないようにする
 			collider.GetComponent<Player>().isDamage = true;
 			//ヒット時の音を鳴らす
-			collider.GetComponent<AudioSource>().PlayOneShot(collider.GetComponent<Player>().damage_SE,0.1f);
+			collider.GetComponent<AudioSource>().PlayOneShot(collider.GetComponent<Player>().damage_SE, 0.1f);
 			//エフェクトを表示
 			GameObject particle = Instantiate(playerParticles[1], collider.transform.position, Quaternion.identity);
 			Destroy(particle, 0.8f);
 			//ノックバックさせる
 			collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
-        }
+		}
+	}
+	//ダメージ受けた時光らせる
+	void BodyFlash()
+    {
+		foreach(GameObject obj in childObjects)
+        {
+			MeshRenderer meshRenderer;
+			meshRenderer = obj.GetComponent<MeshRenderer>();
+			Debug.Log(meshRenderer);
+			meshRenderer.materials[1].color = new Color32(255, 255, 255, 255);
+			
+		}
     }
-	
+	void RoadScene()
+	{
+		timeManagement.SetActive(false);
+		BGMObject = GameObject.FindGameObjectWithTag("BGM");
+		Destroy(BGMObject);
+		SceneManager.LoadScene("Result");
+	}
 }
 
