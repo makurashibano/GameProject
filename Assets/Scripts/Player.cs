@@ -217,7 +217,7 @@ public class Player : MonoBehaviour
 		if (isDamage)
 		{
 			DamageFalse();
-			BodyFlash();
+			StartCoroutine(Hit());
 		}
 		//ダッシュ中のクールタイム
 		if (isdash)
@@ -332,15 +332,25 @@ public class Player : MonoBehaviour
 			collider.transform.GetComponent<Rigidbody>().velocity = forceDir;
 		}
 	}
+	private IEnumerator Hit()
+	{
+		BodyFlash(160);
+		// 0.2秒間待つ
+		yield return new WaitForSeconds(0.2f);
+
+		// 3秒後に原点にワープ
+		BodyFlash(0);
+	}
+
 	//ダメージ受けた時光らせる
-	void BodyFlash()
+	void BodyFlash(byte alpha)
     {
 		foreach(GameObject obj in childObjects)
         {
 			MeshRenderer meshRenderer;
 			meshRenderer = obj.GetComponent<MeshRenderer>();
 			Debug.Log(meshRenderer);
-			meshRenderer.materials[1].color = new Color32(255, 255, 255, 255);
+			meshRenderer.materials[1].color = new Color32(255, 255, 255, alpha);
 			
 		}
     }
