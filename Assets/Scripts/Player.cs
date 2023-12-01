@@ -46,7 +46,9 @@ public class Player : MonoBehaviour
 	//押し出す力
 	[SerializeField]
     private float boundsPower = 12.0f;
-
+	[SerializeField]
+	private float bodyBoundsPower = 4;
+	
 	//攻撃ゲージ
 	private int attackCount = 0;
 	[SerializeField]
@@ -370,9 +372,8 @@ public class Player : MonoBehaviour
 		///ノックバック処理		
 		if (collision.gameObject.layer == otherLayerMaskPlayer)
 		{
-
 			//正規化
-			Vector3 forceDir = (boundsPower/2) * (this.gameObject.transform.position- collision.transform.position);
+			Vector3 forceDir = bodyBoundsPower * (this.gameObject.transform.position- collision.transform.position);
 			//ノックバックさせる
 			collision.gameObject.GetComponent<Player>().UnControllableTimer = 0.5f;
 			//攻撃されたときに攻撃できないようにする
@@ -391,7 +392,6 @@ public class Player : MonoBehaviour
 		BodyFlash(160);
 		// 0.2秒間待つ
 		yield return new WaitForSeconds(0.2f);
-		
 		BodyFlash(0);
 	}
 

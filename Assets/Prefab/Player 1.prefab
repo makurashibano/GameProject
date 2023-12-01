@@ -369,10 +369,11 @@ MonoBehaviour:
   - {r: 0.79768676, g: 0.48490566, b: 1, a: 1}
   - {r: 0.48490566, g: 0.9224892, b: 1, a: 1}
   animator: {fileID: 0}
-  speed: 5.14
+  speed: 6
   dashSpeed: 10
   UnControllableTimer: 0
   boundsPower: 12
+  bodyBoundsPower: 4
   maxAttackCount: 4
   specialAttackMultiplier: 1.5
   isAttack: 0
