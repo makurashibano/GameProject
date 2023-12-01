@@ -5,28 +5,49 @@ using UnityEngine;
 public class TransformPlane : MonoBehaviour
 {
     [SerializeField]
-    float speed=1;
+    float speed = 1.0f;
     [SerializeField]
-    float amplitude=1.5f;
+    float amplitude = 1.5f;
     [SerializeField]
-    float startTime=5f;
-    float currentTime=0f;
-    float timer=0f;
+    float startTime = 5f;
+
+    float currentTime = 0f;
+    float timer = 0f;
     float y;
+    float stopTimer = 0f;
+
+    bool isMove = true;
     void Start()
     {
         y = transform.position.y;
     }
-
     void Update()
     {
         currentTime += Time.deltaTime;
+
         if (startTime <= currentTime)
         {
-            float a = Mathf.Sin(timer * speed) * amplitude;
+            float move = Mathf.Sin(timer * speed) * amplitude;
             timer += Time.deltaTime;
-            transform.position = new Vector3(transform.position.x, y + a, transform.position.z);
+            if (isMove)
+            {
+                transform.position = new Vector3(transform.position.x, y + move, transform.position.z);
+                if (transform.position.y >= 0.49f)
+                {
+                    isMove = false;
+                    return;
+                }
+            }
+            if (!isMove)
+            {
+                stopTimer += Time.deltaTime;
+                if (stopTimer >=2f)
+                {
+                    stopTimer = 0f;
+                    isMove = true;
+                }
+                return;
+            }
         }
-
     }
 }

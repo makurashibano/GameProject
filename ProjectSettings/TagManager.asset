@@ -12,6 +12,9 @@ TagManager:
   - PlayerKillZone
   - TimeManagement
   - BGM
+  - TimePanel
+  - FxTemporaire
+  - ModelBody
   layers:
   - Default
   - TransparentFX

@@ -17,10 +17,19 @@ public class TitleScene : MonoBehaviour
     {
         if (SceneManager.GetSceneByName("Title").IsValid())
         {
-            if (Gamepad.current.buttonSouth.isPressed)
+            if (Input.GetKeyDown(KeyCode.Return))
             {
-                canvas.SetActive(false);
-                SceneManager.LoadScene("Stage");
+                List<InputDevice> devices = new List<InputDevice>(InputSystem.devices);
+
+                if (devices.Count > 1)
+                {
+                    canvas.SetActive(false);
+                    SceneManager.LoadScene("Stage");
+                }
+                else
+                {
+                    Debug.Log(devices.Count);
+                }
             }
 
         }
