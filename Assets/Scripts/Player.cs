@@ -354,6 +354,8 @@ public class Player : MonoBehaviour
 			Destroy(particle, 0.8f);
 			//敵を飛ばす
 			collider.transform.GetComponent<Rigidbody>().velocity = forceDir*knockbackMultiplier;
+			isSpecialAttack = false;
+			Debug.Log((forceDir * knockbackMultiplier).magnitude);
 		}
 	}
 
