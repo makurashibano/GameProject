@@ -372,7 +372,7 @@ public class Player : MonoBehaviour
 		{
 
 			//正規化
-			Vector3 forceDir = (boundsPower/2) * -transform.forward;
+			Vector3 forceDir = (boundsPower/2) * (this.gameObject.transform.position- collision.transform.position);
 			//ノックバックさせる
 			collision.gameObject.GetComponent<Player>().UnControllableTimer = 0.5f;
 			//攻撃されたときに攻撃できないようにする
@@ -385,12 +385,13 @@ public class Player : MonoBehaviour
 		}
 	}
 
+	//攻撃されたときとお互いに衝突した時にダメージのフラッシュを入れる
     private IEnumerator Hit()
 	{
 		BodyFlash(160);
 		// 0.2秒間待つ
 		yield return new WaitForSeconds(0.2f);
-		// 3秒後に原点にワープ
+		
 		BodyFlash(0);
 	}
 
@@ -407,8 +408,6 @@ public class Player : MonoBehaviour
 	void RoadScene()
 	{
 		timeManagement.SetActive(false);
-		BGMObject = GameObject.FindGameObjectWithTag("BGM");
-		Destroy(BGMObject);
 		SceneManager.LoadScene("Result");
 	}
 }
