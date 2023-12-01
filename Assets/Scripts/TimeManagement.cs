@@ -14,7 +14,7 @@ public class TimeManagement : MonoBehaviour
     public GameObject TimeUpPanel;
     bool sceneActive = false;
     bool GameStart = true;
-    
+
     void ReturnToTitle()
     {
         SceneManager.LoadScene("title");
@@ -29,6 +29,8 @@ public class TimeManagement : MonoBehaviour
     {
         if (GameStart == true)
         {
+            
+
             StartCount -= Time.deltaTime;
             // 試合時間のやつもカウントダウンだから、5秒間だけ数を数えて下のコードに渡すみたいな処理を作りたい
             // たぶんそうすればこっちの処理を先にするから、結果的に誰も動かない時間になるんじゃないのか？
