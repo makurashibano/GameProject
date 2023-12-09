@@ -12,15 +12,18 @@ public class TimeManagement : MonoBehaviour
     float StartCount = 5f;
     public TextMeshProUGUI TimerText;
     public GameObject TimeUpPanel;
-<<<<<<< HEAD
+
+// <<<<<<< HEAD
+
     bool sceneActive = false;
     bool GameStart = true;
 
-=======
-    bool sceneActive = true;
+// =======
+    
     public bool isdrawStopTime = false;
         
->>>>>>> main
+//  >>>>>>> main
+
     void ReturnToTitle()
     {
         SceneManager.LoadScene("title");
@@ -53,7 +56,7 @@ public class TimeManagement : MonoBehaviour
             if(StartCount <= 0)
             {
                 TimerText.text = "start!";
-                // ‚±‚¤‚â‚Á‚½‚ç‚P•b‚¾‚¯•\Ž¦‚µ‚ÄŠJŽn‚·‚é‚ñ‚¶‚á‚ËH
+                // ‚±‚¤‚â‚Á‚½‚ç‚R•b‚¾‚¯•\Ž¦‚µ‚ÄŠJŽn‚·‚é‚ñ‚¶‚á‚ËH
 
                 if (StartCount <= -3)
                 {
