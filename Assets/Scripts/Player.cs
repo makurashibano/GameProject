@@ -236,7 +236,7 @@ public class Player : MonoBehaviour
 		if (isDamage)
         {
 			DamageFalse();
-			StartCoroutine(Hit());
+			StartCoroutine(Hit(0.2f));
 		}
 		//ダッシュ中のクールタイム
 		if (isdash)
@@ -244,10 +244,15 @@ public class Player : MonoBehaviour
 			DashCoolTimeCount();
 		}
 		//時間切れになったら動けないようにする
-		if (Managers.GetComponent<TimeManagement>().isdrawStopTime == true) return;
+		if (Managers.GetComponent<TimeManagement>().isdrawStopTime == true)
+        {
+			rigidbody.useGravity = false;
+			return;
+		}
 		//スタン判定
 		if (isStan)
 		{
+			StartCoroutine(Hit(0.6f));
 			Invoke("StanTime", 0.5f);
 			return;
 		}
@@ -405,11 +410,11 @@ public class Player : MonoBehaviour
 	}
 
 	//攻撃されたときとお互いに衝突した時にダメージのフラッシュを入れる
-    private IEnumerator Hit()
+    private IEnumerator Hit(float time)
 	{
 		BodyFlash(160);
 		// 0.2秒間待つ
-		yield return new WaitForSeconds(0.2f);
+		yield return new WaitForSeconds(time);
 		BodyFlash(0);
 	}
 
