@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2853742006939764644
 MonoBehaviour:
@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f85d0d9486c2a4a4782abe299278d937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 10
+  radius: 1
   stonePrefabs:
-  - {fileID: 8841067285054502897, guid: d627c880e7a20424b8afe930e4af713c, type: 3}
+  - {fileID: 438180670717900715, guid: 6415b9395feff914da5067ad05419b3f, type: 3}
   isFall: 0
   minIntervalTime: 0
   maxIntervalTime: 5

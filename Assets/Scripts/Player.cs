@@ -62,7 +62,8 @@ public class Player : MonoBehaviour
 	//ダメージ
 	public bool isDamage = false;
 	float damageCount = 0f;
-
+	//スタン
+	public bool isStan = false;
 	[SerializeField]
 	GameObject[] players;
 	//出現地点
@@ -73,11 +74,10 @@ public class Player : MonoBehaviour
 	//初期化用変数
 	private Vector3 PlayerPositionInitialization;
 
+	//サウンド
 	AudioSource audioSource;
 	public AudioClip attack_SE;
 	public AudioClip damage_SE;
-
-	public List<AudioClip> player_SE;
 
 	// Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
 	private Rigidbody rigidbody;
@@ -87,7 +87,6 @@ public class Player : MonoBehaviour
 	public GameObject obj;
 
 	public GameObject timeManagement;
-	private GameObject BGMObject;
 
 	public GameObject Managers;
 
@@ -95,7 +94,7 @@ public class Player : MonoBehaviour
 	private List<GameObject> playerParticles;
 	//子オブジェクトを格納
 	public List<GameObject> childObjects;
-
+	//プレイヤー番号を表示する時間
 	float inactiveTimer = 0f;
 	private void Awake()
     {
@@ -193,7 +192,12 @@ public class Player : MonoBehaviour
 	{
 		//時間切れになったら動けないようにする
 		if (Managers.GetComponent<TimeManagement>().isdrawStopTime == true) return;
-		
+		//スタン判定
+        if (isStan)
+        {
+			Invoke("StanTime", 0.5f);
+			return;
+        }
 		if (UnControllableTimer > 0f)
 		{
             UnControllableTimer -= Time.deltaTime;
@@ -239,8 +243,16 @@ public class Player : MonoBehaviour
 		{
 			DashCoolTimeCount();
 		}
+		//時間切れになったら動けないようにする
+		if (Managers.GetComponent<TimeManagement>().isdrawStopTime == true) return;
+		//スタン判定
+		if (isStan)
+		{
+			Invoke("StanTime", 0.5f);
+			return;
+		}
 		//攻撃する
-        if (isAttack)
+		if (isAttack)
         {
             col.enabled = true;
 		}
@@ -255,6 +267,10 @@ public class Player : MonoBehaviour
 			canvas.SetActive(false);
         }
 
+    }
+	void StanTime()
+    {
+		isStan = false;
     }
 	//走るためのクールタイムカウント関数
 	void DashCoolTimeCount()
