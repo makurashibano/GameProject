@@ -63,7 +63,7 @@ MonoBehaviour:
   - {fileID: 2480328126306027694}
   - {fileID: 8743803016904049548}
   - {fileID: 8453327760764940540}
-  stoneDestroy: 0.5
+  stoneDestroy: 1
 --- !u!64 &3656854093731464827
 MeshCollider:
   m_ObjectHideFlags: 0
