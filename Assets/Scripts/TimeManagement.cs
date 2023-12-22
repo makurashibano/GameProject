@@ -37,8 +37,7 @@ public class TimeManagement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // CountDown‚ª1ˆÈ‰º‚É‚È‚é‚Æreturn‚Á‚Ä‚Ç‚±‚És‚­‚ñ‚¾H
-        if (CountDown <= 1f)
+        if (CountDown <= 0f)
         {
             return;
         }
