@@ -17,12 +17,17 @@ public class TransformPlane : MonoBehaviour
     float stopTimer = 0f;
 
     bool isMove = true;
+
+    private CountDownManager countManager;
+
     void Start()
     {
         y = transform.position.y;
+        countManager = GameObject.Find("Managers").GetComponent<CountDownManager>();
     }
     void Update()
     {
+        if (countManager.GameStart == false) return;
         currentTime += Time.deltaTime;
 
         if (startTime <= currentTime)

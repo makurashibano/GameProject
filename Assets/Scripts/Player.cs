@@ -267,7 +267,7 @@ public class Player : MonoBehaviour
 		}
 		//プレイヤーの番号を時間が来たら非表示にする
 		inactiveTimer += Time.deltaTime;
-        if (inactiveTimer >= 3.0f)
+        if (inactiveTimer >= 7.0f)
         {
 			canvas.SetActive(false);
         }
