@@ -81,9 +81,10 @@ public class Player : MonoBehaviour
 
 	// Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
 	private Rigidbody rigidbody;
+	//攻撃コライダー
 	[SerializeField]
 	private Collider col;
-
+	//タイムアップパネル
 	public GameObject obj;
 
 	public GameObject timeManagement;
@@ -119,7 +120,6 @@ public class Player : MonoBehaviour
 
 		//ランキングを初期化
 		rank.Clear();
-
 
 		GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
 		totalPlayersCount = currentPlayers.Length;
@@ -198,11 +198,11 @@ public class Player : MonoBehaviour
 			Invoke("StanTime", 0.5f);
 			return;
         }
+		//ダメージの動かせない時間
 		if (UnControllableTimer > 0f)
 		{
             UnControllableTimer -= Time.deltaTime;
         }
-
         if (UnControllableTimer > 0f)
 		{
 			return;
@@ -372,7 +372,9 @@ public class Player : MonoBehaviour
 			collider.GetComponent<Player>().UnControllableTimer = 0.5f;
 			//攻撃されたときに攻撃できないようにする
 			collider.GetComponent<Player>().isDamage = true;
-			collider.GetComponent<AudioSource>().PlayOneShot(collider.GetComponent<Player>().damage_SE,0.1f);
+            //SE
+            collider.GetComponent<AudioSource>().PlayOneShot(collider.GetComponent<Player>().damage_SE,0.1f);
+			//パーティクル表示
 			GameObject particle = Instantiate(playerParticles[1], collider.transform.position, Quaternion.identity);
 			Destroy(particle, 0.8f);
 			//敵を飛ばす
@@ -401,8 +403,10 @@ public class Player : MonoBehaviour
 			collision.gameObject.GetComponent<Player>().UnControllableTimer = 0.5f;
 			//攻撃されたときに攻撃できないようにする
 			collision.gameObject.GetComponent<Player>().isDamage = true;
+			//SE
 			collision.gameObject.GetComponent<AudioSource>().PlayOneShot(collision.gameObject.GetComponent<Player>().damage_SE, 0.1f);
-			GameObject particle = Instantiate(playerParticles[1], collision.gameObject.transform.position, Quaternion.identity);
+            //パーティクル表示
+            GameObject particle = Instantiate(playerParticles[1], collision.gameObject.transform.position, Quaternion.identity);
 			Destroy(particle, 0.8f);
 			//敵を飛ばす
 			gameObject.transform.GetComponent<Rigidbody>().velocity = forceDir;
@@ -412,6 +416,7 @@ public class Player : MonoBehaviour
 	//攻撃されたときとお互いに衝突した時にダメージのフラッシュを入れる
     private IEnumerator Hit(float time)
 	{
+		//体を白くする（引数にalphaの値を入れる）
 		BodyFlash(160);
 		// 0.2秒間待つ
 		yield return new WaitForSeconds(time);
