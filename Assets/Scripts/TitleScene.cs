@@ -24,7 +24,7 @@ public class TitleScene : MonoBehaviour
                 if (devices.Count > 1)
                 {
                     canvas.SetActive(false);
-                    SceneManager.LoadScene("Stage");
+                    SceneManager.LoadScene("StageSelect");
                 }
                 else
                 {
