@@ -361,6 +361,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2853742006939764644, guid: 69357fa8c02b03441a9bae6871345cf4, type: 3}
+      propertyPath: radius
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853742006939764644, guid: 69357fa8c02b03441a9bae6871345cf4, type: 3}
+      propertyPath: maxIntervalTime
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3579370023086559818, guid: 69357fa8c02b03441a9bae6871345cf4, type: 3}
       propertyPath: m_Name
       value: FallingRock
