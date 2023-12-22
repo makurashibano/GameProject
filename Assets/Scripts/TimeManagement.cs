@@ -1,19 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
 public class TimeManagement : MonoBehaviour
 {
     [SerializeField]
-    float countdownTime = 0f;
+    float countdownTime = 60f;
     float CountDown = 0f;
     public TextMeshProUGUI TimerText;
     public GameObject TimeUpPanel;
+    [SerializeField]
+    CountDownManager countDownManager;
+
+// <<<<<<< HEAD
+
     bool sceneActive = true;
+
+// =======
+    
     public bool isdrawStopTime = false;
-        
+//  >>>>>>> main
+
     void ReturnToTitle()
     {
         SceneManager.LoadScene("title");
@@ -21,22 +31,29 @@ public class TimeManagement : MonoBehaviour
     private void Awake()
     {
         CountDown = countdownTime;
+        TimerText.text = " ";
     }
     
     // Update is called once per frame
     void Update()
     {
+        // CountDownÇ™1à»â∫Ç…Ç»ÇÈÇ∆returnÇ¡ÇƒÇ«Ç±Ç…çsÇ≠ÇÒÇæÅH
         if (CountDown <= 1f)
         {
             return;
         }
+
         if (sceneActive==true)
         {
-            CountDown -= Time.deltaTime;
-            
+            if (countDownManager.GameStart == false) return;
+
             int second = (int)CountDown;
             TimerText.text = second.ToString();
-            if (CountDown <= 1f)
+
+            CountDown -= Time.deltaTime;
+          
+
+            if (CountDown <= 0f)
             {
                 TimeUpPanel.SetActive(true);
                 isdrawStopTime = true;
