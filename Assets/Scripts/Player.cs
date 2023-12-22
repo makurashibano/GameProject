@@ -62,7 +62,8 @@ public class Player : MonoBehaviour
 	//ダメージ
 	public bool isDamage = false;
 	float damageCount = 0f;
-
+	//スタン
+	public bool isStan = false;
 	[SerializeField]
 	GameObject[] players;
 	//出現地点
@@ -73,21 +74,20 @@ public class Player : MonoBehaviour
 	//初期化用変数
 	private Vector3 PlayerPositionInitialization;
 
+	//サウンド
 	AudioSource audioSource;
 	public AudioClip attack_SE;
 	public AudioClip damage_SE;
 
-	public List<AudioClip> player_SE;
-
 	// Rigidbodyコンポーネントを入れる変数"rb"を宣言する。 
 	private Rigidbody rigidbody;
+	//攻撃コライダー
 	[SerializeField]
 	private Collider col;
-
+	//タイムアップパネル
 	public GameObject obj;
 
 	public GameObject timeManagement;
-	private GameObject BGMObject;
 
 	public GameObject Managers;
 
@@ -95,7 +95,7 @@ public class Player : MonoBehaviour
 	private List<GameObject> playerParticles;
 	//子オブジェクトを格納
 	public List<GameObject> childObjects;
-
+	//プレイヤー番号を表示する時間
 	float inactiveTimer = 0f;
 	private void Awake()
     {
@@ -120,7 +120,6 @@ public class Player : MonoBehaviour
 
 		//ランキングを初期化
 		rank.Clear();
-
 
 		GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
 		totalPlayersCount = currentPlayers.Length;
@@ -193,12 +192,17 @@ public class Player : MonoBehaviour
 	{
 		//時間切れになったら動けないようにする
 		if (Managers.GetComponent<TimeManagement>().isdrawStopTime == true) return;
-		
+		//スタン判定
+        if (isStan)
+        {
+			Invoke("StanTime", 0.5f);
+			return;
+        }
+		//ダメージの動かせない時間
 		if (UnControllableTimer > 0f)
 		{
             UnControllableTimer -= Time.deltaTime;
         }
-
         if (UnControllableTimer > 0f)
 		{
 			return;
@@ -232,15 +236,28 @@ public class Player : MonoBehaviour
 		if (isDamage)
         {
 			DamageFalse();
-			StartCoroutine(Hit());
+			StartCoroutine(Hit(0.2f));
 		}
 		//ダッシュ中のクールタイム
 		if (isdash)
 		{
 			DashCoolTimeCount();
 		}
+		//時間切れになったら動けないようにする
+		if (Managers.GetComponent<TimeManagement>().isdrawStopTime == true)
+        {
+			rigidbody.useGravity = false;
+			return;
+		}
+		//スタン判定
+		if (isStan)
+		{
+			StartCoroutine(Hit(0.6f));
+			Invoke("StanTime", 0.5f);
+			return;
+		}
 		//攻撃する
-        if (isAttack)
+		if (isAttack)
         {
             col.enabled = true;
 		}
@@ -255,6 +272,10 @@ public class Player : MonoBehaviour
 			canvas.SetActive(false);
         }
 
+    }
+	void StanTime()
+    {
+		isStan = false;
     }
 	//走るためのクールタイムカウント関数
 	void DashCoolTimeCount()
@@ -351,7 +372,9 @@ public class Player : MonoBehaviour
 			collider.GetComponent<Player>().UnControllableTimer = 0.5f;
 			//攻撃されたときに攻撃できないようにする
 			collider.GetComponent<Player>().isDamage = true;
-			collider.GetComponent<AudioSource>().PlayOneShot(collider.GetComponent<Player>().damage_SE,0.1f);
+            //SE
+            collider.GetComponent<AudioSource>().PlayOneShot(collider.GetComponent<Player>().damage_SE,0.1f);
+			//パーティクル表示
 			GameObject particle = Instantiate(playerParticles[1], collider.transform.position, Quaternion.identity);
 			Destroy(particle, 0.8f);
 			//敵を飛ばす
@@ -380,8 +403,10 @@ public class Player : MonoBehaviour
 			collision.gameObject.GetComponent<Player>().UnControllableTimer = 0.5f;
 			//攻撃されたときに攻撃できないようにする
 			collision.gameObject.GetComponent<Player>().isDamage = true;
+			//SE
 			collision.gameObject.GetComponent<AudioSource>().PlayOneShot(collision.gameObject.GetComponent<Player>().damage_SE, 0.1f);
-			GameObject particle = Instantiate(playerParticles[1], collision.gameObject.transform.position, Quaternion.identity);
+            //パーティクル表示
+            GameObject particle = Instantiate(playerParticles[1], collision.gameObject.transform.position, Quaternion.identity);
 			Destroy(particle, 0.8f);
 			//敵を飛ばす
 			gameObject.transform.GetComponent<Rigidbody>().velocity = forceDir;
@@ -389,11 +414,12 @@ public class Player : MonoBehaviour
 	}
 
 	//攻撃されたときとお互いに衝突した時にダメージのフラッシュを入れる
-    private IEnumerator Hit()
+    private IEnumerator Hit(float time)
 	{
+		//体を白くする（引数にalphaの値を入れる）
 		BodyFlash(160);
 		// 0.2秒間待つ
-		yield return new WaitForSeconds(0.2f);
+		yield return new WaitForSeconds(time);
 		BodyFlash(0);
 	}
 

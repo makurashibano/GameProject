@@ -165,7 +165,6 @@ public class Enemy : MonoBehaviour
     //攻撃関数
     void AttackStart()
     {
-
         //攻撃するときに止まる
         navmesh.speed = 1f;
     }
