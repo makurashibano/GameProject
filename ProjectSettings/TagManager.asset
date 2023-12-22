@@ -15,6 +15,7 @@ TagManager:
   - TimePanel
   - FxTemporaire
   - ModelBody
+  - TimeCountDown
   layers:
   - Default
   - TransparentFX
