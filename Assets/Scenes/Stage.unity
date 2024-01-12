@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: b3b256dc917e2ff4f90149cfd2f5e5fa, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -608,10 +608,10 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
-    topLeft: {r: 1, g: 0.2028302, b: 0.2028302, a: 1}
-    topRight: {r: 1, g: 0, b: 0, a: 1}
-    bottomLeft: {r: 1, g: 0.6805635, b: 0.19339621, a: 1}
-    bottomRight: {r: 1, g: 0.8413572, b: 0.06132078, a: 1}
+    topLeft: {r: 1, g: 0.8431373, b: 0.0627451, a: 1}
+    topRight: {r: 1, g: 0.8431373, b: 0.0627451, a: 1}
+    bottomLeft: {r: 0, g: 0.88191414, b: 1, a: 1}
+    bottomRight: {r: 0.5058824, g: 0.8705883, b: 0.91372555, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -777,17 +777,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageCommon
       objectReference: {fileID: 0}
+    - target: {fileID: 391933397039501641, guid: 90d345b8bc6832240bc9ec81f773ded9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2548213956170417171, guid: 90d345b8bc6832240bc9ec81f773ded9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.08
+      value: 8.58
       objectReference: {fileID: 0}
     - target: {fileID: 2548213956170417171, guid: 90d345b8bc6832240bc9ec81f773ded9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.01
+      value: 3.78
       objectReference: {fileID: 0}
     - target: {fileID: 2548213956170417171, guid: 90d345b8bc6832240bc9ec81f773ded9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.09
+      value: -3.67
       objectReference: {fileID: 0}
     - target: {fileID: 4361792828715260906, guid: 90d345b8bc6832240bc9ec81f773ded9, type: 3}
       propertyPath: m_RootOrder
@@ -1126,9 +1130,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1752208100dd24e8a383fc98786c0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.42
-  amplitude: 1.5
-  startTime: 20
+  speed: 0.35
+  amplitude: 2
+  startTime: 5
 --- !u!1 &1060570788
 GameObject:
   m_ObjectHideFlags: 0
@@ -1834,6 +1838,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall
       objectReference: {fileID: 0}
+    - target: {fileID: 7798624224849919832, guid: e4ea5c015ee0c284199a86c387a10e1d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8626856480508550172, guid: e4ea5c015ee0c284199a86c387a10e1d, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1892,6 +1900,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1743822981855862032, guid: e4ea5c015ee0c284199a86c387a10e1d, type: 3}
+    - {fileID: 1022736275345924088, guid: e4ea5c015ee0c284199a86c387a10e1d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

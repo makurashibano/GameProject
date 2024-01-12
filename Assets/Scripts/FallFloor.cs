@@ -12,7 +12,7 @@ public class FallFloor : MonoBehaviour
     public float fallInterval = 2.0f;
     public float startFallingTime = 10.0f;
     float timer = 0;
-    float destroyThreshold = -5.0f;
+    float destroyThreshold = -10.0f;
     bool startFalling = false;
     public Material fallingObjectMaterial;
     public CountDownManager countDown;
@@ -40,11 +40,11 @@ public class FallFloor : MonoBehaviour
                     timer = 0;
                     if (outsideFloor.Count <= 0)
                     {
-                        FallRandomObject(insideFloor);
+                        FallRandomObject(insideFloor,1);
                     }
                     else
                     {
-                        FallRandomObject(outsideFloor);
+                        FallRandomObject(outsideFloor,2);
                     }
                 }
                 CheckObjectPosition(outsideFloor);
@@ -71,13 +71,16 @@ public class FallFloor : MonoBehaviour
         }
         rb.velocity = Vector3.down * downSpeed;
     }
-    void FallRandomObject(List<GameObject> floor)
+    void FallRandomObject(List<GameObject> floor,int num)
     {
         if (floor.Count > 0)
         {
-            int index = Random.Range(0, floor.Count);
-            GameObject fallingObject = floor[index];
-            StartCoroutine(FallWithDelay(fallingObject));
+            for (int i = 0; i < num; i++)
+            {
+                int index = Random.Range(0, floor.Count);
+                GameObject fallingObject = floor[index];
+                StartCoroutine(FallWithDelay(fallingObject));
+            }
         }
     }
     void CheckObjectPosition(List<GameObject> objectList)
