@@ -15,7 +15,7 @@ public class StoneDestroy : MonoBehaviour
             //接触ポイント
             Vector3 hitPos = collision.contacts[0].point;
             //頭より下で当たった場合スタンしないようにする
-            if (collision.gameObject.transform.position.y + 0.3f > hitPos.y) return;
+            if (collision.gameObject.transform.position.y + 0.1f > hitPos.y) return;
             //接触したプレイヤーをスタンさせる
             collision.gameObject.GetComponent<Player>().isStan = true;
         }

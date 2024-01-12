@@ -25,21 +25,18 @@ public class CountDownManager : MonoBehaviour
     {
         int second = (int)StartCount;
         StartDownText.text = second.ToString();
-        // カウントダウンを文字列に変更
+        // カウントダウン
         StartCount -= Time.deltaTime;
-
-        if (StartCount < 1)
-        {
-            
+        if (StartCount <= 1)
+        { 
             StartDownText.text = "start!!";
-            // startの表示（3秒間）
+            
 
-
-            if (StartCount <= -2)
+            if (StartCount <= -0.5)
             {
                 GameStart = true;
                 StartDownText.text = " ";
-                // start!!の表示が3秒経ったら、" "を表示する（テキストがなくなったわけではない）
+
             }
         }
 

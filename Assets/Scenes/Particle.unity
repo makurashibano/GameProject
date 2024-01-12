@@ -361,6 +361,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2853742006939764644, guid: 69357fa8c02b03441a9bae6871345cf4, type: 3}
+      propertyPath: radius
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853742006939764644, guid: 69357fa8c02b03441a9bae6871345cf4, type: 3}
+      propertyPath: maxIntervalTime
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3579370023086559818, guid: 69357fa8c02b03441a9bae6871345cf4, type: 3}
       propertyPath: m_Name
       value: FallingRock
@@ -435,6 +443,7 @@ GameObject:
   - component: {fileID: 535326586}
   - component: {fileID: 535326585}
   - component: {fileID: 535326587}
+  - component: {fileID: 535326588}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -485,7 +494,23 @@ MonoBehaviour:
   countdownTime: 60
   TimerText: {fileID: 1837158943}
   TimeUpPanel: {fileID: 1154396904}
+  countDownManager: {fileID: 535326588}
   isdrawStopTime: 0
+--- !u!114 &535326588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535326584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c86887741c421984aa5f6d3e377d1ede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartCount: 6
+  StartDownText: {fileID: 1837158943}
+  GameStart: 1
 --- !u!1 &617129038
 GameObject:
   m_ObjectHideFlags: 0
@@ -2098,7 +2123,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1876500244}
   m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: 0, y: 13, z: -12}
+  m_LocalPosition: {x: 0, y: 14, z: -12.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
