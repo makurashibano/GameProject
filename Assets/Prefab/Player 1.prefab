@@ -378,6 +378,7 @@ MonoBehaviour:
   specialAttackMultiplier: 1.5
   isAttack: 0
   isDamage: 0
+  isStan: 0
   players:
   - {fileID: 7008454588849471792, guid: 5aa8bbef400ce4b4ab59dc2fca468a45, type: 3}
   - {fileID: 7466202218037769747, guid: 8d77a5b4e26a9244cbba9623e67ce3ed, type: 3}
@@ -386,7 +387,6 @@ MonoBehaviour:
   spawnPoint: []
   attack_SE: {fileID: 8300000, guid: f2f955c05b7f4d44eb3034677849eb13, type: 3}
   damage_SE: {fileID: 8300000, guid: 418f88e645eb4134ab6a7c983afd1bbe, type: 3}
-  player_SE: []
   col: {fileID: 6723197363922051111}
   obj: {fileID: 0}
   timeManagement: {fileID: 0}
@@ -394,6 +394,7 @@ MonoBehaviour:
   playerParticles:
   - {fileID: 1687118924408352, guid: 77c69ec12208c4c4380d15e30b6f8f68, type: 3}
   - {fileID: 100004, guid: f95ff734540a0d749be6571b6cb5b37f, type: 3}
+  - {fileID: 1687118924408352, guid: ddd38f88c196ed84dab21aef25af303c, type: 3}
   childObjects: []
 --- !u!54 &4973356753539302914
 Rigidbody:
