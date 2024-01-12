@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7032166676230050021}
   - component: {fileID: 6871073851013490681}
   - component: {fileID: 140857935538283568}
-  - component: {fileID: 1743822981855862032}
+  - component: {fileID: 1022736275345924088}
   m_Layer: 0
   m_Name: PlayerKillZone
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7032166676230050021
 MeshFilter:
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1743822981855862032
+--- !u!114 &1022736275345924088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,6 +115,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7798624224849919832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecd873dc4aad690438c51cd44d9eff95, type: 3}
+  m_Script: {fileID: 11500000, guid: 7510cef89dcf30747a6f5ef3f438a478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
