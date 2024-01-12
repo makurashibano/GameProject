@@ -195,7 +195,10 @@ PrefabInstance:
     - {fileID: 1743822981855862032, guid: e4ea5c015ee0c284199a86c387a10e1d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7798624224849919832, guid: e4ea5c015ee0c284199a86c387a10e1d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 365286178}
   m_SourcePrefab: {fileID: 100100000, guid: e4ea5c015ee0c284199a86c387a10e1d, type: 3}
 --- !u!4 &144569014 stripped
 Transform:
@@ -353,6 +356,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e96c54a9054b6894580f3b392c429955, type: 3}
+--- !u!1 &231363957 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7798624224849919832, guid: e4ea5c015ee0c284199a86c387a10e1d, type: 3}
+  m_PrefabInstance: {fileID: 31421196}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &294429105
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -427,6 +435,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8626856480508550172, guid: e4ea5c015ee0c284199a86c387a10e1d, type: 3}
   m_PrefabInstance: {fileID: 31421196}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &365286178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231363957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7510cef89dcf30747a6f5ef3f438a478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &403046173 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6678761462987830739, guid: e96c54a9054b6894580f3b392c429955, type: 3}
@@ -443,6 +463,7 @@ GameObject:
   - component: {fileID: 535326586}
   - component: {fileID: 535326585}
   - component: {fileID: 535326587}
+  - component: {fileID: 535326588}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -493,7 +514,23 @@ MonoBehaviour:
   countdownTime: 60
   TimerText: {fileID: 1837158943}
   TimeUpPanel: {fileID: 1154396904}
+  countDownManager: {fileID: 535326588}
   isdrawStopTime: 0
+--- !u!114 &535326588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535326584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c86887741c421984aa5f6d3e377d1ede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartCount: 6
+  StartDownText: {fileID: 1837158943}
+  GameStart: 1
 --- !u!1 &617129038
 GameObject:
   m_ObjectHideFlags: 0

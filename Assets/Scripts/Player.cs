@@ -22,9 +22,6 @@ public class Player : MonoBehaviour
 		get { return GetComponent<PlayerInput>().playerIndex; }
     }
 	LayerMask otherLayerMaskPlayer;
-	//ノックバックパワー
-	private float boundPower = 5.0f;
-	Vector3 boundVec = new Vector3(0f, 0f, 0f);
 
 	[SerializeField]
 	Animator animator;
@@ -42,7 +39,6 @@ public class Player : MonoBehaviour
 
     public float UnControllableTimer = 0.0f;
 
-	float rotateSpeed = 10f;
 	//押し出す力
 	[SerializeField]
     private float boundsPower = 12.0f;
@@ -71,9 +67,6 @@ public class Player : MonoBehaviour
 	Vector3[] spawnPoint;
 	private Vector2 moveAmount;
 
-	//初期化用変数
-	private Vector3 PlayerPositionInitialization;
-
 	//サウンド
 	AudioSource audioSource;
 	public AudioClip attack_SE;
@@ -92,7 +85,7 @@ public class Player : MonoBehaviour
 	public GameObject Managers;
 
 	[SerializeField]
-	private List<GameObject> playerParticles;
+	public List<GameObject> playerParticles;
 	//子オブジェクトを格納
 	public List<GameObject> childObjects;
 	//プレイヤー番号を表示する時間
@@ -116,7 +109,6 @@ public class Player : MonoBehaviour
 		transform.position = playerSpawnPoint.transform.position;
         transform.rotation = playerSpawnPoint.transform.rotation;
 		name = "Player" + index;
-		PlayerPositionInitialization = this.gameObject.transform.position;
 
 		//ランキングを初期化
 		rank.Clear();
@@ -169,12 +161,15 @@ public class Player : MonoBehaviour
 
 		playerText.colorGradient = vertexGradient;
 	}
+
 	void OnMove(InputValue value)
 	{
 		moveAmount = value.Get<Vector2>();
     } 
 	void OnAttack()
 	{
+		//スタートまで硬直
+		if (Managers.GetComponent<CountDownManager>().GameStart == false) return;
 		if (isDamage == true) return;
 
 		isAttack = true;
@@ -190,6 +185,9 @@ public class Player : MonoBehaviour
 	}
 	void FixedUpdate() 
 	{
+		//スタートまで硬直
+		if (Managers.GetComponent<CountDownManager>().GameStart == false) return;
+
 		//時間切れになったら動けないようにする
 		if (Managers.GetComponent<TimeManagement>().isdrawStopTime == true) return;
 		//スタン判定
@@ -232,6 +230,15 @@ public class Player : MonoBehaviour
 	
 	void Update()
 	{
+		//プレイヤーの番号を時間が来たら非表示にする
+		inactiveTimer += Time.deltaTime;
+		if (inactiveTimer >= 7.0f)
+		{
+			canvas.SetActive(false);
+		}
+
+		//スタートまで硬直
+		if (Managers.GetComponent<CountDownManager>().GameStart == false) return;
 		//ダメージ
 		if (isDamage)
         {
@@ -265,12 +272,7 @@ public class Player : MonoBehaviour
 		{
 			col.enabled = false;
 		}
-		//プレイヤーの番号を時間が来たら非表示にする
-		inactiveTimer += Time.deltaTime;
-        if (inactiveTimer >= 7.0f)
-        {
-			canvas.SetActive(false);
-        }
+
 
     }
 	void StanTime()
@@ -315,8 +317,6 @@ public class Player : MonoBehaviour
 		if (collider.tag == "PlayerKillZone")
 		{
 			GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-			GameObject particle = Instantiate(playerParticles[0], this.transform.position, Quaternion.Euler(90, 0, 0));
-			Destroy(particle, 2f);
 			if (PlayerIndex >= 0)
             {
 				rank.Insert(0, PlayerIndex);

@@ -27,14 +27,12 @@ public class CountDownManager : MonoBehaviour
         StartDownText.text = second.ToString();
         // カウントダウン
         StartCount -= Time.deltaTime;
-        if (StartCount < 1)
-        {
-            
+        if (StartCount <= 1)
+        { 
             StartDownText.text = "start!!";
-            // こうやったら３秒だけ表示して開始するんじゃね？
             
 
-            if (StartCount <= -2)
+            if (StartCount <= -0.5)
             {
                 GameStart = true;
                 StartDownText.text = " ";
