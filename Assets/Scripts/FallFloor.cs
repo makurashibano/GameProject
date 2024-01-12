@@ -15,6 +15,7 @@ public class FallFloor : MonoBehaviour
     float destroyThreshold = -5.0f;
     bool startFalling = false;
     public Material fallingObjectMaterial;
+    public CountDownManager countDown;
     void Start()
     {
         outsideObj = GameObject.FindGameObjectsWithTag("OutsideFloor");
@@ -25,27 +26,30 @@ public class FallFloor : MonoBehaviour
 
     void Update()
     {
-        if (Time.time >= startFallingTime && !startFalling)
+        if (countDown.GameStart)
         {
-            startFalling = true;
-        }
-        if (startFalling)
-        {
-            timer += Time.deltaTime;
-            if (timer >= fallInterval)
+            if (Time.time >= startFallingTime && !startFalling)
             {
-                timer = 0;
-                if (outsideFloor.Count <= 0)
-                {
-                    FallRandomObject(insideFloor);
-                }
-                else
-                {
-                    FallRandomObject(outsideFloor);
-                }
+                startFalling = true;
             }
-            CheckObjectPosition(outsideFloor);
-            CheckObjectPosition(insideFloor);
+            if (startFalling)
+            {
+                timer += Time.deltaTime;
+                if (timer >= fallInterval)
+                {
+                    timer = 0;
+                    if (outsideFloor.Count <= 0)
+                    {
+                        FallRandomObject(insideFloor);
+                    }
+                    else
+                    {
+                        FallRandomObject(outsideFloor);
+                    }
+                }
+                CheckObjectPosition(outsideFloor);
+                CheckObjectPosition(insideFloor);
+            }
         }
     }
     IEnumerator FallWithDelay(GameObject fallingObject)
