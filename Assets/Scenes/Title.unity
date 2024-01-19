@@ -1262,6 +1262,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7235845559806433874, guid: 0441fb610f328f3479acc8ac5c6aef0b, type: 3}
+      propertyPath: m_fontSize
+      value: 83
+      objectReference: {fileID: 0}
+    - target: {fileID: 7235845559806433874, guid: 0441fb610f328f3479acc8ac5c6aef0b, type: 3}
+      propertyPath: m_fontStyle
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7235845559806433874, guid: 0441fb610f328f3479acc8ac5c6aef0b, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 83
+      objectReference: {fileID: 0}
     - target: {fileID: 7553287748409534940, guid: 0441fb610f328f3479acc8ac5c6aef0b, type: 3}
       propertyPath: m_Name
       value: Canvas
