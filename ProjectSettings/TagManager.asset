@@ -15,6 +15,9 @@ TagManager:
   - TimePanel
   - FxTemporaire
   - ModelBody
+  - OutsideFloor
+  - InsideFloor
+  - Stone
   layers:
   - Default
   - TransparentFX
@@ -26,9 +29,9 @@ TagManager:
   - AttackCollider
   - UI 3D Object
   - PlayerKillZone
-  - 
-  - 
-  - 
+  - Stone
+  - Ceiling
+  - StoneClear
   - 
   - 
   - 

@@ -10,17 +10,8 @@ public class HudManager : MonoBehaviour
     PlayerInputManager PlayerInputManager;
     private void Start()
     {
-        /*        foreach (InputDevice device in InputSystem.devices)
-                {
-                    // デバイス名をログ出力
-                    Debug.Log(device.name);
-                    //playerinputmanager.joinplayer(0, -1, null, device);
-
-                }*/
-        // ↓
         List<InputDevice> devices = new List<InputDevice>(InputSystem.devices);
-        //devices.RemoveAll(devices=> devices.name.Contains("Keyboard") || devices.name.Contains("Mouse") || devices.name.Contains("Pen"));
-        //InputDevice[] devices = InputSystem.devices.ToArray();
+        devices.RemoveAll(devices => devices.name.Contains("Keyboard") || devices.name.Contains("Mouse") || devices.name.Contains("Pen"));
         for (int i = 0; i < devices.Count; i++)
         {
             PlayerInputManager.JoinPlayer(i, -1, null, devices[i]);
