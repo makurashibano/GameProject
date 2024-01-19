@@ -43,19 +43,19 @@ public class TitleScene : MonoBehaviour
         }
         timer += Time.deltaTime;
 
-        //if (timer >= 10.0f)
-        //{
-        //    CreditPanel.SetActive(false);
-        //}
-        //if (timer >= 10f && timer <= 16f)
-        //{
-        //    CreditPanel.SetActive(true);
-        //}
-        //if (timer >= 16.0f)
-        //{
-        //    CreditPanel.SetActive(false);
-        //    timer = 0f;
-        //}
+        if (timer >= 10.0f)
+        {
+            CreditPanel.SetActive(false);
+        }
+        if (timer >= 10f && timer <= 16f)
+        {
+            CreditPanel.SetActive(true);
+        }
+        if (timer >= 16.0f)
+        {
+            CreditPanel.SetActive(false);
+            timer = 0f;
+        }
 
     }
     //private void OnDeviceChange(InputDevice device, InputDeviceChange change)
