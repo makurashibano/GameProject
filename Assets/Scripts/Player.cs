@@ -88,6 +88,7 @@ public class Player : MonoBehaviour
 	public List<GameObject> playerParticles;
 	//子オブジェクトを格納
 	public List<GameObject> childObjects;
+
 	//プレイヤー番号を表示する時間
 	float inactiveTimer = 0f;
 	private void Awake()
@@ -170,10 +171,11 @@ public class Player : MonoBehaviour
 	{
 		//スタートまで硬直
 		if (Managers.GetComponent<CountDownManager>().GameStart == false) return;
-		if (isDamage == true) return;
+		if (isDamage) return;
+		if (isAttack) return;
 
 		isAttack = true;
-		Invoke("AttackFalse", 0.5f);
+		Invoke("AttackFalse", 1f);
 		audioSource.PlayOneShot(attack_SE);
 		animator?.SetTrigger("IsAttack");
 
@@ -365,10 +367,11 @@ public class Player : MonoBehaviour
 			}
 			//攻撃ゲージ
 			float knockbackMultiplier = isSpecialAttack ? specialAttackMultiplier : 1.0f;
-
+			float playerRange = (collider.gameObject.transform.position - this.gameObject.transform.position).magnitude;
+			Debug.Log(playerRange);
 			//正規化
 			Vector3 forceDir = boundsPower * transform.forward;
-			//ノックバックさせる
+
 			collider.GetComponent<Player>().UnControllableTimer = 0.5f;
 			//攻撃されたときに攻撃できないようにする
 			collider.GetComponent<Player>().isDamage = true;
@@ -377,10 +380,26 @@ public class Player : MonoBehaviour
 			//パーティクル表示
 			GameObject particle = Instantiate(playerParticles[1], collider.transform.position, Quaternion.identity);
 			Destroy(particle, 0.8f);
+			//近さで飛ぶ力を変える
+			if (playerRange <= 1.6f)
+			{
+				forceDir = forceDir * 1.2f;
+			}
+			else if (playerRange <= 2.0f)
+            {
+				forceDir = forceDir * 1.0f;
+			}
+			else if (playerRange <= 2.2f)
+			{
+				forceDir = forceDir * 0.7f;
+			}
+			else
+            {
+				forceDir = forceDir * 0.3f;
+			}
 			//敵を飛ばす
 			collider.transform.GetComponent<Rigidbody>().velocity = forceDir*knockbackMultiplier;
 			isSpecialAttack = false;
-			Debug.Log((forceDir * knockbackMultiplier).magnitude);
 		}
 	}
 
