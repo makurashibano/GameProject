@@ -55,6 +55,9 @@ public class Player : MonoBehaviour
 
 	//攻撃
 	public bool isAttack= false;
+	//攻撃クールタイム
+	bool isAttackCoolTime = false;
+
 	//ダメージ
 	public bool isDamage = false;
 	float damageCount = 0f;
@@ -128,6 +131,7 @@ public class Player : MonoBehaviour
 		rigidbody = GetComponent<Rigidbody>(); // Rigidbodyコンポーネントを取得する
 		col.enabled = false;
 		isDamage = false;
+		isAttackCoolTime = false;
 		Managers = GameObject.Find("Managers");
 	}
 	//子を取得
@@ -169,13 +173,19 @@ public class Player : MonoBehaviour
     } 
 	void OnAttack()
 	{
+
 		//スタートまで硬直
 		if (Managers.GetComponent<CountDownManager>().GameStart == false) return;
 		if (isDamage) return;
-		if (isAttack) return;
+		if (isAttackCoolTime) return;
 
 		isAttack = true;
-		Invoke("AttackFalse", 1f);
+		isAttackCoolTime = true;
+		//攻撃クールタイム
+		Invoke("AttackCoolTime", 1.2f);
+
+		//コライダーのオンオフ
+		Invoke("AttackFalse", 0.3f);
 		audioSource.PlayOneShot(attack_SE);
 		animator?.SetTrigger("IsAttack");
 
@@ -302,6 +312,10 @@ public class Player : MonoBehaviour
 	{
 		isAttack = false;
 	}
+	void AttackCoolTime()
+    {
+		isAttackCoolTime = false;
+    }
 	void DamageFalse()
 	{
 
@@ -367,7 +381,8 @@ public class Player : MonoBehaviour
 			}
 			//攻撃ゲージ
 			float knockbackMultiplier = isSpecialAttack ? specialAttackMultiplier : 1.0f;
-			float playerRange = (collider.gameObject.transform.position - this.gameObject.transform.position).magnitude;
+			//敵と自分との距離
+			float playerRange = Vector3.Distance(collider.gameObject.transform.position, this.gameObject.transform.position);
 			Debug.Log(playerRange);
 			//正規化
 			Vector3 forceDir = boundsPower * transform.forward;
@@ -381,15 +396,19 @@ public class Player : MonoBehaviour
 			GameObject particle = Instantiate(playerParticles[1], collider.transform.position, Quaternion.identity);
 			Destroy(particle, 0.8f);
 			//近さで飛ぶ力を変える
-			if (playerRange <= 1.6f)
+			if (playerRange <= 1.4f)
 			{
 				forceDir = forceDir * 1.2f;
 			}
-			else if (playerRange <= 2.0f)
+			else if (playerRange <= 1.8f)
+			{
+				forceDir = forceDir * 1.0f;
+			}
+			else if (playerRange <= 2.1f)
             {
 				forceDir = forceDir * 1.0f;
 			}
-			else if (playerRange <= 2.2f)
+			else if (playerRange <= 2.3f)
 			{
 				forceDir = forceDir * 0.7f;
 			}
