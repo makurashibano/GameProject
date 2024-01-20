@@ -17,10 +17,10 @@ public class TitleScene : MonoBehaviour
     private void Start()
     {
         // 初回のデバイス接続状態の確認とパネルの表示・非表示
-        //UpdateControllerStatus();
+        UpdateControllerStatus();
 
         // コントローラーの接続状態を確認するためのイベントハンドラを登録
-        //InputSystem.onDeviceChange += OnDeviceChange;
+        InputSystem.onDeviceChange += OnDeviceChange;
     }
     private void Update()
     {
@@ -58,31 +58,31 @@ public class TitleScene : MonoBehaviour
         }
 
     }
-    //private void OnDeviceChange(InputDevice device, InputDeviceChange change)
-    //{
-    //    if (change == InputDeviceChange.Added || change == InputDeviceChange.Removed)
-    //    {
-    //        // デバイスの接続状態が変化したら、リストを更新するなどの処理を行う
-    //        UpdateControllerStatus();
-    //    }
-    //}
+    private void OnDeviceChange(InputDevice device, InputDeviceChange change)
+    {
+        if (change == InputDeviceChange.Added || change == InputDeviceChange.Removed)
+        {
+            // デバイスの接続状態が変化したら、リストを更新するなどの処理を行う
+            UpdateControllerStatus();
+        }
+    }
 
-    //private void UpdateControllerStatus()
-    //{
-    //    List<InputDevice> currentDevices = new List<InputDevice>(InputSystem.devices);
+    private void UpdateControllerStatus()
+    {
+        List<InputDevice> currentDevices = new List<InputDevice>(InputSystem.devices);
 
-    //    // ここで特定のデバイス（例: キーボードやペン）を除外する処理を追加
-    //    currentDevices.RemoveAll(device => device.name.Contains("Keyboard") || device.name.Contains("Mouse") || device.name.Contains("Pen"));
+        // ここで特定のデバイス（例: キーボードやペン）を除外する処理を追加
+        currentDevices.RemoveAll(device => device.name.Contains("Keyboard") || device.name.Contains("Mouse") || device.name.Contains("Pen"));
 
-    //    if (currentDevices.Count > 1)
-    //    {
-    //        noControllerPanel.SetActive(false);
-    //        flag = true;
-    //    }
-    //    else
-    //    {
-    //        noControllerPanel.SetActive(true);
-    //        flag = false;
-    //    }
-   // }
+        if (currentDevices.Count > 1)
+        {
+            noControllerPanel.SetActive(false);
+            flag = true;
+        }
+        else
+        {
+            noControllerPanel.SetActive(true);
+            flag = false;
+        }
+    }
 }

@@ -182,7 +182,7 @@ public class Player : MonoBehaviour
 		isAttack = true;
 		isAttackCoolTime = true;
 		//攻撃クールタイム
-		Invoke("AttackCoolTime", 1.2f);
+		Invoke("AttackCoolTime", 0.7f);
 
 		//コライダーのオンオフ
 		Invoke("AttackFalse", 0.3f);
@@ -398,23 +398,23 @@ public class Player : MonoBehaviour
 			//近さで飛ぶ力を変える
 			if (playerRange <= 1.4f)
 			{
-				forceDir = forceDir * 1.2f;
+				forceDir = forceDir * 1.5f;
 			}
 			else if (playerRange <= 1.8f)
 			{
-				forceDir = forceDir * 1.0f;
+				forceDir = forceDir * 1.3f;
 			}
 			else if (playerRange <= 2.1f)
             {
-				forceDir = forceDir * 1.0f;
+				forceDir = forceDir * 1.1f;
 			}
 			else if (playerRange <= 2.3f)
 			{
-				forceDir = forceDir * 0.7f;
+				forceDir = forceDir * 1.0f;
 			}
 			else
             {
-				forceDir = forceDir * 0.3f;
+				forceDir = forceDir * 0.7f;
 			}
 			//敵を飛ばす
 			collider.transform.GetComponent<Rigidbody>().velocity = forceDir*knockbackMultiplier;

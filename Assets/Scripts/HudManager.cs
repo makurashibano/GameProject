@@ -11,7 +11,7 @@ public class HudManager : MonoBehaviour
     private void Start()
     {
         List<InputDevice> devices = new List<InputDevice>(InputSystem.devices);
-        //devices.RemoveAll(devices => devices.name.Contains("Keyboard") || devices.name.Contains("Mouse") || devices.name.Contains("Pen"));
+        devices.RemoveAll(devices => devices.name.Contains("Keyboard") || devices.name.Contains("Mouse") || devices.name.Contains("Pen"));
         for (int i = 0; i < devices.Count; i++)
         {
             PlayerInputManager.JoinPlayer(i, -1, null, devices[i]);
